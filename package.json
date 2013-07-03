@@ -1,0 +1,19 @@
+{
+  "name": "Invoice-inator",
+  "version": "0.0.1",
+  "description": "Generator Word Documents",
+  "main": "app.js",
+  "author": "George Czabania",
+  "license": "BSD",
+  "dependencies": {
+    "jqueryify": "*",
+    "spine": "*",
+    "archiver": "*"
+  },
+  "devDependencies": {
+    "node-static": "*",
+    "watchify": "*",
+    "browserify": "*",
+    "caching-coffeeify": "*"
+  }
+}

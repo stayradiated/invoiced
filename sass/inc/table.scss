@@ -1,0 +1,124 @@
+.table {
+
+  h2 {
+    color: #333;
+  }
+
+  ul {
+  }
+
+  li {
+    margin-bottom: 10px;
+    @extend .group;
+  }
+
+  input {
+    width: calc(100% - 30px);
+    height: 40px;
+    font-size: 16px;
+    border: 2px solid $turquoise;
+    padding: 0 10px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    float: left;
+  }
+
+  input:focus {
+    outline: 0;
+    border-color: $belize_hole;
+  }
+
+  label {
+    line-height: 40px;
+    padding: 0 10px 0 9px;
+    width: 90px;
+  }
+
+  .new-section {
+    background: #eee;
+    border: 2px solid $emerald;
+    border-radius: 4px;
+    width: 300px;
+
+    label {
+      float: left;
+      background: $emerald;
+      color: $white;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    input {
+      float: left;
+      width: calc(100% - 110px);
+      border: 0
+    }
+  }
+
+  .bold {
+    font-weight: bold;
+    background: $clouds;
+  }
+
+  .caps {
+    text-transform: uppercase;
+  }
+
+  .indent {
+    margin-left: 50px;
+    width: calc(100% - 50px);
+  }
+  
+  .number {
+    
+    $label_width: 30px;
+
+    position: relative;
+
+    label {
+      position: absolute;
+      padding: 0;
+      width: $label_width;
+      text-align: center;
+      color: $white;
+      font-weight: bold;
+    }
+
+    input {
+      border-left-width: $label_width;
+      float: left;
+      width: calc(100% - 30px);
+    }
+  }
+
+  .handle {
+    position: relative;
+    background: $silver;
+    height: 20px;
+    width: 20px;
+    float: right;
+    margin: 10px 0 0 10px;
+    cursor: pointer;
+
+    &:hover {
+      background: $concrete;
+    }
+
+    &:before, &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      background: $white;
+      width: 20px;
+      height: 4px;
+    }
+
+    &:before {
+      top: 4px;
+    }
+
+    &:after {
+      top: 12px;
+    }
+  }
+}

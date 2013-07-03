@@ -1,0 +1,81 @@
+@import "compass/css3";
+@import "compass/reset";
+@import "mixins";
+@import "inc/colors";
+@import "inc/forms";
+@import "inc/table";
+@import "inc/snippets";
+@import "inc/buttons";
+
+body, input, button {
+  font-family: "Open Sans", sans-serif;
+}
+
+h1, h2, h3 {
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 25px;
+  margin: 20px 0;
+  color: $white;
+  padding-bottom: 20px;
+  border-bottom: 4px solid $wet_asphalt;
+}
+
+h2 {
+  font-size: 16px;
+  margin: 20px 0;
+  color: $white;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size: 15px;
+}
+
+hr {
+  height: 4px;
+  background: $wet_asphalt;
+  border: 0;
+  margin: 20px 0;
+}
+
+// PANELS
+
+$header_height: 0px;
+$snippets_height: 300px;
+
+header {
+  @include pos(0, 0, auto, 0);
+  height: $header_height;
+  line-height: $header_height;
+  background: darken($midnight_blue, 10);
+  color: $white;
+}
+
+section.details {
+  @include pos($header_height, auto, 0, 0);
+  width: 300px;
+  padding: 20px;
+  box-sizing: border-box;
+  background: $midnight_blue;
+  overflow-y: auto;
+}
+
+section.table {
+  @include pos($header_height, $snippets_height, 0, 300px);
+  padding: 20px;
+  box-sizing: border-box;
+  background: $white;
+  overflow-y: auto;
+}
+
+section.snippets {
+  @include pos($header_height, 0, 0, auto);
+  width: $snippets_height;
+  background: $clouds;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
