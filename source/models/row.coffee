@@ -17,4 +17,4 @@ class Rows extends Base.Collection
   constructor: ->
     super
 
-module.exports = new Rows()
+module.exports = Rows

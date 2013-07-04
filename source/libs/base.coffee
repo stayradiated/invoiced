@@ -56,15 +56,18 @@ class Controller
 # I could add .off() and .once() but I never use them ...
 class Event
 
-  _events: {}
+  constructor: ->
+    @_events = {}
 
-  trigger: (event, args...) ->
+  trigger: (event, args...) =>
+    console.log '> Trigger', event, args
     if @_events[event]?
       for fn in @_events[event]
        fn.apply(fn, args)
     return
 
-  on: (event, fn) ->
+  on: (event, fn) =>
+    console.log '> Listening for', event
     @_events[event] ?= []
     @_events[event].push(fn)
 
@@ -72,18 +75,40 @@ class Event
 # A basic Model class
 # Just stores data and has defaults and events
 class Model extends Event
-
-  defaults: {}
-
+  
   constructor: (attrs) ->
-    load(this, @defaults)
-    load(this, attrs)
+    super
+
+    @defaults ?= {}
+    @_data = {}
+
+    console.log 'defaults', @defaults
+
+    load(@_data, @defaults)
+    load(@_data, attrs)
+
+    set = (key) =>
+      (value) =>
+        return if value is @_data[key]
+        @_data[key] = value
+        @trigger("change:#{key}", value)
+
+    get = (key) =>
+      return => @_data[key]
+
+    for key of @defaults
+      @__defineSetter__ key, set(key)
+      @__defineGetter__ key, get(key)
+
+  destroy: =>
+    console.log '> Destroying model'
+    @trigger('before:destroy')
+    delete @_data
+    @trigger('destroy')
+    return this
 
   toJSON: =>
-    obj = {}
-    for key of @defaults
-      obj[key] = @[key]
-    return obj
+    return @_data
 
 
 # A collection holds an array of models
@@ -91,9 +116,9 @@ class Model extends Event
 # You can add/remove models
 class Collection extends Event
 
-  _records: []
-
   constructor: ->
+    super
+    @_records = []
 
   create: (args...) =>
     model = new @model(args...)
@@ -101,13 +126,41 @@ class Collection extends Event
     return model
 
   add: (model) =>
+
+    # Add to records array
     @_records.push(model)
-    model.on 'change', => @trigger('change', model)
-    @trigger('create', model)
+
+    # Bubble events
+    model.on 'change', =>
+      @trigger('change:model', model)
+
+    model.on 'destroy', =>
+      @trigger('destroy:model', model)
+      @remove(model)
+
+    # Alert app that a new model has been created
+    @trigger('create:model', model)
+
+  remove: (record) =>
+    console.log 'removing record from collection'
+    index = @_records.indexOf(record)
+    @_records.splice(index, 1)
+    @trigger('change')
 
   forEach: =>
     Array::forEach.apply(@_records, arguments)
 
+  toJSON: =>
+    record.toJSON() for record in @_records
+
+  first: =>
+    @_records[0]
+
+  last: =>
+    @_records[@_records.length-1]
+
+  get: (index) =>
+    @_records[index]
 
 
 # A view stores and renders a template

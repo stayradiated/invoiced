@@ -9,18 +9,21 @@ class TableRow extends Base.Controller
 
   elements:
     'input': 'input'
+    'label': 'number'
 
   events:
-    'change input': 'update'
+    'change input': 'setName'
 
   constructor: ->
     super
     @template.load('table-row')
+    @row.on 'change:number', @updateNumber
 
-  update: (e) =>
-    console.log 'updating model'
+  setName: (e) =>
     @row.name = @input.val()
-    console.log @row.toJSON()
+
+  updateNumber: (val) =>
+    @number.html(val)
 
   render: =>
     @template.render(@row)

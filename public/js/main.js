@@ -1,273 +1,274 @@
 ;(function(e,t,n){function i(n,s){if(!t[n]){if(!e[n]){var o=typeof require=="function"&&require;if(!s&&o)return o(n,!0);if(r)return r(n,!0);throw new Error("Cannot find module '"+n+"'")}var u=t[n]={exports:{}};e[n][0].call(u.exports,function(t){var r=e[n][1][t];return i(r?r:t)},u,u.exports)}return t[n].exports}var r=typeof require=="function"&&require;for(var s=0;s<n.length;s++)i(n[s]);return i})({1:[function(require,module,exports){
 (function() {
-  var Base, Details,
+  var $, Collection, Controller, Event, Model, RND, View, load,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __slice = [].slice,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  Base = require('../base.coffee');
+  $ = require('jqueryify');
 
-  Details = (function(_super) {
-    __extends(Details, _super);
+  load = function(obj, attrs) {
+    var key, value;
+    for (key in attrs) {
+      value = attrs[key];
+      obj[key] = value;
+    }
+    return obj;
+  };
 
-    Details.prototype.elements = {
-      '.invoice-id': 'invoiceId',
-      '.invoice-date': 'invoiceDate',
-      '.client-name': 'clientName',
-      '.client-address': 'clientAddress',
-      '.client-city': 'clientCity',
-      '.client-postcode': 'clientPostcode',
-      '.job-customer': 'jobCustomer',
-      '.job-site': 'jobSite',
-      '.job-amount': 'jobAmount'
+  RND = function(tmpl, ns) {
+    var fn;
+    fn = function(w, g) {
+      var cnt, i;
+      g = g.split("|");
+      cnt = ns[g[0]];
+      i = 1;
+      while (i < g.length) {
+        cnt = eval(g[i++])(cnt);
+      }
+      return cnt || w;
+    };
+    return tmpl.replace(/%\(([A-Za-z0-9_|.]*)\)/g, fn);
+  };
+
+  Controller = (function() {
+    Controller.prototype.elements = {};
+
+    Controller.prototype.events = {};
+
+    Controller.prototype._bind = function(el) {
+      var action, event, name, query, selector, split, _ref, _ref1, _results;
+      if (el == null) {
+        el = this.el;
+      }
+      _ref = this.elements;
+      for (selector in _ref) {
+        name = _ref[selector];
+        this[name] = el.find(selector);
+      }
+      _ref1 = this.events;
+      _results = [];
+      for (query in _ref1) {
+        action = _ref1[query];
+        split = query.indexOf(' ');
+        event = query.slice(0, +split + 1 || 9e9);
+        selector = query.slice(split + 1);
+        _results.push(el.find(selector).on(event, this[action]));
+      }
+      return _results;
     };
 
-    Details.prototype.events = {
-      'change input': 'update'
-    };
-
-    function Details() {
-      this.update = __bind(this.update, this);
-      Details.__super__.constructor.apply(this, arguments);
+    function Controller(attrs) {
+      this._bind = __bind(this._bind, this);
+      load(this, attrs);
+      if (this.el != null) {
+        this._bind();
+      }
     }
 
-    Details.prototype.update = function(e) {
-      var name, value;
-      name = this.elements['.' + e.target.className];
-      return value = e.target.value;
+    return Controller;
+
+  })();
+
+  Event = (function() {
+    function Event() {
+      this.on = __bind(this.on, this);
+      this.trigger = __bind(this.trigger, this);
+      this._events = {};
+    }
+
+    Event.prototype.trigger = function() {
+      var args, event, fn, _i, _len, _ref;
+      event = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      console.log('> Trigger', event, args);
+      if (this._events[event] != null) {
+        _ref = this._events[event];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          fn = _ref[_i];
+          fn.apply(fn, args);
+        }
+      }
     };
 
-    return Details;
-
-  })(Base.Controller);
-
-  module.exports = Details;
-
-}).call(this);
-
-
-},{"../base.coffee":2}],3:[function(require,module,exports){
-(function() {
-  var App, Details, Table,
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-  window.Base = require('../base.coffee');
-
-  Table = require('../controllers/table.coffee');
-
-  Details = require('../controllers/details.coffee');
-
-  App = (function(_super) {
-    __extends(App, _super);
-
-    App.prototype.elements = {
-      '.table': 'table',
-      '.snippets': 'snippets',
-      '.details': 'details'
+    Event.prototype.on = function(event, fn) {
+      var _base;
+      console.log('> Listening for', event);
+      if ((_base = this._events)[event] == null) {
+        _base[event] = [];
+      }
+      return this._events[event].push(fn);
     };
 
-    App.prototype.events = {
-      'click .generate': 'generate'
+    return Event;
+
+  })();
+
+  Model = (function(_super) {
+    __extends(Model, _super);
+
+    function Model(attrs) {
+      this.toJSON = __bind(this.toJSON, this);
+      this.destroy = __bind(this.destroy, this);
+      var get, key, set,
+        _this = this;
+      Model.__super__.constructor.apply(this, arguments);
+      if (this.defaults == null) {
+        this.defaults = {};
+      }
+      this._data = {};
+      console.log('defaults', this.defaults);
+      load(this._data, this.defaults);
+      load(this._data, attrs);
+      set = function(key) {
+        return function(value) {
+          if (value === _this._data[key]) {
+            return;
+          }
+          _this._data[key] = value;
+          return _this.trigger("change:" + key, value);
+        };
+      };
+      get = function(key) {
+        return function() {
+          return _this._data[key];
+        };
+      };
+      for (key in this.defaults) {
+        this.__defineSetter__(key, set(key));
+        this.__defineGetter__(key, get(key));
+      }
+    }
+
+    Model.prototype.destroy = function() {
+      console.log('> Destroying model');
+      this.trigger('before:destroy');
+      delete this._data;
+      this.trigger('destroy');
+      return this;
     };
 
-    function App() {
-      App.__super__.constructor.apply(this, arguments);
-      this.table = new Table({
-        el: this.table
+    Model.prototype.toJSON = function() {
+      return this._data;
+    };
+
+    return Model;
+
+  })(Event);
+
+  Collection = (function(_super) {
+    __extends(Collection, _super);
+
+    function Collection() {
+      this.get = __bind(this.get, this);
+      this.last = __bind(this.last, this);
+      this.first = __bind(this.first, this);
+      this.toJSON = __bind(this.toJSON, this);
+      this.forEach = __bind(this.forEach, this);
+      this.remove = __bind(this.remove, this);
+      this.add = __bind(this.add, this);
+      this.create = __bind(this.create, this);
+      Collection.__super__.constructor.apply(this, arguments);
+      this._records = [];
+    }
+
+    Collection.prototype.create = function() {
+      var args, model;
+      args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      model = (function(func, args, ctor) {
+        ctor.prototype = func.prototype;
+        var child = new ctor, result = func.apply(child, args);
+        return Object(result) === result ? result : child;
+      })(this.model, args, function(){});
+      this.add(model);
+      return model;
+    };
+
+    Collection.prototype.add = function(model) {
+      var _this = this;
+      this._records.push(model);
+      model.on('change', function() {
+        return _this.trigger('change:model', model);
       });
-      this.details = new Details({
-        el: this.details
+      model.on('destroy', function() {
+        _this.trigger('destroy:model', model);
+        return _this.remove(model);
       });
-    }
-
-    App.prototype.generate = function() {
-      return console.log('Generating word document...');
+      return this.trigger('create:model', model);
     };
 
-    return App;
+    Collection.prototype.remove = function(record) {
+      var index;
+      console.log('removing record from collection');
+      index = this._records.indexOf(record);
+      this._records.splice(index, 1);
+      return this.trigger('change');
+    };
 
-  })(Base.Controller);
+    Collection.prototype.forEach = function() {
+      return Array.prototype.forEach.apply(this._records, arguments);
+    };
 
-  module.exports = App;
+    Collection.prototype.toJSON = function() {
+      var record, _i, _len, _ref, _results;
+      _ref = this._records;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        record = _ref[_i];
+        _results.push(record.toJSON());
+      }
+      return _results;
+    };
+
+    Collection.prototype.first = function() {
+      return this._records[0];
+    };
+
+    Collection.prototype.last = function() {
+      return this._records[this._records.length - 1];
+    };
+
+    Collection.prototype.get = function(index) {
+      return this._records[index];
+    };
+
+    return Collection;
+
+  })(Event);
+
+  View = (function() {
+    function View(template) {
+      this.template = template;
+      this.load = __bind(this.load, this);
+    }
+
+    View.prototype.load = function(id) {
+      var html;
+      html = $("#" + id + "-template").html();
+      return this.template = html.replace(/\s+/g, ' ').slice(1);
+    };
+
+    View.prototype.render = function(data) {
+      return RND(this.template, data);
+    };
+
+    return View;
+
+  })();
+
+  module.exports = {
+    $: $,
+    Event: Event,
+    Controller: Controller,
+    Model: Model,
+    Collection: Collection,
+    View: View
+  };
 
 }).call(this);
 
 
-},{"../base.coffee":2,"../controllers/details.coffee":1,"../controllers/table.coffee":4}],5:[function(require,module,exports){
-(function() {
-  var Base, TableRow,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-  Base = require('../base.coffee');
-
-  window.Rows = require('../models/row.coffee');
-
-  TableRow = (function(_super) {
-    __extends(TableRow, _super);
-
-    TableRow.prototype.template = new Base.View;
-
-    TableRow.prototype.elements = {
-      'input': 'input'
-    };
-
-    TableRow.prototype.events = {
-      'change input': 'update'
-    };
-
-    function TableRow() {
-      this.render = __bind(this.render, this);
-      this.update = __bind(this.update, this);
-      TableRow.__super__.constructor.apply(this, arguments);
-      this.template.load('table-row');
-    }
-
-    TableRow.prototype.update = function(e) {
-      console.log('updating model');
-      this.row.name = this.input.val();
-      return console.log(this.row.toJSON());
-    };
-
-    TableRow.prototype.render = function() {
-      return this.template.render(this.row);
-    };
-
-    return TableRow;
-
-  })(Base.Controller);
-
-  module.exports = TableRow;
-
-}).call(this);
-
-
-},{"../base.coffee":2,"../models/row.coffee":6}],6:[function(require,module,exports){
-(function() {
-  var Base, Row, Rows,
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-  Base = require('../base.coffee');
-
-  Row = (function(_super) {
-    __extends(Row, _super);
-
-    Row.prototype.defaults = {
-      name: 'A new row',
-      number: 1
-    };
-
-    function Row() {
-      Row.__super__.constructor.apply(this, arguments);
-    }
-
-    return Row;
-
-  })(Base.Model);
-
-  Rows = (function(_super) {
-    __extends(Rows, _super);
-
-    Rows.prototype.model = Row;
-
-    function Rows() {
-      Rows.__super__.constructor.apply(this, arguments);
-    }
-
-    return Rows;
-
-  })(Base.Collection);
-
-  module.exports = new Rows();
-
-}).call(this);
-
-
-},{"../base.coffee":2}],4:[function(require,module,exports){
-(function() {
-  var Base, Row, Table, TableRow,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-  Base = require('../base.coffee');
-
-  TableRow = require('../controllers/table.row.coffee');
-
-  Row = require('../models/row.coffee');
-
-  Table = (function(_super) {
-    __extends(Table, _super);
-
-    Table.prototype.elements = {
-      '.rows': 'rows'
-    };
-
-    Table.prototype.events = {
-      'click .add-row': 'createRow',
-      'click .add-section': 'createSection'
-    };
-
-    function Table() {
-      this.createSection = __bind(this.createSection, this);
-      this.createRow = __bind(this.createRow, this);
-      this.addRow = __bind(this.addRow, this);
-      Table.__super__.constructor.apply(this, arguments);
-      Row.on('create', this.addRow);
-    }
-
-    Table.prototype.addRow = function(row) {
-      var $el, view;
-      view = new TableRow({
-        row: row
-      });
-      $el = $(view.render());
-      this.rows.append($el);
-      console.log('binding element');
-      return view._bind($el);
-    };
-
-    Table.prototype.createRow = function() {
-      console.log('creating row');
-      return Row.create({
-        name: 'custom name'
-      });
-    };
-
-    Table.prototype.createSection = function() {
-      return console.log('creating section');
-    };
-
-    return Table;
-
-  })(Base.Controller);
-
-  module.exports = Table;
-
-}).call(this);
-
-
-},{"../controllers/table.row.coffee":5,"../models/row.coffee":6,"../base.coffee":2}],7:[function(require,module,exports){
-(function() {
-  var App, jQuery;
-
-  jQuery = require('jqueryify');
-
-  App = require('./controllers/app.coffee');
-
-  jQuery(function() {
-    return window.App = new App({
-      el: $('body')
-    });
-  });
-
-}).call(this);
-
-
-},{"./controllers/app.coffee":3,"jqueryify":8}],8:[function(require,module,exports){
+},{"jqueryify":2}],2:[function(require,module,exports){
 (function(){/*!
  * jQuery JavaScript Library v2.0.0
  * http://jquery.com/
@@ -9028,203 +9029,379 @@ module.exports = window.jQuery;
 
 
 })()
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 (function() {
-  var $, Collection, Controller, Event, Model, RND, View, load,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __slice = [].slice,
+  var App, Details, Table,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  $ = require('jqueryify');
+  window.Base = require('../base.coffee');
 
-  load = function(obj, attrs) {
-    var key, value;
-    for (key in attrs) {
-      value = attrs[key];
-      obj[key] = value;
-    }
-    return obj;
-  };
+  Table = require('../controllers/table.coffee');
 
-  RND = function(tmpl, ns) {
-    var fn;
-    fn = function(w, g) {
-      var cnt, i;
-      g = g.split("|");
-      cnt = ns[g[0]];
-      i = 1;
-      while (i < g.length) {
-        cnt = eval(g[i++])(cnt);
-      }
-      return cnt || w;
-    };
-    return tmpl.replace(/%\(([A-Za-z0-9_|.]*)\)/g, fn);
-  };
+  Details = require('../controllers/details.coffee');
 
-  Controller = (function() {
-    Controller.prototype.elements = {};
+  App = (function(_super) {
+    __extends(App, _super);
 
-    Controller.prototype.events = {};
-
-    Controller.prototype._bind = function(el) {
-      var action, event, name, query, selector, split, _ref, _ref1, _results;
-      if (el == null) {
-        el = this.el;
-      }
-      _ref = this.elements;
-      for (selector in _ref) {
-        name = _ref[selector];
-        this[name] = el.find(selector);
-      }
-      _ref1 = this.events;
-      _results = [];
-      for (query in _ref1) {
-        action = _ref1[query];
-        split = query.indexOf(' ');
-        event = query.slice(0, +split + 1 || 9e9);
-        selector = query.slice(split + 1);
-        _results.push(el.find(selector).on(event, this[action]));
-      }
-      return _results;
+    App.prototype.elements = {
+      '.table': 'table',
+      '.snippets': 'snippets',
+      '.details': 'details'
     };
 
-    function Controller(attrs) {
-      this._bind = __bind(this._bind, this);
-      load(this, attrs);
-      if (this.el != null) {
-        this._bind();
-      }
-    }
-
-    return Controller;
-
-  })();
-
-  Event = (function() {
-    function Event() {}
-
-    Event.prototype._events = {};
-
-    Event.prototype.trigger = function() {
-      var args, event, fn, _i, _len, _ref;
-      event = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-      if (this._events[event] != null) {
-        _ref = this._events[event];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          fn = _ref[_i];
-          fn.apply(fn, args);
-        }
-      }
+    App.prototype.events = {
+      'click .generate': 'generate'
     };
 
-    Event.prototype.on = function(event, fn) {
-      var _base;
-      if ((_base = this._events)[event] == null) {
-        _base[event] = [];
-      }
-      return this._events[event].push(fn);
-    };
-
-    return Event;
-
-  })();
-
-  Model = (function(_super) {
-    __extends(Model, _super);
-
-    Model.prototype.defaults = {};
-
-    function Model(attrs) {
-      this.toJSON = __bind(this.toJSON, this);
-      load(this, this.defaults);
-      load(this, attrs);
-    }
-
-    Model.prototype.toJSON = function() {
-      var key, obj;
-      obj = {};
-      for (key in this.defaults) {
-        obj[key] = this[key];
-      }
-      return obj;
-    };
-
-    return Model;
-
-  })(Event);
-
-  Collection = (function(_super) {
-    __extends(Collection, _super);
-
-    Collection.prototype._records = [];
-
-    function Collection() {
-      this.forEach = __bind(this.forEach, this);
-      this.add = __bind(this.add, this);
-      this.create = __bind(this.create, this);
-    }
-
-    Collection.prototype.create = function() {
-      var args, model;
-      args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-      model = (function(func, args, ctor) {
-        ctor.prototype = func.prototype;
-        var child = new ctor, result = func.apply(child, args);
-        return Object(result) === result ? result : child;
-      })(this.model, args, function(){});
-      this.add(model);
-      return model;
-    };
-
-    Collection.prototype.add = function(model) {
-      var _this = this;
-      this._records.push(model);
-      model.on('change', function() {
-        return _this.trigger('change', model);
+    function App() {
+      App.__super__.constructor.apply(this, arguments);
+      this.table = new Table({
+        el: this.table
       });
-      return this.trigger('create', model);
-    };
-
-    Collection.prototype.forEach = function() {
-      return Array.prototype.forEach.apply(this._records, arguments);
-    };
-
-    return Collection;
-
-  })(Event);
-
-  View = (function() {
-    function View(template) {
-      this.template = template;
-      this.load = __bind(this.load, this);
+      this.details = new Details({
+        el: this.details
+      });
     }
 
-    View.prototype.load = function(id) {
-      var html;
-      html = $("#" + id + "-template").html();
-      return this.template = html.replace(/\s+/g, ' ').slice(1);
+    App.prototype.generate = function() {
+      return console.log('Generating word document...');
     };
 
-    View.prototype.render = function(data) {
-      return RND(this.template, data);
-    };
+    return App;
 
-    return View;
+  })(Base.Controller);
 
-  })();
-
-  module.exports = {
-    $: $,
-    Event: Event,
-    Controller: Controller,
-    Model: Model,
-    Collection: Collection,
-    View: View
-  };
+  module.exports = App;
 
 }).call(this);
 
 
-},{"jqueryify":8}]},{},[7])
+},{"../base.coffee":1,"../controllers/table.coffee":4,"../controllers/details.coffee":5}],5:[function(require,module,exports){
+(function() {
+  var Base, Detail, Details,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  Base = require('../base.coffee');
+
+  Detail = require('../models/detail.coffee');
+
+  Details = (function(_super) {
+    __extends(Details, _super);
+
+    Details.prototype.elements = {
+      '.invoice-id': 'invoiceId',
+      '.invoice-date': 'invoiceDate',
+      '.client-name': 'clientName',
+      '.client-address': 'clientAddress',
+      '.client-city': 'clientCity',
+      '.client-postcode': 'clientPostcode',
+      '.job-customer': 'jobCustomer',
+      '.job-site': 'jobSite',
+      '.job-amount': 'jobAmount'
+    };
+
+    Details.prototype.events = {
+      'change input': 'update'
+    };
+
+    function Details() {
+      this.render = __bind(this.render, this);
+      this.update = __bind(this.update, this);
+      Details.__super__.constructor.apply(this, arguments);
+      this.model = new Detail();
+    }
+
+    Details.prototype.update = function(e) {
+      var name, value;
+      name = this.elements['.' + e.target.className];
+      value = e.target.value;
+      return this.model[name] = value;
+    };
+
+    Details.prototype.render = function() {
+      var name, selector, _ref;
+      _ref = this.elements;
+      for (selector in _ref) {
+        name = _ref[selector];
+        this[name].val(this.model[name]);
+      }
+    };
+
+    return Details;
+
+  })(Base.Controller);
+
+  module.exports = Details;
+
+}).call(this);
+
+
+},{"../base.coffee":1,"../models/detail.coffee":6}],6:[function(require,module,exports){
+(function() {
+  var Base, Day, Detail,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  Base = require('../base.coffee');
+
+  Day = require('../libs/date.coffee');
+
+  Detail = (function(_super) {
+    __extends(Detail, _super);
+
+    Detail.prototype.defaults = {
+      invoiceId: 0,
+      invoiceDate: new Day().toString(),
+      clientName: '',
+      clientAddress: '',
+      clientCity: '',
+      clientPostcode: '',
+      jobCustomer: '',
+      jobSite: '',
+      jobAmount: ''
+    };
+
+    function Detail() {
+      Detail.__super__.constructor.apply(this, arguments);
+    }
+
+    return Detail;
+
+  })(Base.Model);
+
+  module.exports = Detail;
+
+}).call(this);
+
+
+},{"../base.coffee":1,"../libs/date.coffee":7}],7:[function(require,module,exports){
+(function() {
+  var Day,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+  Day = (function() {
+    function Day() {
+      this.toString = __bind(this.toString, this);
+      this.now = new Date();
+    }
+
+    Day.prototype.year = function() {
+      return this.now.getFullYear();
+    };
+
+    Day.prototype.month = function() {
+      return (this.now.getMonth() + 1).toString().replace(/^(\d)$/, '0$1');
+    };
+
+    Day.prototype.day = function() {
+      return this.now.getDate().toString().replace(/^(\d)$/, '0$1');
+    };
+
+    Day.prototype.toString = function() {
+      return "" + (this.year()) + "-" + (this.month()) + "-" + (this.day());
+    };
+
+    return Day;
+
+  })();
+
+  module.exports = Day;
+
+}).call(this);
+
+
+},{}],8:[function(require,module,exports){
+(function() {
+  var App, jQuery;
+
+  jQuery = require('jqueryify');
+
+  App = require('./controllers/app.coffee');
+
+  jQuery(function() {
+    return window.App = new App({
+      el: $('body')
+    });
+  });
+
+}).call(this);
+
+
+},{"./controllers/app.coffee":3,"jqueryify":2}],9:[function(require,module,exports){
+(function() {
+  var Base, TableRow,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  Base = require('../base.coffee');
+
+  window.Rows = require('../models/row.coffee');
+
+  TableRow = (function(_super) {
+    __extends(TableRow, _super);
+
+    TableRow.prototype.template = new Base.View;
+
+    TableRow.prototype.elements = {
+      'input': 'input',
+      'label': 'number'
+    };
+
+    TableRow.prototype.events = {
+      'change input': 'setName'
+    };
+
+    function TableRow() {
+      this.render = __bind(this.render, this);
+      this.updateNumber = __bind(this.updateNumber, this);
+      this.setName = __bind(this.setName, this);
+      TableRow.__super__.constructor.apply(this, arguments);
+      this.template.load('table-row');
+      this.row.on('change:number', this.updateNumber);
+    }
+
+    TableRow.prototype.setName = function(e) {
+      return this.row.name = this.input.val();
+    };
+
+    TableRow.prototype.updateNumber = function(val) {
+      return this.number.html(val);
+    };
+
+    TableRow.prototype.render = function() {
+      return this.template.render(this.row);
+    };
+
+    return TableRow;
+
+  })(Base.Controller);
+
+  module.exports = TableRow;
+
+}).call(this);
+
+
+},{"../base.coffee":1,"../models/row.coffee":10}],10:[function(require,module,exports){
+(function() {
+  var Base, Row, Rows,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  Base = require('../base.coffee');
+
+  Row = (function(_super) {
+    __extends(Row, _super);
+
+    Row.prototype.defaults = {
+      name: 'A new row',
+      number: 1
+    };
+
+    function Row() {
+      Row.__super__.constructor.apply(this, arguments);
+    }
+
+    return Row;
+
+  })(Base.Model);
+
+  Rows = (function(_super) {
+    __extends(Rows, _super);
+
+    Rows.prototype.model = Row;
+
+    function Rows() {
+      Rows.__super__.constructor.apply(this, arguments);
+    }
+
+    return Rows;
+
+  })(Base.Collection);
+
+  module.exports = Rows;
+
+}).call(this);
+
+
+},{"../base.coffee":1}],4:[function(require,module,exports){
+(function() {
+  var Base, Rows, Table, TableRow,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  Base = require('../base.coffee');
+
+  TableRow = require('../controllers/table.row.coffee');
+
+  Rows = require('../models/row.coffee');
+
+  Table = (function(_super) {
+    __extends(Table, _super);
+
+    Table.prototype.elements = {
+      '.rows': 'table'
+    };
+
+    Table.prototype.events = {
+      'click .add-row': 'createRow'
+    };
+
+    function Table() {
+      this.createRow = __bind(this.createRow, this);
+      this.update = __bind(this.update, this);
+      this.removeRow = __bind(this.removeRow, this);
+      this.addRow = __bind(this.addRow, this);
+      Table.__super__.constructor.apply(this, arguments);
+      this.count = 1;
+      this.rows = new Rows();
+      this.rows.on('create:model', this.addRow);
+      this.rows.on('destroy:model', this.removeRow);
+      this.rows.on('change', this.update);
+    }
+
+    Table.prototype.addRow = function(row) {
+      var view;
+      view = row.view = new TableRow({
+        row: row
+      });
+      view.el = $(view.render());
+      this.table.append(view.el);
+      return view._bind();
+    };
+
+    Table.prototype.removeRow = function(row) {
+      console.log('removing row from table');
+      return row.view.el.remove();
+    };
+
+    Table.prototype.update = function() {
+      var _this = this;
+      this.count = 1;
+      return this.rows.forEach(function(row) {
+        return row.number = _this.count++;
+      });
+    };
+
+    Table.prototype.createRow = function() {
+      return this.rows.create({
+        name: 'custom name',
+        number: this.count++
+      });
+    };
+
+    return Table;
+
+  })(Base.Controller);
+
+  module.exports = Table;
+
+}).call(this);
+
+
+},{"../base.coffee":1,"../controllers/table.row.coffee":9,"../models/row.coffee":10}]},{},[8])
 ;

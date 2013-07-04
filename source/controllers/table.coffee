@@ -1,33 +1,44 @@
 
 Base = require '../base.coffee'
 TableRow = require '../controllers/table.row.coffee'
-Row = require '../models/row.coffee'
+Rows = require '../models/row.coffee'
 
 class Table extends Base.Controller
 
   elements:
-    '.rows': 'rows'
+    '.rows': 'table'
 
   events:
     'click .add-row': 'createRow'
-    'click .add-section': 'createSection'
 
   constructor: ->
     super
-    Row.on 'create', @addRow
-
+    @count = 1
+    @rows = new Rows()
+    @rows.on 'create:model', @addRow
+    @rows.on 'destroy:model', @removeRow
+    @rows.on 'change', @update
+  
+  # Create a new TableRow and append it to the table
   addRow: (row) =>
-    view = new TableRow(row: row)
-    $el = $ view.render()
-    @rows.append $el
-    console.log 'binding element'
-    view._bind $el
+    view = row.view = new TableRow(row: row)
+    view.el = $ view.render()
+    @table.append view.el
+    view._bind()
 
+  removeRow: (row) =>
+    console.log 'removing row from table'
+    row.view.el.remove()
+
+  update: =>
+    @count = 1
+    @rows.forEach (row) =>
+      row.number = @count++
+
+  # Instantiate a new Row
   createRow: =>
-    console.log 'creating row'
-    Row.create name: 'custom name'
-
-  createSection: =>
-    console.log 'creating section'
+    @rows.create
+      name: 'custom name'
+      number: @count++
 
 module.exports = Table

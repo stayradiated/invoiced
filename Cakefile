@@ -27,8 +27,8 @@ task 'server', 'Start server', (options) ->
   terminal = spawn(watchify, args)
   terminal.stdout.on 'data', (data) -> console.log(data.toString())
   terminal.stderr.on 'data', (data) -> console.log(data.toString())
-  terminal.on 'error', (data) -> console.log(data.toString())
-  terminal.on 'close', (data) -> console.log(data.toString())
+  terminal.on 'error', (data) -> console.log('Error', data.toString())
+  terminal.on 'close', (data) -> console.log('Closing', data.toString())
   
   # Run http server on localhost:9294
   file= new(node_static.Server)(serverFolder)
@@ -52,20 +52,20 @@ task 'build', 'Start server', (options) ->
   coffeeify = './node_modules/caching-coffeeify/index.js'
 
   # Arguments
-  args = ['-v', '-t', coffeeify, input, '-o', output]
+  args = ['-t', coffeeify, input, '-o', output]
   
   # Build or Watch
   if options.watch
     cmd = watchify
   else
     cmd = browserify
+
+  console.log cmd, args.join(' ')
   
   # Start browserify
   terminal = spawn(cmd, args)
   terminal.stdout.on 'data', (data) -> console.log(data.toString())
   terminal.stderr.on 'data', (data) -> console.log(data.toString())
-  terminal.on 'error', (data) -> console.log(data.toString())
-  terminal.on 'close', (data) -> console.log(data.toString())
 
 
 task 'minify', 'Minify application.js', ->
