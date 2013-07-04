@@ -4,9 +4,9 @@ http = require 'http'
 fs = require 'fs'
 
 # Configuration
-input = 'source/main.coffee'
-output = 'js/main.js'
-serverFolder = '.'
+input = 'source/'
+output = 'public/js/'
+serverFolder = 'public'
 
 option '-p', '--port [port]', 'Set port for cake server'
 option '-w', '--watch', 'Watch the folder for changes'
@@ -47,21 +47,17 @@ task 'server', 'Start server', (options) ->
 task 'build', 'Start server', (options) ->
   
   # Modules
-  watchify = './node_modules/watchify/bin/cmd.js'
-  browserify = './node_modules/browserify/bin/cmd.js'
-  coffeeify = './node_modules/caching-coffeeify/index.js'
+  cmd = 'coffee'
 
   # Arguments
-  args = ['-t', coffeeify, input, '-o', output]
+  args = ['-c', '-o', output, input]
   
   # Build or Watch
   if options.watch
-    cmd = watchify
-  else
-    cmd = browserify
+    args.unshift('-w')
 
   console.log cmd, args.join(' ')
-  
+
   # Start browserify
   terminal = spawn(cmd, args)
   terminal.stdout.on 'data', (data) -> console.log(data.toString())

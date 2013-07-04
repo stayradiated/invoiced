@@ -15,12 +15,9 @@ load = (obj, attrs) ->
 # RND template engine - http://amix.dk/blog/post/161
 RND = (tmpl, ns) ->
   fn = (w, g) ->
-    g = g.split("|")
-    cnt = ns[g[0]]
-    i = 1
-    while i < g.length
-      cnt = eval(g[i++])(cnt)
-    return cnt || w
+    cnt = ns[g]
+    cnt ?= w
+    return cnt
   tmpl.replace(/%\(([A-Za-z0-9_|.]*)\)/g, fn)
 
 
@@ -43,7 +40,10 @@ class Controller
       split = query.indexOf(' ')
       event = query[0..split]
       selector = query[split+1..]
-      el.find(selector).on(event, @[action])
+      if selector.length > 0
+        el.on(event, selector, @[action])
+      else
+        el.on(event, @[action])
 
   constructor: (attrs) ->
     load(this, attrs)
@@ -60,14 +60,12 @@ class Event
     @_events = {}
 
   trigger: (event, args...) =>
-    console.log '> Trigger', event, args
     if @_events[event]?
       for fn in @_events[event]
        fn.apply(fn, args)
     return
 
   on: (event, fn) =>
-    console.log '> Listening for', event
     @_events[event] ?= []
     @_events[event].push(fn)
 
@@ -81,8 +79,6 @@ class Model extends Event
 
     @defaults ?= {}
     @_data = {}
-
-    console.log 'defaults', @defaults
 
     load(@_data, @defaults)
     load(@_data, attrs)
@@ -101,7 +97,6 @@ class Model extends Event
       @__defineGetter__ key, get(key)
 
   destroy: =>
-    console.log '> Destroying model'
     @trigger('before:destroy')
     delete @_data
     @trigger('destroy')
@@ -142,7 +137,6 @@ class Collection extends Event
     @trigger('create:model', model)
 
   remove: (record) =>
-    console.log 'removing record from collection'
     index = @_records.indexOf(record)
     @_records.splice(index, 1)
     @trigger('change')

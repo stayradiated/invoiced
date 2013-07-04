@@ -79,3 +79,12 @@ section.snippets {
   box-sizing: border-box;
   overflow-y: auto;
 }
+
+.no-snippets {
+  section.snippets {
+    display: none;
+  }
+  section.table {
+    right: 0;
+  }
+}

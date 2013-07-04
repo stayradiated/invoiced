@@ -1,7 +1,8 @@
 
-Base = require '../base.coffee'
-TableRow = require '../controllers/table.row.coffee'
-Rows = require '../models/row.coffee'
+Base = require '../libs/base'
+$ = Base.$
+TableRow = require '../controllers/table.row'
+Rows = require '../models/row'
 
 class Table extends Base.Controller
 
@@ -10,6 +11,7 @@ class Table extends Base.Controller
 
   events:
     'click .add-row': 'createRow'
+    'keydown input': 'move'
 
   constructor: ->
     super
@@ -25,9 +27,9 @@ class Table extends Base.Controller
     view.el = $ view.render()
     @table.append view.el
     view._bind()
+    view.focus()
 
   removeRow: (row) =>
-    console.log 'removing row from table'
     row.view.el.remove()
 
   update: =>
@@ -38,7 +40,15 @@ class Table extends Base.Controller
   # Instantiate a new Row
   createRow: =>
     @rows.create
-      name: 'custom name'
+      name: ''
       number: @count++
+  
+  # Move input focus up and down
+  move: (e) =>
+    switch e.keyCode
+      when 38
+        $(e.target).parent().prev('li').find('input').focus()
+      when 40
+        $(e.target).parent().next('li').find('input').focus()
 
 module.exports = Table

@@ -1,6 +1,6 @@
 
-Base = require '../base.coffee'
-Day = require '../libs/date.coffee'
+Base = require '../libs/base'
+Day = require '../libs/date'
 
 class Detail extends Base.Model
 
@@ -13,9 +13,24 @@ class Detail extends Base.Model
     clientPostcode: ''
     jobCustomer: ''
     jobSite: ''
-    jobAmount: ''
+    jobAmount: 0
 
   constructor: ->
     super
+
+  # Create our own custom exporter
+  toJSON: =>
+    invoiceId: @invoiceId
+    invoiceDate: @invoiceDate
+    clientName: @clientName.toUpperCase()
+    clientAddress: @clientAddress.toUpperCase()
+    clientCity: @clientCity.toUpperCase()
+    clientPostcode: @clientPostcode
+    jobCustomer: @jobCustomer.toUpperCase()
+    jobSite: @jobSite.toUpperCase()
+    jobAmount: @jobAmount
+    jobGst: @jobAmount * 0.15
+    jobBeforeGst: @jobAmount - (@jobAmount * 0.15)
+
 
 module.exports = Detail

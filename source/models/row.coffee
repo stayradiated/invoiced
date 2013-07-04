@@ -1,14 +1,15 @@
 
-Base = require '../base.coffee'
+Base = require '../libs/base'
 
 class Row extends Base.Model
 
   defaults:
-    name: 'A new row'
-    number: 1
+    name: ''
+    number: 0
 
   constructor: ->
     super
+    console.log @toJSON()
 
 class Rows extends Base.Collection
   

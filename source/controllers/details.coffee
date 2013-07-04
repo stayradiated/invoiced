@@ -1,6 +1,6 @@
 
-Base = require '../base.coffee'
-Detail = require '../models/detail.coffee'
+Base = require '../libs/base'
+Detail = require '../models/detail'
 
 class Details extends Base.Controller
 
@@ -26,6 +26,9 @@ class Details extends Base.Controller
   update: (e) =>
     name = @elements[ '.' + e.target.className]
     value = e.target.value
+    # Parse numbers
+    if e.target.attributes.type.value is 'number'
+      value = parseInt(value, 10)
     @model[name] = value
 
   # Populate the input fields with model data

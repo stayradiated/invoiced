@@ -1,8 +1,11 @@
 
-window.Base = require '../base.coffee'
+Base = require '../libs/base'
 
-Table = require '../controllers/table.coffee'
-Details = require '../controllers/details.coffee'
+Table = require '../controllers/table'
+Details = require '../controllers/details'
+Snippets = require '../controllers/snippets'
+
+docx = require '../libs/docx'
 
 class App extends Base.Controller
 
@@ -13,6 +16,7 @@ class App extends Base.Controller
 
   events:
     'click .generate': 'generate'
+    'click .toggle-sidebar': 'toggle'
 
   constructor: ->
     super
@@ -20,8 +24,15 @@ class App extends Base.Controller
     # Overwrite elements with controllers
     @table = new Table(el: @table)
     @details = new Details(el: @details)
+    @snippets = new Snippets(el: @snippets)
 
-  generate: ->
+  generate: =>
     console.log 'Generating word document...'
+    details = @details.model.toJSON()
+    table = @table.rows.toJSON()
+    docx(details, table)
+
+  toggle: =>
+    @el.toggleClass('no-snippets')
 
 module.exports = App

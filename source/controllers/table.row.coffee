@@ -1,7 +1,7 @@
 
-Base = require '../base.coffee'
+Base = require '../libs/base'
 
-window.Rows = require '../models/row.coffee'
+window.Rows = require '../models/row'
 
 class TableRow extends Base.Controller
 
@@ -21,6 +21,9 @@ class TableRow extends Base.Controller
 
   setName: (e) =>
     @row.name = @input.val()
+
+  focus: =>
+    @input.focus()
 
   updateNumber: (val) =>
     @number.html(val)
