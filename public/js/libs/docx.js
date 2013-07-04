@@ -24,7 +24,7 @@
       }
       return content || existing;
     };
-    return template.replace(/\{{3}([A-Za-z0-9_|.]*)\}{3}/g, fn);
+    return template.replace(/\{{2}([A-Za-z0-9_|.]*)\}{2}/g, fn);
   };
 
   templates = {

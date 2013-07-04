@@ -15,7 +15,7 @@ tmpl = (template, namespace) ->
       else next = value
     return content or existing
 
-  template.replace(/\{{3}([A-Za-z0-9_|.]*)\}{3}/g, fn)
+  template.replace(/\{{2}([A-Za-z0-9_|.]*)\}{2}/g, fn)
 
 templates =
   doc: __dirname + '/../../../docs/document.xml.tmpl'
