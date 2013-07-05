@@ -1,7 +1,11 @@
 .table {
 
   h2 {
-    color: #333;
+    font-size: 20px;
+    color: $concrete;
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 4px solid $clouds;
   }
 
   ul {
@@ -19,7 +23,7 @@
   }
 
   input {
-    width: calc(100% - 30px);
+    width: calc(100% - 65px);
     height: 40px;
     font-size: 16px;
     border: 2px solid $turquoise;
@@ -40,39 +44,53 @@
     width: 90px;
   }
 
-  .new-section {
-    background: #eee;
-    border: 2px solid $emerald;
-    border-radius: 4px;
-    width: 300px;
+  .section {
+
+    &:not(:first-child) {
+      margin-top: 20px;
+      border-top: 4px solid $clouds;
+      padding-top: 20px;
+    }
 
     label {
       float: left;
-      background: $emerald;
-      color: $white;
+      border-radius: 4px;
+      background: $clouds;
+      color: $asbestos;
       font-weight: bold;
       text-align: center;
+      margin-right: 10px;
     }
 
     input {
       float: left;
-      width: calc(100% - 110px);
-      border: 0
+      width: calc(100% - 185px);
     }
   }
 
-  .bold {
+  .heading input {
     font-weight: bold;
-    background: $clouds;
-  }
-
-  .caps {
     text-transform: uppercase;
   }
 
-  .indent {
-    margin-left: 50px;
-    width: calc(100% - 50px);
+  .bullet {
+    position:relative;
+
+    input {
+      margin-left: 30px;
+      width: calc(100% - 95px);
+    }
+
+    &:before {
+      $size: 10px;
+      content: "";
+      display: block;
+      @include pos(15px, auto, auto, 7px);
+      background: $concrete;
+      width: $size;
+      height: $size;
+      border-radius: $size;
+    }
   }
   
   .number {
@@ -93,18 +111,19 @@
     input {
       border-left-width: $label_width;
       float: left;
-      width: calc(100% - 30px);
+      width: calc(100% - 65px);
     }
   }
 
   .handle {
     position: relative;
-    background: $silver;
+    background: $clouds;
     height: 20px;
     width: 20px;
     float: right;
-    margin: 10px 0 0 10px;
+    margin: 10px 5px 0 5px;
     cursor: pointer;
+    @include transition(background 0.15s);
 
     &:hover {
       background: $concrete;
@@ -125,6 +144,39 @@
 
     &:after {
       top: 12px;
+    }
+  }
+
+  .delete {
+    float: right;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    background: $clouds;
+    cursor: pointer;
+    @include transition(background 0.15s);
+    margin: 10px 5px 0 5px;
+
+    &:hover {
+      background: $carrot;
+    }
+
+    &:after, &:before {
+      content: "";
+      display: block;
+      @include pos(9px, auto, auto, 5px);
+      width: 10px;
+      height: 2px;
+      background: $white;
+    }
+
+    &:after {
+      @include transform(rotate(45deg));
+    }
+
+    &:before {
+      @include transform(rotate(-45deg));
     }
   }
 }

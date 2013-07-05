@@ -1,12 +1,12 @@
 
 Base = require '../libs/base'
-Day = require '../libs/date'
+require 'date-utils'
 
 class Detail extends Base.Model
 
   defaults:
     invoiceId: 0
-    invoiceDate: new Day().toString()
+    invoiceDate: new Date().toYMD()
     clientName: ''
     clientAddress: ''
     clientCity: ''
@@ -18,10 +18,20 @@ class Detail extends Base.Model
   constructor: ->
     super
 
+  getInvoiceDate: =>
+    date = new Date(@invoiceDate)
+    date.toFormat('DD MMMM YYYY')
+
+  getDueDate: =>
+    date = new Date(@invoiceDate)
+    date.add( days: 7 )
+    date.toFormat('DD MMMM YYYY')
+
   # Create our own custom exporter
   toJSON: =>
     invoiceId: @invoiceId
-    invoiceDate: @invoiceDate
+    invoiceDate: @getInvoiceDate().toUpperCase()
+    invoiceDue: @getDueDate().toUpperCase()
     clientName: @clientName.toUpperCase()
     clientAddress: @clientAddress.toUpperCase()
     clientCity: @clientCity.toUpperCase()

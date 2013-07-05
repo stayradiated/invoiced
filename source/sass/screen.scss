@@ -7,6 +7,10 @@
 @import "inc/snippets";
 @import "inc/buttons";
 
+body {
+  overflow-x: hidden;
+}
+
 body, input, button {
   font-family: "Open Sans", sans-serif;
 }
@@ -44,7 +48,7 @@ hr {
 // PANELS
 
 $header_height: 0px;
-$snippets_height: 300px;
+$snippets_width: 300px;
 
 header {
   @include pos(0, 0, auto, 0);
@@ -64,25 +68,27 @@ section.details {
 }
 
 section.table {
-  @include pos($header_height, $snippets_height, 0, 300px);
+  @include pos($header_height, $snippets_width, 0, 300px);
   padding: 20px;
   box-sizing: border-box;
   background: $white;
   overflow-y: auto;
+  @include transition(right 0.5s);
 }
 
 section.snippets {
   @include pos($header_height, 0, 0, auto);
-  width: $snippets_height;
+  width: $snippets_width;
   background: $clouds;
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
+  @include transition(right 0.5s);
 }
 
 .no-snippets {
   section.snippets {
-    display: none;
+    right: -$snippets_width;
   }
   section.table {
     right: 0;

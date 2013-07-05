@@ -12,7 +12,7 @@
   Snippets = (function(_super) {
     __extends(Snippets, _super);
 
-    Snippets.prototype.template = new Base.View;
+    Snippets.prototype.template = new Base.View('snippet');
 
     Snippets.prototype.elements = {
       '.snippets': 'list'
@@ -26,7 +26,6 @@
       this.createSnippet = __bind(this.createSnippet, this);
       this.addSnippet = __bind(this.addSnippet, this);
       Snippets.__super__.constructor.apply(this, arguments);
-      this.template.load('snippet');
       this.snippets = new Snippet();
       this.snippets.on('create:model', this.addSnippet);
     }

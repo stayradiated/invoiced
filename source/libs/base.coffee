@@ -4,6 +4,10 @@
 
 # Uses jQuery for DOM stuff
 $ = require 'jqueryify'
+swig = require 'swig'
+
+swig.init
+  root: __dirname + '/../../../source/views'
 
 
 # Load values from one object into another
@@ -11,14 +15,6 @@ load = (obj, attrs) ->
   for key, value of attrs
     obj[key] = value
   return obj
-
-# RND template engine - http://amix.dk/blog/post/161
-RND = (tmpl, ns) ->
-  fn = (w, g) ->
-    cnt = ns[g]
-    cnt ?= w
-    return cnt
-  tmpl.replace(/%\(([A-Za-z0-9_|.]*)\)/g, fn)
 
 
 # Handle DOM interaction
@@ -160,17 +156,12 @@ class Collection extends Event
 # A view stores and renders a template
 class View
 
-  constructor: (@template) ->
+  constructor: (filename) ->
+    path = filename + '.html'
+    @template = swig.compileFile(path)
 
-  # Load the contents of an element
-  # HTML: <script id="item-template" type="text/template"></script>
-  # JS: view.load('item')
-  load: (id) =>
-    html = $("##{id}-template").html()
-    @template = html.replace(/\s+/g, ' ')[1..-1]
-
-  render: (data) ->
-    RND(@template, data)
+  render: (data) =>
+    @template.render(data)
 
 
 # Export all the classes and jQuery

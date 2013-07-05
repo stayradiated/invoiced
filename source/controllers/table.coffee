@@ -35,13 +35,27 @@ class Table extends Base.Controller
   update: =>
     @count = 1
     @rows.forEach (row) =>
-      row.number = @count++
+      if row.type is 'number'
+        row.number = @count++
 
   # Instantiate a new Row
-  createRow: =>
-    @rows.create
+  createRow: (e) =>
+
+    # Identify which button was pressed
+    # The last in the list is the default value
+    types = ['bullet', 'heading', 'section', 'number']
+    for type in types
+      if e?.target.classList.contains("row-#{type}")
+        break
+
+    details =
       name: ''
-      number: @count++
+      type: type
+
+    if type is 'number'
+      details.number = @count++
+
+    @rows.create(details)
   
   # Move input focus up and down
   move: (e) =>
