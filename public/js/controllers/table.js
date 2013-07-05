@@ -28,6 +28,7 @@
     function Table() {
       this.move = __bind(this.move, this);
       this.createRow = __bind(this.createRow, this);
+      this.render = __bind(this.render, this);
       this.update = __bind(this.update, this);
       this.removeRow = __bind(this.removeRow, this);
       this.addRow = __bind(this.addRow, this);
@@ -38,6 +39,7 @@
       this.rows.on('create:model', this.addRow);
       this.rows.on('destroy:model', this.removeRow);
       this.rows.on('change', this.update);
+      this.rows.on('refresh', this.render);
       this.table.sortable({
         axis: 'y',
         handle: '.handle',
@@ -74,6 +76,14 @@
         if (row.type === 'number') {
           return row.number = _this.count++;
         }
+      });
+    };
+
+    Table.prototype.render = function() {
+      var _this = this;
+      this.table.empty();
+      return this.rows.forEach(function(row) {
+        return _this.addRow(row);
       });
     };
 

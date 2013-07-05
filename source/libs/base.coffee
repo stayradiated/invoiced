@@ -61,9 +61,12 @@ class Event
        fn.apply(fn, args)
     return
 
-  on: (event, fn) =>
-    @_events[event] ?= []
-    @_events[event].push(fn)
+  on: (events, fn) =>
+    # Allow mutltiple events to be listend for at once
+    # Event.on('update change refresh', fn)
+    for event in events.split(' ')
+      @_events[event] ?= []
+      @_events[event].push(fn)
 
 
 # A basic Model class
@@ -91,6 +94,10 @@ class Model extends Event
     for key of @defaults
       @__defineSetter__ key, set(key)
       @__defineGetter__ key, get(key)
+
+  refresh: (data) =>
+    load(@_data, data)
+    @trigger('refresh')
 
   destroy: =>
     @trigger('before:destroy')
@@ -142,6 +149,13 @@ class Collection extends Event
     @_records.splice(index, 1)
     @_records.splice(pos, 0, record)
     @trigger('change')
+
+  refresh: (data) =>
+    @_records = []
+    for record in data
+      model = new @model(record)
+      @_records.push model
+    @trigger('refresh')
 
   forEach: =>
     Array::forEach.apply(@_records, arguments)

@@ -20,6 +20,7 @@ class Table extends Base.Controller
     @rows.on 'create:model', @addRow
     @rows.on 'destroy:model', @removeRow
     @rows.on 'change', @update
+    @rows.on 'refresh', @render
 
     @table.sortable
       axis: 'y'
@@ -48,6 +49,11 @@ class Table extends Base.Controller
     @rows.forEach (row) =>
       if row.type is 'number'
         row.number = @count++
+
+  render: =>
+    @table.empty()
+    @rows.forEach (row) =>
+      @addRow(row)
 
   # Instantiate a new Row
   createRow: (e) =>

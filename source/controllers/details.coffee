@@ -21,6 +21,7 @@ class Details extends Base.Controller
   constructor: ->
     super
     @model = new Detail()
+    @model.on 'refresh', @render
 
   # Detect input name and update model
   update: (e) =>

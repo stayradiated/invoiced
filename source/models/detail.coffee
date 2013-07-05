@@ -5,7 +5,7 @@ require 'date-utils'
 class Detail extends Base.Model
 
   defaults:
-    invoiceId: 0
+    invoiceId: 7300
     invoiceDate: new Date().toYMD()
     clientName: ''
     clientAddress: ''
@@ -28,7 +28,7 @@ class Detail extends Base.Model
     date.toFormat('DD MMMM YYYY')
 
   # Create our own custom exporter
-  toJSON: =>
+  export: =>
     invoiceId: @invoiceId
     invoiceDate: @getInvoiceDate()
     invoiceDue: @getDueDate().toUpperCase()

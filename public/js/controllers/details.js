@@ -33,6 +33,7 @@
       this.update = __bind(this.update, this);
       Details.__super__.constructor.apply(this, arguments);
       this.model = new Detail();
+      this.model.on('refresh', this.render);
     }
 
     Details.prototype.update = function(e) {

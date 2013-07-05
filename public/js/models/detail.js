@@ -13,7 +13,7 @@
     __extends(Detail, _super);
 
     Detail.prototype.defaults = {
-      invoiceId: 0,
+      invoiceId: 7300,
       invoiceDate: new Date().toYMD(),
       clientName: '',
       clientAddress: '',
@@ -25,7 +25,7 @@
     };
 
     function Detail() {
-      this.toJSON = __bind(this.toJSON, this);
+      this["export"] = __bind(this["export"], this);
       this.getDueDate = __bind(this.getDueDate, this);
       this.getInvoiceDate = __bind(this.getInvoiceDate, this);
       Detail.__super__.constructor.apply(this, arguments);
@@ -46,7 +46,7 @@
       return date.toFormat('DD MMMM YYYY');
     };
 
-    Detail.prototype.toJSON = function() {
+    Detail.prototype["export"] = function() {
       return {
         invoiceId: this.invoiceId,
         invoiceDate: this.getInvoiceDate(),

@@ -19,19 +19,23 @@
     };
 
     function Row() {
-      this.toJSON = __bind(this.toJSON, this);
+      this["export"] = __bind(this["export"], this);
       Row.__super__.constructor.apply(this, arguments);
     }
 
-    Row.prototype.toJSON = function() {
+    Row.prototype["export"] = function() {
       var obj;
       obj = {
         name: this.name,
         number: this.number,
         type: this.type
       };
-      if (this.type === 'section') {
-        obj.name = new Date(obj.name).toFormat('DD/MM/YYYY');
+      switch (this.type) {
+        case 'heading':
+          obj.name = this.name.toUpperCase();
+          break;
+        case 'section':
+          obj.name = new Date(obj.name).toFormat('DD/MM/YYYY');
       }
       return obj;
     };
@@ -46,8 +50,18 @@
     Rows.prototype.model = Row;
 
     function Rows() {
+      this["export"] = __bind(this["export"], this);
       Rows.__super__.constructor.apply(this, arguments);
     }
+
+    Rows.prototype["export"] = function() {
+      var arr;
+      arr = [];
+      this.forEach(function(record) {
+        return arr.push(record["export"]());
+      });
+      return arr;
+    };
 
     return Rows;
 

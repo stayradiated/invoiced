@@ -85,12 +85,18 @@
       }
     };
 
-    Event.prototype.on = function(event, fn) {
-      var _base;
-      if ((_base = this._events)[event] == null) {
-        _base[event] = [];
+    Event.prototype.on = function(events, fn) {
+      var event, _base, _i, _len, _ref, _results;
+      _ref = events.split(' ');
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        if ((_base = this._events)[event] == null) {
+          _base[event] = [];
+        }
+        _results.push(this._events[event].push(fn));
       }
-      return this._events[event].push(fn);
+      return _results;
     };
 
     return Event;
@@ -103,6 +109,7 @@
     function Model(attrs) {
       this.toJSON = __bind(this.toJSON, this);
       this.destroy = __bind(this.destroy, this);
+      this.refresh = __bind(this.refresh, this);
       var get, key, set,
         _this = this;
       Model.__super__.constructor.apply(this, arguments);
@@ -132,6 +139,11 @@
       }
     }
 
+    Model.prototype.refresh = function(data) {
+      load(this._data, data);
+      return this.trigger('refresh');
+    };
+
     Model.prototype.destroy = function() {
       this.trigger('before:destroy');
       delete this._data;
@@ -156,6 +168,7 @@
       this.first = __bind(this.first, this);
       this.toJSON = __bind(this.toJSON, this);
       this.forEach = __bind(this.forEach, this);
+      this.refresh = __bind(this.refresh, this);
       this.move = __bind(this.move, this);
       this.remove = __bind(this.remove, this);
       this.add = __bind(this.add, this);
@@ -202,6 +215,17 @@
       this._records.splice(index, 1);
       this._records.splice(pos, 0, record);
       return this.trigger('change');
+    };
+
+    Collection.prototype.refresh = function(data) {
+      var model, record, _i, _len;
+      this._records = [];
+      for (_i = 0, _len = data.length; _i < _len; _i++) {
+        record = data[_i];
+        model = new this.model(record);
+        this._records.push(model);
+      }
+      return this.trigger('refresh');
     };
 
     Collection.prototype.forEach = function() {
