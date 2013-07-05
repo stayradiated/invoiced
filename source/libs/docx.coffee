@@ -27,7 +27,6 @@ templates =
 config =
   template: __dirname + '/../../../docs/template/word/document.xml'
   folder: __dirname + '/../../../docs/template'
-  output: __dirname + '/../../../docs/file.docx'
 
 content = {}
 loaded = false
@@ -41,7 +40,7 @@ loadFiles = ->
     loaded = true
 
 # Compile template and create docx file
-compile = (details, table) ->
+compile = (path, details, table) ->
 
   if not loaded then loadFiles()
 
@@ -70,6 +69,6 @@ compile = (details, table) ->
 
   # Save template to disk and create docx file
   fs.writeFile(config.template, output)
-  zip(config.folder, config.output)
+  zip(config.folder, path)
 
 module.exports = compile

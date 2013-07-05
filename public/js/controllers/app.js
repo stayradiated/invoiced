@@ -21,17 +21,20 @@
     App.prototype.elements = {
       '.table': 'table',
       '.snippets': 'snippets',
-      '.details': 'details'
+      '.details': 'details',
+      '#save-file': 'file'
     };
 
     App.prototype.events = {
-      'click .generate': 'generate',
+      'click .generate': 'generateButton',
       'click .toggle-sidebar': 'toggle'
     };
 
     function App() {
       this.toggle = __bind(this.toggle, this);
-      this.generate = __bind(this.generate, this);
+      this.buildDoc = __bind(this.buildDoc, this);
+      this.generateButton = __bind(this.generateButton, this);
+      var _this = this;
       App.__super__.constructor.apply(this, arguments);
       this.table = new Table({
         el: this.table
@@ -42,14 +45,22 @@
       this.snippets = new Snippets({
         el: this.snippets
       });
+      this.file.on('change', function(e) {
+        var path;
+        path = e.target.value;
+        return _this.buildDoc(path);
+      });
     }
 
-    App.prototype.generate = function() {
+    App.prototype.generateButton = function() {
+      return this.file.click();
+    };
+
+    App.prototype.buildDoc = function(path) {
       var details, table;
-      console.log('Generating word document...');
       details = this.details.model.toJSON();
       table = this.table.rows.toJSON();
-      return docx(details, table);
+      return docx(path, details, table);
     };
 
     App.prototype.toggle = function() {

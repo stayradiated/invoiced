@@ -13,9 +13,10 @@ class App extends Base.Controller
     '.table': 'table'
     '.snippets': 'snippets'
     '.details': 'details'
+    '#save-file': 'file'
 
   events:
-    'click .generate': 'generate'
+    'click .generate': 'generateButton'
     'click .toggle-sidebar': 'toggle'
 
   constructor: ->
@@ -25,12 +26,20 @@ class App extends Base.Controller
     @table = new Table(el: @table)
     @details = new Details(el: @details)
     @snippets = new Snippets(el: @snippets)
+    
+    # Build doc when user selects a file
+    @file.on 'change', (e) =>
+      path = e.target.value
+      @buildDoc(path)
 
-  generate: =>
-    console.log 'Generating word document...'
+  generateButton: =>
+    # Show file dialog
+    @file.click()
+
+  buildDoc: (path) =>
     details = @details.model.toJSON()
     table = @table.rows.toJSON()
-    docx(details, table)
+    docx(path, details, table)
 
   toggle: =>
     @el.toggleClass('no-snippets')

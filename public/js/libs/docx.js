@@ -39,8 +39,7 @@
 
   config = {
     template: __dirname + '/../../../docs/template/word/document.xml',
-    folder: __dirname + '/../../../docs/template',
-    output: __dirname + '/../../../docs/file.docx'
+    folder: __dirname + '/../../../docs/template'
   };
 
   content = {};
@@ -58,7 +57,7 @@
     return _results;
   };
 
-  compile = function(details, table) {
+  compile = function(path, details, table) {
     var jobDate, output, row, startDate, _i, _len;
     if (!loaded) {
       loadFiles();
@@ -92,7 +91,7 @@
     details.jobDate = startDate;
     output = tmpl(content.document, details);
     fs.writeFile(config.template, output);
-    return zip(config.folder, config.output);
+    return zip(config.folder, path);
   };
 
   module.exports = compile;
