@@ -1,15 +1,23 @@
 {
-  "name": "Invoice-inator",
+  "name": "Invoicer",
   "version": "0.0.1",
   "description": "Generator Word Documents",
-  "main": "public/index.html",
   "author": "George Czabania",
   "license": "BSD",
+
+  "main": "public/index.html",
+  "window": {
+    "toolbar": false,
+    "height": 860,
+    "width": 1235
+  },
+
   "dependencies": {
     "jqueryify": "*",
-    "swig": "git://github.com/stayradiated/swig.git",
+    "swig": "*",
     "date-utils": "*",
-    "archiver": "*"
+    "archiver": "*",
+    "mysql": "2.0.0-alpha8"
   },
   "devDependencies": {
     "node-static": "*",

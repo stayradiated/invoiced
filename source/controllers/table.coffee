@@ -11,7 +11,7 @@ class Table extends Base.Controller
 
   events:
     'click .add-row': 'createRow'
-    'keydown input': 'move'
+    'keydown input': 'keydown'
 
   constructor: ->
     super
@@ -58,28 +58,41 @@ class Table extends Base.Controller
   # Instantiate a new Row
   createRow: (e) =>
 
-    # Identify which button was pressed
-    # The last in the list is the default value
-    types = ['bullet', 'heading', 'section', 'number']
-    for type in types
-      if e?.target.classList.contains("row-#{type}")
-        break
+    if e.target?
 
-    details =
-      name: ''
-      type: type
+      # Identify which button was pressed
+      # The last in the list is the default value
+      types = ['bullet', 'heading', 'section', 'number']
+      for type in types
+        if e.target.classList.contains("row-#{type}")
+          break
 
-    if type is 'number'
+      details =
+        name: ''
+        type: type
+
+    else
+
+      details = e
+
+
+    if details.type is 'number'
       details.number = @count++
 
     @rows.create(details)
   
-  # Move input focus up and down
-  move: (e) =>
+  # Handle keyboard shortcuts
+  keydown: (e) =>
     switch e.keyCode
-      when 38
+      when 9 # tab
+        $row = $(e.target).parent()
+        if $row.is(':last-child')
+          e.preventDefault()
+          type = if $row.data('item').type is 'bullet' then 'bullet' else 'number'
+          @createRow(type: type)
+      when 38 # up
         $(e.target).parent().prev('li').find('input').focus()
-      when 40
+      when 40 # down
         $(e.target).parent().next('li').find('input').focus()
 
 module.exports = Table

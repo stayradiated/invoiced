@@ -22,11 +22,11 @@
 
     Table.prototype.events = {
       'click .add-row': 'createRow',
-      'keydown input': 'move'
+      'keydown input': 'keydown'
     };
 
     function Table() {
-      this.move = __bind(this.move, this);
+      this.keydown = __bind(this.keydown, this);
       this.createRow = __bind(this.createRow, this);
       this.render = __bind(this.render, this);
       this.update = __bind(this.update, this);
@@ -89,25 +89,40 @@
 
     Table.prototype.createRow = function(e) {
       var details, type, types, _i, _len;
-      types = ['bullet', 'heading', 'section', 'number'];
-      for (_i = 0, _len = types.length; _i < _len; _i++) {
-        type = types[_i];
-        if (e != null ? e.target.classList.contains("row-" + type) : void 0) {
-          break;
+      if (e.target != null) {
+        types = ['bullet', 'heading', 'section', 'number'];
+        for (_i = 0, _len = types.length; _i < _len; _i++) {
+          type = types[_i];
+          if (e.target.classList.contains("row-" + type)) {
+            break;
+          }
         }
+        details = {
+          name: '',
+          type: type
+        };
+      } else {
+        details = e;
       }
-      details = {
-        name: '',
-        type: type
-      };
-      if (type === 'number') {
+      if (details.type === 'number') {
         details.number = this.count++;
       }
       return this.rows.create(details);
     };
 
-    Table.prototype.move = function(e) {
+    Table.prototype.keydown = function(e) {
+      var $row, type;
       switch (e.keyCode) {
+        case 9:
+          $row = $(e.target).parent();
+          if ($row.is(':last-child')) {
+            e.preventDefault();
+            type = $row.data('item').type === 'bullet' ? 'bullet' : 'number';
+            return this.createRow({
+              type: type
+            });
+          }
+          break;
         case 38:
           return $(e.target).parent().prev('li').find('input').focus();
         case 40:
