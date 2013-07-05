@@ -58,15 +58,29 @@
       var _this = this;
       this.count = 1;
       return this.rows.forEach(function(row) {
-        return row.number = _this.count++;
+        if (row.type === 'number') {
+          return row.number = _this.count++;
+        }
       });
     };
 
-    Table.prototype.createRow = function() {
-      return this.rows.create({
+    Table.prototype.createRow = function(e) {
+      var details, type, types, _i, _len;
+      types = ['bullet', 'heading', 'section', 'number'];
+      for (_i = 0, _len = types.length; _i < _len; _i++) {
+        type = types[_i];
+        if (e != null ? e.target.classList.contains("row-" + type) : void 0) {
+          break;
+        }
+      }
+      details = {
         name: '',
-        number: this.count++
-      });
+        type: type
+      };
+      if (type === 'number') {
+        details.number = this.count++;
+      }
+      return this.rows.create(details);
     };
 
     Table.prototype.move = function(e) {

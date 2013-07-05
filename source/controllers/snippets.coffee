@@ -4,7 +4,7 @@ Snippet = require '../models/snippet'
 
 class Snippets extends Base.Controller
 
-  template: new Base.View
+  template: new Base.View('snippet')
 
   elements:
     '.snippets': 'list'
@@ -14,7 +14,6 @@ class Snippets extends Base.Controller
 
   constructor: ->
     super
-    @template.load('snippet')
     @snippets = new Snippet()
     @snippets.on 'create:model', @addSnippet
 

@@ -6,10 +6,10 @@ class Row extends Base.Model
   defaults:
     name: ''
     number: 0
+    type: 'number'
 
   constructor: ->
     super
-    console.log @toJSON()
 
 class Rows extends Base.Collection
   

@@ -92,9 +92,13 @@ form input::-webkit-input-placeholder {
 
 /* line 3, ../../source/sass/inc/table.scss */
 .table h2 {
-  color: #333;
+  font-size: 20px;
+  color: #95a5a6;
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 4px solid #ecf0f1;
 }
-/* line 7, ../../source/sass/inc/table.scss */
+/* line 11, ../../source/sass/inc/table.scss */
 .table ul {
   position: absolute;
   top: 100px;
@@ -103,7 +107,7 @@ form input::-webkit-input-placeholder {
   left: 20px;
   overflow-y: auto;
 }
-/* line 12, ../../source/sass/inc/table.scss */
+/* line 16, ../../source/sass/inc/table.scss */
 .table .button-bar {
   position: absolute;
   top: auto;
@@ -111,13 +115,13 @@ form input::-webkit-input-placeholder {
   bottom: 20px;
   left: 20px;
 }
-/* line 16, ../../source/sass/inc/table.scss */
+/* line 20, ../../source/sass/inc/table.scss */
 .table li {
   margin-bottom: 10px;
 }
-/* line 21, ../../source/sass/inc/table.scss */
+/* line 25, ../../source/sass/inc/table.scss */
 .table input {
-  width: calc(100% - 30px);
+  width: calc(100% - 65px);
   height: 40px;
   font-size: 16px;
   border: 2px solid #1abc9c;
@@ -126,57 +130,71 @@ form input::-webkit-input-placeholder {
   border-radius: 4px;
   float: left;
 }
-/* line 32, ../../source/sass/inc/table.scss */
+/* line 36, ../../source/sass/inc/table.scss */
 .table input:focus {
   outline: 0;
   border-color: #2980b9;
 }
-/* line 37, ../../source/sass/inc/table.scss */
+/* line 41, ../../source/sass/inc/table.scss */
 .table label {
   line-height: 40px;
   padding: 0 10px 0 9px;
   width: 90px;
 }
-/* line 43, ../../source/sass/inc/table.scss */
-.table .new-section {
-  background: #eee;
-  border: 2px solid #2ecc71;
-  border-radius: 4px;
-  width: 300px;
-}
 /* line 49, ../../source/sass/inc/table.scss */
-.table .new-section label {
+.table .section:not(:first-child) {
+  margin-top: 20px;
+  border-top: 4px solid #ecf0f1;
+  padding-top: 20px;
+}
+/* line 55, ../../source/sass/inc/table.scss */
+.table .section label {
   float: left;
-  background: #2ecc71;
-  color: white;
+  border-radius: 4px;
+  background: #ecf0f1;
+  color: #7f8c8d;
   font-weight: bold;
   text-align: center;
+  margin-right: 10px;
 }
-/* line 57, ../../source/sass/inc/table.scss */
-.table .new-section input {
+/* line 65, ../../source/sass/inc/table.scss */
+.table .section input {
   float: left;
-  width: calc(100% - 110px);
-  border: 0;
+  width: calc(100% - 185px);
 }
-/* line 64, ../../source/sass/inc/table.scss */
-.table .bold {
+/* line 71, ../../source/sass/inc/table.scss */
+.table .heading input {
   font-weight: bold;
-  background: #ecf0f1;
-}
-/* line 69, ../../source/sass/inc/table.scss */
-.table .caps {
   text-transform: uppercase;
 }
-/* line 73, ../../source/sass/inc/table.scss */
-.table .indent {
-  margin-left: 50px;
-  width: calc(100% - 50px);
+/* line 76, ../../source/sass/inc/table.scss */
+.table .bullet {
+  position: relative;
 }
-/* line 78, ../../source/sass/inc/table.scss */
+/* line 79, ../../source/sass/inc/table.scss */
+.table .bullet input {
+  margin-left: 30px;
+  width: calc(100% - 95px);
+}
+/* line 84, ../../source/sass/inc/table.scss */
+.table .bullet:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 15px;
+  right: auto;
+  bottom: auto;
+  left: 7px;
+  background: #95a5a6;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+}
+/* line 96, ../../source/sass/inc/table.scss */
 .table .number {
   position: relative;
 }
-/* line 84, ../../source/sass/inc/table.scss */
+/* line 102, ../../source/sass/inc/table.scss */
 .table .number label {
   position: absolute;
   padding: 0;
@@ -185,27 +203,31 @@ form input::-webkit-input-placeholder {
   color: white;
   font-weight: bold;
 }
-/* line 93, ../../source/sass/inc/table.scss */
+/* line 111, ../../source/sass/inc/table.scss */
 .table .number input {
   border-left-width: 30px;
   float: left;
-  width: calc(100% - 30px);
+  width: calc(100% - 65px);
 }
-/* line 100, ../../source/sass/inc/table.scss */
+/* line 118, ../../source/sass/inc/table.scss */
 .table .handle {
   position: relative;
-  background: #bdc3c7;
+  background: #ecf0f1;
   height: 20px;
   width: 20px;
   float: right;
-  margin: 10px 0 0 10px;
+  margin: 10px 5px 0 5px;
   cursor: pointer;
+  -webkit-transition: background 0.15s;
+  -moz-transition: background 0.15s;
+  -o-transition: background 0.15s;
+  transition: background 0.15s;
 }
-/* line 109, ../../source/sass/inc/table.scss */
+/* line 128, ../../source/sass/inc/table.scss */
 .table .handle:hover {
   background: #95a5a6;
 }
-/* line 113, ../../source/sass/inc/table.scss */
+/* line 132, ../../source/sass/inc/table.scss */
 .table .handle:before, .table .handle:after {
   content: "";
   display: block;
@@ -214,13 +236,61 @@ form input::-webkit-input-placeholder {
   width: 20px;
   height: 4px;
 }
-/* line 122, ../../source/sass/inc/table.scss */
+/* line 141, ../../source/sass/inc/table.scss */
 .table .handle:before {
   top: 4px;
 }
-/* line 126, ../../source/sass/inc/table.scss */
+/* line 145, ../../source/sass/inc/table.scss */
 .table .handle:after {
   top: 12px;
+}
+/* line 150, ../../source/sass/inc/table.scss */
+.table .delete {
+  float: right;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  background: #ecf0f1;
+  cursor: pointer;
+  -webkit-transition: background 0.15s;
+  -moz-transition: background 0.15s;
+  -o-transition: background 0.15s;
+  transition: background 0.15s;
+  margin: 10px 5px 0 5px;
+}
+/* line 161, ../../source/sass/inc/table.scss */
+.table .delete:hover {
+  background: #e67e22;
+}
+/* line 165, ../../source/sass/inc/table.scss */
+.table .delete:after, .table .delete:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 9px;
+  right: auto;
+  bottom: auto;
+  left: 5px;
+  width: 10px;
+  height: 2px;
+  background: white;
+}
+/* line 174, ../../source/sass/inc/table.scss */
+.table .delete:after {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+/* line 178, ../../source/sass/inc/table.scss */
+.table .delete:before {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
 }
 
 /* line 3, ../../source/sass/inc/snippets.scss */
@@ -273,6 +343,12 @@ button {
 }
 
 /* line 11, ../../source/sass/inc/buttons.scss */
+button[disabled] {
+  background: #bdc3c7 !important;
+  color: #ecf0f1 !important;
+}
+
+/* line 16, ../../source/sass/inc/buttons.scss */
 button.primary {
   width: 100%;
   padding: 10px;
@@ -286,12 +362,12 @@ button.primary {
   -o-transition: background 0.15s;
   transition: background 0.15s;
 }
-/* line 21, ../../source/sass/inc/buttons.scss */
+/* line 26, ../../source/sass/inc/buttons.scss */
 button.primary:hover {
   background: #16a085;
 }
 
-/* line 26, ../../source/sass/inc/buttons.scss */
+/* line 31, ../../source/sass/inc/buttons.scss */
 button.secondary {
   padding: 10px;
   background: #3498d8;
@@ -304,12 +380,12 @@ button.secondary {
   -o-transition: background 0.15s;
   transition: background 0.15s;
 }
-/* line 35, ../../source/sass/inc/buttons.scss */
+/* line 40, ../../source/sass/inc/buttons.scss */
 button.secondary:hover {
   background: #2980b9;
 }
 
-/* line 40, ../../source/sass/inc/buttons.scss */
+/* line 45, ../../source/sass/inc/buttons.scss */
 button.toggle-sidebar {
   padding: 10px;
   background: #95a5a6;
@@ -322,22 +398,27 @@ button.toggle-sidebar {
   -o-transition: background 0.15s;
   transition: background 0.15s;
 }
-/* line 49, ../../source/sass/inc/buttons.scss */
+/* line 54, ../../source/sass/inc/buttons.scss */
 button.toggle-sidebar:hover {
   background: #7f8c8d;
 }
 
 /* line 10, ../../source/sass/screen.scss */
+body {
+  overflow-x: hidden;
+}
+
+/* line 14, ../../source/sass/screen.scss */
 body, input, button {
   font-family: "Open Sans", sans-serif;
 }
 
-/* line 14, ../../source/sass/screen.scss */
+/* line 18, ../../source/sass/screen.scss */
 h1, h2, h3 {
   font-weight: bold;
 }
 
-/* line 18, ../../source/sass/screen.scss */
+/* line 22, ../../source/sass/screen.scss */
 h1 {
   font-size: 25px;
   margin: 20px 0;
@@ -346,7 +427,7 @@ h1 {
   border-bottom: 4px solid #34495e;
 }
 
-/* line 26, ../../source/sass/screen.scss */
+/* line 30, ../../source/sass/screen.scss */
 h2 {
   font-size: 16px;
   margin: 20px 0;
@@ -354,12 +435,12 @@ h2 {
   text-transform: uppercase;
 }
 
-/* line 33, ../../source/sass/screen.scss */
+/* line 37, ../../source/sass/screen.scss */
 h3 {
   font-size: 15px;
 }
 
-/* line 37, ../../source/sass/screen.scss */
+/* line 41, ../../source/sass/screen.scss */
 hr {
   height: 4px;
   background: #34495e;
@@ -367,7 +448,7 @@ hr {
   margin: 20px 0;
 }
 
-/* line 49, ../../source/sass/screen.scss */
+/* line 53, ../../source/sass/screen.scss */
 header {
   position: absolute;
   top: 0;
@@ -380,7 +461,7 @@ header {
   color: white;
 }
 
-/* line 57, ../../source/sass/screen.scss */
+/* line 61, ../../source/sass/screen.scss */
 section.details {
   position: absolute;
   top: 0px;
@@ -394,7 +475,7 @@ section.details {
   overflow-y: auto;
 }
 
-/* line 66, ../../source/sass/screen.scss */
+/* line 70, ../../source/sass/screen.scss */
 section.table {
   position: absolute;
   top: 0px;
@@ -405,9 +486,13 @@ section.table {
   box-sizing: border-box;
   background: white;
   overflow-y: auto;
+  -webkit-transition: right 0.5s;
+  -moz-transition: right 0.5s;
+  -o-transition: right 0.5s;
+  transition: right 0.5s;
 }
 
-/* line 74, ../../source/sass/screen.scss */
+/* line 79, ../../source/sass/screen.scss */
 section.snippets {
   position: absolute;
   top: 0px;
@@ -419,13 +504,17 @@ section.snippets {
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
+  -webkit-transition: right 0.5s;
+  -moz-transition: right 0.5s;
+  -o-transition: right 0.5s;
+  transition: right 0.5s;
 }
 
-/* line 84, ../../source/sass/screen.scss */
+/* line 90, ../../source/sass/screen.scss */
 .no-snippets section.snippets {
-  display: none;
+  right: -300px;
 }
-/* line 87, ../../source/sass/screen.scss */
+/* line 93, ../../source/sass/screen.scss */
 .no-snippets section.table {
   right: 0;
 }

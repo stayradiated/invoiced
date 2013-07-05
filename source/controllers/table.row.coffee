@@ -5,7 +5,7 @@ window.Rows = require '../models/row'
 
 class TableRow extends Base.Controller
 
-  template: new Base.View
+  template: new Base.View('table.row')
 
   elements:
     'input': 'input'
@@ -13,11 +13,14 @@ class TableRow extends Base.Controller
 
   events:
     'change input': 'setName'
+    'click .delete': 'delete'
 
   constructor: ->
     super
-    @template.load('table-row')
     @row.on 'change:number', @updateNumber
+
+  delete: =>
+    @row.destroy();
 
   setName: (e) =>
     @row.name = @input.val()

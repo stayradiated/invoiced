@@ -12,7 +12,7 @@
   TableRow = (function(_super) {
     __extends(TableRow, _super);
 
-    TableRow.prototype.template = new Base.View;
+    TableRow.prototype.template = new Base.View('table.row');
 
     TableRow.prototype.elements = {
       'input': 'input',
@@ -20,7 +20,8 @@
     };
 
     TableRow.prototype.events = {
-      'change input': 'setName'
+      'change input': 'setName',
+      'click .delete': 'delete'
     };
 
     function TableRow() {
@@ -28,10 +29,14 @@
       this.updateNumber = __bind(this.updateNumber, this);
       this.focus = __bind(this.focus, this);
       this.setName = __bind(this.setName, this);
+      this["delete"] = __bind(this["delete"], this);
       TableRow.__super__.constructor.apply(this, arguments);
-      this.template.load('table-row');
       this.row.on('change:number', this.updateNumber);
     }
+
+    TableRow.prototype["delete"] = function() {
+      return this.row.destroy();
+    };
 
     TableRow.prototype.setName = function(e) {
       return this.row.name = this.input.val();

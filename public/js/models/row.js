@@ -11,12 +11,12 @@
 
     Row.prototype.defaults = {
       name: '',
-      number: 0
+      number: 0,
+      type: 'number'
     };
 
     function Row() {
       Row.__super__.constructor.apply(this, arguments);
-      console.log(this.toJSON());
     }
 
     return Row;

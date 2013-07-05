@@ -57,28 +57,17 @@
   </section>
 
   <section class="table">
+
     <h2>Table Rows</h2>
-    <ul class="rows">
 
-      <li class="new-section">
-        <label>Job Date</label>
-        <input type="date" value="2013-01-14" />
-      </li>
-
-      <li>
-        <input class="bold caps" type="text" value="Stain Restoration" />
-        <div class="handle"></div>
-      </li>
-
-      <!-- <li class="indent bullet"> -->
-      <!--   <input type="text" /> -->
-      <!-- </li> -->
-
-    </ul>
+    <ul class="rows"></ul>
 
     <div class="button-bar">
-      <button class="secondary add-row">Add Row</button>
-      <button class="secondary add-section">Add Section</button>
+      <button class="secondary add-row row-section">Add Section</button>
+      <button class="secondary add-row row-heading">Add Heading</button>
+      <button class="secondary add-row row-number">Add Number</button>
+      <button class="secondary add-row row-bullet">Add Bullet</button>
+      <button class="toggle-sidebar">Toggle Snippets</button>
     </div>
   </section>
 
@@ -92,21 +81,8 @@
     </ul>
     <div class="button-bar">
       <button class="secondary new-snippet">New Snippet</button>
-      <button class="toggle-sidebar">Hide Snippets</button>
     </div>
   </section>
-
-  <script id="table-row-template" type="text/template">
-    <li class="number">
-      <label>%(number)</label>
-      <input type="text" value="%(name)" />
-      <div class="handle"></div>
-    </li>
-  </script>
-
-  <script id="snippet-template" type="text/template">
-    <li>%(content)</li>
-  </script>
 
 </body>
 </html>
