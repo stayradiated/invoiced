@@ -30,7 +30,7 @@ class Detail extends Base.Model
   # Create our own custom exporter
   toJSON: =>
     invoiceId: @invoiceId
-    invoiceDate: @getInvoiceDate().toUpperCase()
+    invoiceDate: @getInvoiceDate()
     invoiceDue: @getDueDate().toUpperCase()
     clientName: @clientName.toUpperCase()
     clientAddress: @clientAddress.toUpperCase()

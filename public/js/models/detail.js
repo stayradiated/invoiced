@@ -49,7 +49,7 @@
     Detail.prototype.toJSON = function() {
       return {
         invoiceId: this.invoiceId,
-        invoiceDate: this.getInvoiceDate().toUpperCase(),
+        invoiceDate: this.getInvoiceDate(),
         invoiceDue: this.getDueDate().toUpperCase(),
         clientName: this.clientName.toUpperCase(),
         clientAddress: this.clientAddress.toUpperCase(),

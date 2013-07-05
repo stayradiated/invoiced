@@ -156,6 +156,7 @@
       this.first = __bind(this.first, this);
       this.toJSON = __bind(this.toJSON, this);
       this.forEach = __bind(this.forEach, this);
+      this.move = __bind(this.move, this);
       this.remove = __bind(this.remove, this);
       this.add = __bind(this.add, this);
       this.create = __bind(this.create, this);
@@ -192,6 +193,14 @@
       var index;
       index = this._records.indexOf(record);
       this._records.splice(index, 1);
+      return this.trigger('change');
+    };
+
+    Collection.prototype.move = function(record, pos) {
+      var index;
+      index = this._records.indexOf(record);
+      this._records.splice(index, 1);
+      this._records.splice(pos, 0, record);
       return this.trigger('change');
     };
 

@@ -31,12 +31,24 @@
       this.update = __bind(this.update, this);
       this.removeRow = __bind(this.removeRow, this);
       this.addRow = __bind(this.addRow, this);
+      var _this = this;
       Table.__super__.constructor.apply(this, arguments);
       this.count = 1;
       this.rows = new Rows();
       this.rows.on('create:model', this.addRow);
       this.rows.on('destroy:model', this.removeRow);
       this.rows.on('change', this.update);
+      this.table.sortable({
+        axis: 'y',
+        handle: '.handle',
+        items: 'li',
+        stop: function(e, ui) {
+          var index, row;
+          row = ui.item.data('item');
+          index = ui.item.index();
+          return _this.rows.move(row, index);
+        }
+      });
     }
 
     Table.prototype.addRow = function(row) {
@@ -45,6 +57,7 @@
         row: row
       });
       view.el = $(view.render());
+      view.el.data('item', row);
       this.table.append(view.el);
       view._bind();
       return view.focus();

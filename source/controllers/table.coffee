@@ -20,11 +20,22 @@ class Table extends Base.Controller
     @rows.on 'create:model', @addRow
     @rows.on 'destroy:model', @removeRow
     @rows.on 'change', @update
+
+    @table.sortable
+      axis: 'y'
+      handle: '.handle'
+      items: 'li'
+      stop: (e, ui) =>
+        row = ui.item.data('item')
+        index = ui.item.index()
+        @rows.move(row, index)
+
   
   # Create a new TableRow and append it to the table
   addRow: (row) =>
     view = row.view = new TableRow(row: row)
     view.el = $ view.render()
+    view.el.data('item', row)
     @table.append view.el
     view._bind()
     view.focus()

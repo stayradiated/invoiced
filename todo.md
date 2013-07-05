@@ -1,8 +1,7 @@
 
 # Invoicer
 
-- Calculate invoiceDue
 - Fix cost font size in template
-- Add row styles button
+- Add way to change row type
 - Add row styles template
 - Implement sections

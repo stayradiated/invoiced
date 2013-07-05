@@ -406,19 +406,21 @@ button.toggle-sidebar:hover {
 /* line 10, ../../source/sass/screen.scss */
 body {
   overflow-x: hidden;
+  -webkit-user-select: none;
+  cursor: default;
 }
 
-/* line 14, ../../source/sass/screen.scss */
+/* line 18, ../../source/sass/screen.scss */
 body, input, button {
   font-family: "Open Sans", sans-serif;
 }
 
-/* line 18, ../../source/sass/screen.scss */
+/* line 22, ../../source/sass/screen.scss */
 h1, h2, h3 {
   font-weight: bold;
 }
 
-/* line 22, ../../source/sass/screen.scss */
+/* line 26, ../../source/sass/screen.scss */
 h1 {
   font-size: 25px;
   margin: 20px 0;
@@ -427,7 +429,7 @@ h1 {
   border-bottom: 4px solid #34495e;
 }
 
-/* line 30, ../../source/sass/screen.scss */
+/* line 34, ../../source/sass/screen.scss */
 h2 {
   font-size: 16px;
   margin: 20px 0;
@@ -435,12 +437,12 @@ h2 {
   text-transform: uppercase;
 }
 
-/* line 37, ../../source/sass/screen.scss */
+/* line 41, ../../source/sass/screen.scss */
 h3 {
   font-size: 15px;
 }
 
-/* line 41, ../../source/sass/screen.scss */
+/* line 45, ../../source/sass/screen.scss */
 hr {
   height: 4px;
   background: #34495e;
@@ -448,7 +450,7 @@ hr {
   margin: 20px 0;
 }
 
-/* line 53, ../../source/sass/screen.scss */
+/* line 57, ../../source/sass/screen.scss */
 header {
   position: absolute;
   top: 0;
@@ -461,7 +463,7 @@ header {
   color: white;
 }
 
-/* line 61, ../../source/sass/screen.scss */
+/* line 65, ../../source/sass/screen.scss */
 section.details {
   position: absolute;
   top: 0px;
@@ -475,7 +477,7 @@ section.details {
   overflow-y: auto;
 }
 
-/* line 70, ../../source/sass/screen.scss */
+/* line 74, ../../source/sass/screen.scss */
 section.table {
   position: absolute;
   top: 0px;
@@ -492,7 +494,7 @@ section.table {
   transition: right 0.5s;
 }
 
-/* line 79, ../../source/sass/screen.scss */
+/* line 83, ../../source/sass/screen.scss */
 section.snippets {
   position: absolute;
   top: 0px;
@@ -510,11 +512,11 @@ section.snippets {
   transition: right 0.5s;
 }
 
-/* line 90, ../../source/sass/screen.scss */
+/* line 94, ../../source/sass/screen.scss */
 .no-snippets section.snippets {
   right: -300px;
 }
-/* line 93, ../../source/sass/screen.scss */
+/* line 97, ../../source/sass/screen.scss */
 .no-snippets section.table {
   right: 0;
 }

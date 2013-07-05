@@ -9,6 +9,10 @@
 
 body {
   overflow-x: hidden;
+
+  // Make it act like a native app
+  -webkit-user-select: none;
+  cursor: default;
 }
 
 body, input, button {

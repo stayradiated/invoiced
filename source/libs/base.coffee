@@ -137,6 +137,12 @@ class Collection extends Event
     @_records.splice(index, 1)
     @trigger('change')
 
+  move: (record, pos) =>
+    index = @_records.indexOf(record)
+    @_records.splice(index, 1)
+    @_records.splice(pos, 0, record)
+    @trigger('change')
+
   forEach: =>
     Array::forEach.apply(@_records, arguments)
 
