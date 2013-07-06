@@ -46,6 +46,11 @@
       var _this = this;
       App.__super__.constructor.apply(this, arguments);
       this.storage = new Storage();
+      this.storage.on('error', function(err, message) {
+        console.log('Showing error window');
+        return console.log('Error message:', message);
+      });
+      this.storage.start();
       this.table = new Table({
         el: this.table
       });

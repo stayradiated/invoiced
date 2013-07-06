@@ -1,10 +1,12 @@
 
+Base = require '../libs/base'
 mysql = require 'mysql'
 
-class Storage
+class Storage extends Base.Event
 
   constructor: ->
-    
+    super
+
     # Connect to database
     @db = mysql.createConnection
       host: '127.0.0.1'
@@ -13,13 +15,22 @@ class Storage
       password: 'nodejs'
       database: 'invoicer'
 
-    @db.connect()
+  start: =>
 
-  
+    @db.connect (err) =>
+      if err
+        @trigger('error', err, 'Could not connect to database')
+      else
+        @trigger('connected')
+
+  # Close the connection to the database
+  end: =>
+    @db.end()
+
   # Save the details and table objects into a MySQL database
   saveInvoice: ({details, table}) =>
 
-    client = 
+    client =
       name:      details.clientName
       address:   details.clientAddress
       city:      details.clientCity
@@ -52,7 +63,7 @@ class Storage
         @db.query 'INSERT INTO tables SET ?', rowKey, (err, result) =>
           if err then console.error(err)
 
-  
+
   # Get an array of all clients from the database
   getClients: (fn) =>
     @db.query 'SELECT * FROM clients', fn
@@ -72,11 +83,11 @@ class Storage
   # Get an array of all invoices from the database
   getInvoices: =>
     @db.query 'SELECT * FROM invoices', fn
-  
+
   # Get a single invoice
   getInvoice: (id, fn) =>
     @db.query 'SELECT * FROM invoices WHERE id=?', id, fn
-  
+
   # Get all table rows in an invoice
   getRows: (invoiceId, fn) =>
     @db.query 'SELECT rows.* FROM tables INNER JOIN rows ON tables.rowId=rows.id WHERE invoiceId=?', invoiceId, fn

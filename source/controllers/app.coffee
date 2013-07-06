@@ -29,19 +29,24 @@ class App extends Base.Controller
 
     # Load database connnection
     @storage = new Storage()
+    @storage.on 'error', (err, message) ->
+      console.log 'Showing error window'
+      console.log 'Error message:', message
+    @storage.start()
 
     # Overwrite elements with controllers
     @table = new Table(el: @table)
     @details = new Details(el: @details)
     @snippets = new Snippets(el: @snippets)
 
+    # Show search window
     @search = new Search
       el: @search
       storage: @storage
 
     # Display default dat
     @details.render()
-    
+
     # Build doc when user selects a file
     @file.on 'change', (e) =>
       path = e.target.value
@@ -66,7 +71,7 @@ class App extends Base.Controller
     @storage.saveInvoice
       details: @details.model.toJSON()
       table: @table.rows.toJSON()
-  
+
   # Load JSON and set model data
   importData: =>
     path = __dirname + '/../../data.json'
