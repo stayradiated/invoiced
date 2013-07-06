@@ -7,7 +7,7 @@
 
   "main": "public/index.html",
   "window": {
-    "toolbar": false,
+    // "toolbar": false,
     "height": 860,
     "width": 1235
   },

@@ -7,10 +7,15 @@
 
   Storage = (function() {
     function Storage() {
+      this.getRows = __bind(this.getRows, this);
+      this.getInvoice = __bind(this.getInvoice, this);
+      this.getInvoices = __bind(this.getInvoices, this);
+      this.getClient = __bind(this.getClient, this);
+      this.searchClients = __bind(this.searchClients, this);
+      this.getClients = __bind(this.getClients, this);
       this.saveInvoice = __bind(this.saveInvoice, this);
       this.db = mysql.createConnection({
         host: '127.0.0.1',
-        port: 8889,
         user: 'nodejs',
         password: 'nodejs',
         database: 'invoicer'
@@ -18,9 +23,10 @@
       this.db.connect();
     }
 
-    Storage.prototype.saveInvoice = function(data) {
-      var client, details, invoice;
-      details = data.details;
+    Storage.prototype.saveInvoice = function(_arg) {
+      var client, details, invoice, row, rowKey, table, _i, _len, _results,
+        _this = this;
+      details = _arg.details, table = _arg.table;
       client = {
         name: details.clientName,
         address: details.clientAddress,
@@ -35,9 +41,60 @@
         cost: details.jobAmount,
         paid: false
       };
-      return this.db.query('INSERT INTO clients SET ?', client, function() {
-        return console.log(arguments);
+      rowKey = {
+        invoiceId: details.invoiceId
+      };
+      this.db.query('INSERT INTO clients SET ?', client, function(err, result) {
+        if (err) {
+          console.error(err);
+        }
+        invoice.clientId = result.insertId;
+        return _this.db.query('INSERT INTO invoices SET ?', invoice, function(err, result) {
+          if (err) {
+            return console.error(err);
+          }
+        });
       });
+      _results = [];
+      for (_i = 0, _len = table.length; _i < _len; _i++) {
+        row = table[_i];
+        _results.push(this.db.query('INSERT INTO rows SET ?', row, function(err, result) {
+          if (err) {
+            console.error(err);
+          }
+          rowKey.rowId = result.insertId;
+          return _this.db.query('INSERT INTO tables SET ?', rowKey, function(err, result) {
+            if (err) {
+              return console.error(err);
+            }
+          });
+        }));
+      }
+      return _results;
+    };
+
+    Storage.prototype.getClients = function(fn) {
+      return this.db.query('SELECT * FROM clients', fn);
+    };
+
+    Storage.prototype.searchClients = function(query, fn) {
+      return this.db.query("SELECT * FROM clients WHERE\nname LIKE '%" + query + "%' OR\naddress LIKE '%" + query + "%' OR\ncity LIKE '%" + query + "%' OR\npostcode LIKE '%" + query + "%'", fn);
+    };
+
+    Storage.prototype.getClient = function(id, fn) {
+      return this.db.query('SELECT * FROM clients WHERE id=?', id, fn);
+    };
+
+    Storage.prototype.getInvoices = function() {
+      return this.db.query('SELECT * FROM invoices', fn);
+    };
+
+    Storage.prototype.getInvoice = function(id, fn) {
+      return this.db.query('SELECT * FROM invoices WHERE id=?', id, fn);
+    };
+
+    Storage.prototype.getRows = function(invoiceId, fn) {
+      return this.db.query('SELECT rows.* FROM tables INNER JOIN rows ON tables.rowId=rows.id WHERE invoiceId=?', invoiceId, fn);
     };
 
     return Storage;

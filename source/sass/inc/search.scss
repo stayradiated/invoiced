@@ -1,0 +1,59 @@
+.search {
+  @include pos(0, 0, 0, 0);
+  background: $midnight_blue;
+  z-index: 5;
+
+  .container {
+    width: 800px;
+    margin: 100px auto;
+  }
+
+  input {
+    display: block;
+    border: 0;
+    border-radius: 4px;
+    padding: 20px; 
+    margin: 0 auto;
+    width: 500px;
+    font-size: 18px;
+    border: 5px solid transparent;
+    @include transition(border-color 0.15s);
+
+    &:focus {
+      border-color: $orange;
+      outline: none;
+    }
+  }
+
+  .results {
+    width: 500px;  
+    margin: 20px auto;
+  }
+
+  li {
+    @extend .group;
+    color: $white;
+    background: $wet_asphalt;
+    padding: 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    line-height: 24px;
+    margin-bottom: 20px;
+    @include transition(all 0.15s);
+
+    &:hover {
+      color: $midnight_blue;
+      background: $clouds;
+    }
+  }
+
+  .client {
+    float: left;
+  }
+
+  .date {
+    float: right;
+    font-style: italic;
+  }
+
+}

@@ -3,6 +3,7 @@ fs = require 'fs'
 
 Base = require '../libs/base'
 
+Search = require '../controllers/search'
 Table = require '../controllers/table'
 Details = require '../controllers/details'
 Snippets = require '../controllers/snippets'
@@ -13,6 +14,7 @@ Storage = require '../libs/storage'
 class App extends Base.Controller
 
   elements:
+    '.search': 'search'
     '.table': 'table'
     '.snippets': 'snippets'
     '.details': 'details'
@@ -25,16 +27,20 @@ class App extends Base.Controller
   constructor: ->
     super
 
+    # Load database connnection
+    @storage = new Storage()
+
     # Overwrite elements with controllers
     @table = new Table(el: @table)
     @details = new Details(el: @details)
     @snippets = new Snippets(el: @snippets)
 
+    @search = new Search
+      el: @search
+      storage: @storage
+
     # Display default dat
     @details.render()
-
-    # Load database connnection
-    @storage = new Storage()
     
     # Build doc when user selects a file
     @file.on 'change', (e) =>
@@ -57,12 +63,9 @@ class App extends Base.Controller
     @el.toggleClass('no-snippets')
 
   saveState: =>
-    path = __dirname + '/../../data.json'
-    data = JSON.stringify
+    @storage.saveInvoice
       details: @details.model.toJSON()
       table: @table.rows.toJSON()
-    fs.writeFile path, data, (err) ->
-      console.log arguments
   
   # Load JSON and set model data
   importData: =>
