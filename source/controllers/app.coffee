@@ -8,6 +8,7 @@ Details = require '../controllers/details'
 Snippets = require '../controllers/snippets'
 
 docx = require '../libs/docx'
+Storage = require '../libs/storage'
 
 class App extends Base.Controller
 
@@ -29,8 +30,11 @@ class App extends Base.Controller
     @details = new Details(el: @details)
     @snippets = new Snippets(el: @snippets)
 
-    # Display data
+    # Display default dat
     @details.render()
+
+    # Load database connnection
+    @storage = new Storage()
     
     # Build doc when user selects a file
     @file.on 'change', (e) =>
@@ -69,6 +73,5 @@ class App extends Base.Controller
       @details.model.refresh data.details
       @table.rows.refresh data.table
     return
-
 
 module.exports = App
