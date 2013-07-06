@@ -15,21 +15,23 @@ class Storage
 
     @db.connect()
 
-  saveInvoice(data) =>
+  saveInvoice: (data) =>
+
+    details = data.details
 
     client = 
-      name: data.details.clientName
-      address: data.details.clientAddress
-      city: data.details.clientCity
-      postcode: data.details.clientPostcode
+      name:      details.clientName
+      address:   details.clientAddress
+      city:      details.clientCity
+      postcode:  details.clientPostcode
 
     invoice =
-      id: data.details.invoiceId
-      date: data.details.invoiceDate
-      customer: data.details.jobCustomer
-      site: data.details.jobSite
-      cost: data.details.jobAmount
-      paid: false
+      id:        details.invoiceId
+      date:      details.invoiceDate
+      customer:  details.jobCustomer
+      site:      details.jobSite
+      cost:      details.jobAmount
+      paid:      false
 
     @db.query 'INSERT INTO clients SET ?', client, ->
       console.log arguments
