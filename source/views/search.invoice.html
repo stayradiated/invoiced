@@ -1,0 +1,10 @@
+{% for invoice in invoices %}
+<li data-id="{{ invoice.id }}">
+  <p class="name"><strong>{{ invoice.customer }}</strong></p>
+  <p class="count">{{ invoice.id }}</p>
+  <p class="address">{{ invoice.site}}</p>
+  <p class="date">{{ invoice.date.toFormat('DDD D MMMM YYYY') }}</p>
+</li>
+{% else %}
+  <div class="message">Couldn't find any invoices</div>
+{% endfor %}

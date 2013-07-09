@@ -1,0 +1,9 @@
+{% for client in clients %}
+<li data-id="{{ client.id }}">
+<p class="name"><strong>{{ client.name }}</strong></p>
+<p class="count">{{ client.count }}</p>
+<p class="address">{{ client.address }}, {{ client.city }}, {{  client.postcode }}</p>
+</li>
+{% else %}
+<div class="message">Couldn't find any clients</div>
+{% endfor %}
