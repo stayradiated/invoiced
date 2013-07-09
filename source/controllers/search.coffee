@@ -62,9 +62,9 @@ class Search extends Base.Controller
   # Show the search window
   show: =>
     @shown = true
-    @el.css
-      display: 'block'
-      opacity: 1
+    @el.css 'display', 'block'
+    When.delay(1).then =>
+      @el.css 'opacity', '1'
     return true
   
   # Render a list of clients to the dom

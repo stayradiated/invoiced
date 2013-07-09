@@ -83,10 +83,11 @@
     };
 
     Search.prototype.show = function() {
+      var _this = this;
       this.shown = true;
-      this.el.css({
-        display: 'block',
-        opacity: 1
+      this.el.css('display', 'block');
+      When.delay(1).then(function() {
+        return _this.el.css('opacity', '1');
       });
       return true;
     };

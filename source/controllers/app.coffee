@@ -11,6 +11,7 @@ Search = require '../controllers/search'
 Table = require '../controllers/table'
 Details = require '../controllers/details'
 Snippets = require '../controllers/snippets'
+Header = require '../controllers/header'
 
 docx = require '../libs/docx'
 Storage = require '../libs/storage'
@@ -18,14 +19,14 @@ Storage = require '../libs/storage'
 class App extends Base.Controller
 
   elements:
-    '.search': 'search'
-    '.table': 'table'
-    '.snippets': 'snippets'
-    '.details': 'details'
+    'header':     'header'
+    '.table':     'table'
+    '.search':    'search'
+    '.details':   'details'
+    '.snippets':  'snippets'
     '#save-file': 'file'
 
   events:
-    'click .generate': 'generateButton'
     'click .toggle-sidebar': 'toggle'
 
   constructor: ->
@@ -42,6 +43,11 @@ class App extends Base.Controller
     @table = new Table(el: @table)
     @details = new Details(el: @details)
     @snippets = new Snippets(el: @snippets)
+    @header = new Header(el: @header)
+
+    @header.on 'generate', => @file.click()
+    @header.on 'save', @saveInvoice
+    @header.on 'open', => @search.show()
 
     # Show search window
     @search = new Search
@@ -55,10 +61,6 @@ class App extends Base.Controller
 
     # Compile word doc when user selects a file
     @file.on 'change', @saveFile
-
-  generateButton: =>
-    # Show file dialog
-    @file.click()
 
   # Display a save file dialogue
   saveFile: (e) =>
