@@ -2,6 +2,7 @@
 @import "compass/reset";
 @import "mixins";
 @import "inc/colors";
+@import "inc/header";
 @import "inc/forms";
 @import "inc/table";
 @import "inc/snippets";
@@ -60,7 +61,7 @@ hr {
 
 // PANELS
 
-$header_height: 0px;
+$header_height: 50px;
 $snippets_width: 300px;
 
 header {
