@@ -1,5 +1,5 @@
 
-Base = require '../libs/base'
+Base = require 'base'
 Detail = require '../models/detail'
 
 class Details extends Base.Controller

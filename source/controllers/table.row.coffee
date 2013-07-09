@@ -1,5 +1,5 @@
 
-Base = require '../libs/base'
+Base = require 'base'
 
 window.Rows = require '../models/row'
 
@@ -20,7 +20,7 @@ class TableRow extends Base.Controller
     @row.on 'change:number', @updateNumber
 
   delete: =>
-    @row.destroy();
+    @row.destroy()
 
   setName: (e) =>
     @row.name = @input.val()

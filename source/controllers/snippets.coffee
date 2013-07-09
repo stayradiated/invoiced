@@ -1,5 +1,5 @@
 
-Base = require '../libs/base'
+Base = require 'base'
 Snippet = require '../models/snippet'
 
 class Snippets extends Base.Controller

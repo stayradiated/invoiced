@@ -1,6 +1,6 @@
 
-Base = require '../libs/base'
-$ = Base.$
+Base = require 'base'
+$ = require 'jqueryify'
 TableRow = require '../controllers/table.row'
 Rows = require '../models/row'
 
@@ -21,8 +21,9 @@ class Table extends Base.Controller
     @rows.on 'destroy:model', @removeRow
     @rows.on 'change', @update
     @rows.on 'refresh', @render
-
-    @table.sortable
+    
+    # Base uses a different version of jQuery
+    $(@table).sortable
       axis: 'y'
       handle: '.handle'
       items: 'li'
@@ -33,13 +34,13 @@ class Table extends Base.Controller
 
   
   # Create a new TableRow and append it to the table
-  addRow: (row) =>
+  addRow: (row, opts={}) =>
     view = row.view = new TableRow(row: row)
     view.el = $ view.render()
     view.el.data('item', row)
     @table.append view.el
-    view._bind()
-    view.focus()
+    view.bind()
+    view.focus() unless opts.nofocus
 
   removeRow: (row) =>
     row.view.el.remove()
@@ -53,7 +54,7 @@ class Table extends Base.Controller
   render: =>
     @table.empty()
     @rows.forEach (row) =>
-      @addRow(row)
+      @addRow(row, nofocus: true)
 
   # Instantiate a new Row
   createRow: (e) =>

@@ -55,3 +55,17 @@ button.toggle-sidebar {
     background: $asbestos;
   }
 }
+
+button.new {
+  padding: 10px;
+  background: $wet_asphalt;
+  color: $white;
+  border-radius: 4px;
+  border: 0;
+  font-size: 16px;
+  @include transition(background 0.15s);
+
+  &:hover {
+    background: $peter_river;
+  }
+}

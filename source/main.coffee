@@ -5,19 +5,22 @@ $ = require 'jqueryify'
 
 gui = require 'nw.gui'
 window.win = gui.Window.get()
+window.log = console.log.bind(console)
+
 $(document).on 'keydown', (e) ->
   switch e.keyCode
-    when 82
+
+    when 82 # r
       if e.ctrlKey
+        window.app.storage.end()
         win.reloadDev()
-    when 68
+
+    when 68 # d
       if e.ctrlKey
         win.showDevTools()
-    # else
-    #   console.log e.keyCode
 
-App = require './js/controllers/app'
+window.App = require './js/controllers/app'
 
 $ ->
-  window.App = new App
+  window.app = new App
     el: $('body')

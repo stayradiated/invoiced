@@ -5,9 +5,9 @@
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  Base = require('../libs/base');
+  Base = require('base');
 
-  $ = Base.$;
+  $ = require('jqueryify');
 
   TableRow = require('../controllers/table.row');
 
@@ -40,7 +40,7 @@
       this.rows.on('destroy:model', this.removeRow);
       this.rows.on('change', this.update);
       this.rows.on('refresh', this.render);
-      this.table.sortable({
+      $(this.table).sortable({
         axis: 'y',
         handle: '.handle',
         items: 'li',
@@ -53,16 +53,21 @@
       });
     }
 
-    Table.prototype.addRow = function(row) {
+    Table.prototype.addRow = function(row, opts) {
       var view;
+      if (opts == null) {
+        opts = {};
+      }
       view = row.view = new TableRow({
         row: row
       });
       view.el = $(view.render());
       view.el.data('item', row);
       this.table.append(view.el);
-      view._bind();
-      return view.focus();
+      view.bind();
+      if (!opts.nofocus) {
+        return view.focus();
+      }
     };
 
     Table.prototype.removeRow = function(row) {
@@ -83,7 +88,9 @@
       var _this = this;
       this.table.empty();
       return this.rows.forEach(function(row) {
-        return _this.addRow(row);
+        return _this.addRow(row, {
+          nofocus: true
+        });
       });
     };
 

@@ -1,7 +1,11 @@
 
 fs = require 'fs'
 
-Base = require '../libs/base'
+Base = require 'base'
+
+# Configure swig templates
+Base.View.swig.init
+  root: __dirname + '/../../../source/views'
 
 Search = require '../controllers/search'
 Table = require '../controllers/table'
@@ -44,21 +48,27 @@ class App extends Base.Controller
       el: @search
       storage: @storage
 
-    # Display default dat
-    @details.render()
+    @search.on 'select:invoice', @openInvoice
+    
+    # Display search page
+    @search.search()
 
-    # Build doc when user selects a file
-    @file.on 'change', (e) =>
-      path = e.target.value
-      extension = '.docx'
-      if path[-5..] isnt extension
-        path += extension
-      @buildDoc(path)
+    # Compile word doc when user selects a file
+    @file.on 'change', @saveFile
 
   generateButton: =>
     # Show file dialog
     @file.click()
 
+  # Display a save file dialogue
+  saveFile: (e) =>
+    path = e.target.value
+    extension = '.docx'
+    if path[-5..] isnt extension
+      path += extension
+    @buildDoc(path)
+
+  # Compile a word document and save it to `path`
   buildDoc: (path) =>
     details = @details.model.export()
     table = @table.rows.export()
@@ -67,19 +77,15 @@ class App extends Base.Controller
   toggle: =>
     @el.toggleClass('no-snippets')
 
-  saveState: =>
+  # Open an invoice
+  openInvoice: (details, table) =>
+    @details.model.refresh(details, true)
+    @table.rows.refresh(table, true)
+
+  # Save an invoice to the database
+  saveInvoice: =>
     @storage.saveInvoice
       details: @details.model.toJSON()
       table: @table.rows.toJSON()
-
-  # Load JSON and set model data
-  importData: =>
-    path = __dirname + '/../../data.json'
-    fs.readFile path, (err, data) =>
-      if err? then return console.error err
-      data = JSON.parse data.toString()
-      @details.model.refresh data.details
-      @table.rows.refresh data.table
-    return
 
 module.exports = App

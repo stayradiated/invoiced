@@ -1,6 +1,7 @@
 
-Base = require '../libs/base'
+Base = require 'base'
 mysql = require 'mysql'
+When = require 'when'
 
 class Storage extends Base.Event
 
@@ -10,7 +11,6 @@ class Storage extends Base.Event
     # Connect to database
     @db = mysql.createConnection
       host: '127.0.0.1'
-      # port: 8889
       user: 'nodejs'
       password: 'nodejs'
       database: 'invoicer'
@@ -26,6 +26,19 @@ class Storage extends Base.Event
   # Close the connection to the database
   end: =>
     @db.end()
+
+  escape: (text) ->
+    text.replace(/(['"!?\.])/, '\\$1')
+
+  _query: (args...) =>
+    deferred = When.defer()
+    args.push (err, results) ->
+      if err
+        console.error(err)
+        return deferred.reject(err)
+      deferred.resolve(results)
+    @db.query(args...)
+    return deferred.promise
 
   # Save the details and table objects into a MySQL database
   saveInvoice: ({details, table}) =>
@@ -47,49 +60,55 @@ class Storage extends Base.Event
     rowKey =
       invoiceId: details.invoiceId
 
-    @db.query 'INSERT INTO clients SET ?', client, (err, result) =>
-      if err then console.error(err)
+    @_query('INSERT INTO clients SET ?', client).then (result) =>
       invoice.clientId = result.insertId
-
-      @db.query 'INSERT INTO invoices SET ?', invoice, (err, result) =>
-        if err then console.error(err)
+      @_query('INSERT INTO invoices SET ?', invoice)
 
     for row in table
-
-      @db.query 'INSERT INTO rows SET ?', row, (err, result) =>
-        if err then console.error(err)
+      @_query('INSERT INTO rows SET ?', row).then (result) =>
         rowKey.rowId = result.insertId
-
-        @db.query 'INSERT INTO tables SET ?', rowKey, (err, result) =>
-          if err then console.error(err)
-
+        @_query('INSERT INTO tables SET ?', rowKey)
 
   # Get an array of all clients from the database
-  getClients: (fn) =>
-    @db.query 'SELECT * FROM clients', fn
+  getClients: =>
+    @_query 'SELECT * FROM clients'
 
   # Search all clients
-  searchClients: (query, fn) =>
-    @db.query """SELECT * FROM clients WHERE
+  searchClients: (query) =>
+    query = @escape query
+    @_query """SELECT * FROM clients WHERE
       name LIKE '%#{query}%' OR
       address LIKE '%#{query}%' OR
       city LIKE '%#{query}%' OR
-      postcode LIKE '%#{query}%'""", fn
+      postcode LIKE '%#{query}%'"""
 
   # Get a single client
-  getClient: (id, fn) =>
-    @db.query 'SELECT * FROM clients WHERE id=?', id, fn
+  getClient: (id) =>
+    @_query 'SELECT * FROM clients WHERE id=?', id
 
   # Get an array of all invoices from the database
   getInvoices: =>
-    @db.query 'SELECT * FROM invoices', fn
+    @_query 'SELECT * FROM invoices'
+
+  # Get an array of all invoices for a specified client
+  getClientInvoices: (clientId) =>
+    @_query 'SELECT * FROM invoices WHERE clientId=?', clientId
+
+  # Get the number of invoices attached to the clientId
+  getClientInvoiceCount: (clientId) =>
+    deferred = When.defer()
+    @_query('SELECT COUNT(id) FROM invoices WHERE clientId=?', clientId).then (results) ->
+      deferred.resolve results[0]['COUNT(id)']
+    return deferred.promise
 
   # Get a single invoice
-  getInvoice: (id, fn) =>
-    @db.query 'SELECT * FROM invoices WHERE id=?', id, fn
+  getInvoice: (id) =>
+    @_query 'SELECT * FROM invoices WHERE id=?', id
 
   # Get all table rows in an invoice
-  getRows: (invoiceId, fn) =>
-    @db.query 'SELECT rows.* FROM tables INNER JOIN rows ON tables.rowId=rows.id WHERE invoiceId=?', invoiceId, fn
+  getRows: (invoiceId) =>
+    @_query """SELECT rows.* FROM tables
+      INNER JOIN rows ON tables.rowId=rows.id
+      WHERE invoiceId=?""", invoiceId
 
 module.exports = Storage

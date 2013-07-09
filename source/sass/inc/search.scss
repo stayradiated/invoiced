@@ -2,10 +2,15 @@
   @include pos(0, 0, 0, 0);
   background: $midnight_blue;
   z-index: 5;
+  overflow-y: hidden;
+  @include transition(opacity 0.5s);
 
   .container {
-    width: 800px;
-    margin: 100px auto;
+    $width: 800px;
+    width: $width;
+    @include pos(100px, auto, 20px, 50%);
+    margin-left: -$width / 2;
+    overflow-y: hidden;
   }
 
   input {
@@ -13,9 +18,9 @@
     border: 0;
     border-radius: 4px;
     padding: 20px; 
-    margin: 0 auto;
-    width: 500px;
     font-size: 18px;
+    width: 100%;
+    @include box-sizing(border-box);
     border: 5px solid transparent;
     @include transition(border-color 0.15s);
 
@@ -25,9 +30,46 @@
     }
   }
 
-  .results {
-    width: 500px;  
-    margin: 20px auto;
+  .clients, .invoices {
+    width: 390px;
+    @include pos(100px, 0, 0, 0);
+
+    ul {
+      @include pos(90px, 0, 0, 0);
+      @include box-sizing(border-box);
+      padding-right: 10px;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      &::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: $wet_asphalt;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: $turquoise;
+        border-radius: 10px;
+      }
+    }
+  }
+
+  .clients {
+    right: auto;
+  }
+
+  .invoices {
+    left: auto;
+  }
+
+  h1 {
+    padding-bottom: 20px;
+  }
+
+  button {
+    @include pos(10px, 0, auto , auto);
   }
 
   li {
@@ -39,21 +81,45 @@
     cursor: pointer;
     line-height: 24px;
     margin-bottom: 20px;
-    @include transition(all 0.15s);
+    @include transition(background 0.15s, color 0.15s);
 
-    &:hover {
+    &.active, &:hover {
       color: $midnight_blue;
       background: $clouds;
     }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
-  .client {
+  .name {
     float: left;
   }
 
-  .date {
-    float: right;
+  .count {
+    $height: 25px;
+    float: right; 
+    background: $midnight_blue;
+    padding: 0 15px;
+    height: $height;
+    line-height: $height;
+    border-radius: 4px;
+    font-weight: bold;
+    color: $white;
+  }
+
+  .address {
+    clear: both;
+  }
+
+  .message {
+    color: $turquoise;
     font-style: italic;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 20px;
   }
 
 }

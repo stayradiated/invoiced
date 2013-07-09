@@ -1,5 +1,5 @@
 
-Base = require '../libs/base'
+Base = require 'base'
 require 'date-utils'
 
 class Detail extends Base.Model

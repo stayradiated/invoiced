@@ -1,28 +1,24 @@
 {
   "name": "Invoicer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Generator Word Documents",
   "author": "George Czabania",
   "license": "BSD",
 
   "main": "public/index.html",
   "window": {
-    // "toolbar": false,
+    "toolbar": true,
     "height": 860,
     "width": 1235
   },
 
   "dependencies": {
+    "base": "git://github.com/stayradiated/Base.git#master",
     "jqueryify": "*",
-    "swig": "*",
     "date-utils": "*",
     "archiver": "*",
+    "underscore": "*",
+    "when": "*",
     "mysql": "2.0.0-alpha8"
-  },
-  "devDependencies": {
-    "node-static": "*",
-    "watchify": "*",
-    "browserify": "*",
-    "caching-coffeeify": "*"
   }
 }

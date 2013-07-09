@@ -7,7 +7,11 @@
 
   fs = require('fs');
 
-  Base = require('../libs/base');
+  Base = require('base');
+
+  Base.View.swig.init({
+    root: __dirname + '/../../../source/views'
+  });
 
   Search = require('../controllers/search');
 
@@ -38,12 +42,12 @@
     };
 
     function App() {
-      this.importData = __bind(this.importData, this);
-      this.saveState = __bind(this.saveState, this);
+      this.saveInvoice = __bind(this.saveInvoice, this);
+      this.openInvoice = __bind(this.openInvoice, this);
       this.toggle = __bind(this.toggle, this);
       this.buildDoc = __bind(this.buildDoc, this);
+      this.saveFile = __bind(this.saveFile, this);
       this.generateButton = __bind(this.generateButton, this);
-      var _this = this;
       App.__super__.constructor.apply(this, arguments);
       this.storage = new Storage();
       this.storage.on('error', function(err, message) {
@@ -64,20 +68,23 @@
         el: this.search,
         storage: this.storage
       });
-      this.details.render();
-      this.file.on('change', function(e) {
-        var extension, path;
-        path = e.target.value;
-        extension = '.docx';
-        if (path.slice(-5) !== extension) {
-          path += extension;
-        }
-        return _this.buildDoc(path);
-      });
+      this.search.on('select:invoice', this.openInvoice);
+      this.search.search();
+      this.file.on('change', this.saveFile);
     }
 
     App.prototype.generateButton = function() {
       return this.file.click();
+    };
+
+    App.prototype.saveFile = function(e) {
+      var extension, path;
+      path = e.target.value;
+      extension = '.docx';
+      if (path.slice(-5) !== extension) {
+        path += extension;
+      }
+      return this.buildDoc(path);
     };
 
     App.prototype.buildDoc = function(path) {
@@ -91,24 +98,15 @@
       return this.el.toggleClass('no-snippets');
     };
 
-    App.prototype.saveState = function() {
+    App.prototype.openInvoice = function(details, table) {
+      this.details.model.refresh(details, true);
+      return this.table.rows.refresh(table, true);
+    };
+
+    App.prototype.saveInvoice = function() {
       return this.storage.saveInvoice({
         details: this.details.model.toJSON(),
         table: this.table.rows.toJSON()
-      });
-    };
-
-    App.prototype.importData = function() {
-      var path,
-        _this = this;
-      path = __dirname + '/../../data.json';
-      fs.readFile(path, function(err, data) {
-        if (err != null) {
-          return console.error(err);
-        }
-        data = JSON.parse(data.toString());
-        _this.details.model.refresh(data.details);
-        return _this.table.rows.refresh(data.table);
       });
     };
 

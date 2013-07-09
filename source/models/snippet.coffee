@@ -1,5 +1,5 @@
 
-Base = require '../libs/base'
+Base = require 'base'
 
 class Snippet extends Base.Model
 
