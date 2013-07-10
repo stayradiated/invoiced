@@ -1,6 +1,6 @@
-
 fs = require 'fs'
 zip = require './zip'
+When = require 'when'
 
 # Super simple templating engine
 tmpl = (template, namespace) ->
@@ -18,31 +18,51 @@ tmpl = (template, namespace) ->
 
   template.replace(/\{{2}([A-Za-z0-9_|.]*)\}{2}/g, fn)
 
+# Configuration
+config = {}
+config.docs = __dirname + '/../../../docs/'
+config.folder = config.docs + 'template/'
+config.template = config.folder + 'word/document.xml'
+
+# Template files to laod
 templates =
-  document: __dirname + '/../../../docs/document.xml.tmpl'
-  rowHeading: __dirname + '/../../../docs/row.heading.xml.tmpl'
-  rowNumber: __dirname + '/../../../docs/row.number.xml.tmpl'
-  rowBullet: __dirname + '/../../../docs/row.bullet.xml.tmpl'
+  document: config.docs + 'document.xml.tmpl'
+  rowNumber: config.docs + 'row.number.xml.tmpl'
+  rowBullet: config.docs + 'row.bullet.xml.tmpl'
+  rowHeading: config.docs + 'row.heading.xml.tmpl'
 
-config =
-  template: __dirname + '/../../../docs/template/word/document.xml'
-  folder: __dirname + '/../../../docs/template'
-
+# Store template contents
 content = {}
 loaded = false
 
-# Load content from `templates` into `content`
-loadFiles = ->
+readFile = (name, path) ->
+  deferred = When.defer()
+  fs.readFile path, (err, contents) ->
+    if err
+      return deferred.reject(err)
+    deferred.resolve([name, contents.toString()])
+  return deferred.promise
 
-  # TODO: use async versions
+# Load content from `templates` into `content`
+loadFiles = (fn) ->
+
+  requests = []
   for file, path of templates
-    content[file] = fs.readFileSync(path).toString()
+    requests.push readFile(file, path)
+
+  When.all requests, (contents) ->
+    for [file, text] in contents
+      content[file] = text
     loaded = true
+    if fn then fn()
 
 # Compile template and create docx file
-compile = (path, details, table) ->
+compile = (path, details={}, table=[]) ->
 
-  if not loaded then loadFiles()
+  if not loaded
+    args = arguments
+    return loadFiles ->
+      compile.apply(this, args)
 
   # Compile rows
   details.rows = ""
@@ -68,7 +88,7 @@ compile = (path, details, table) ->
   output = tmpl(content.document, details)
 
   # Save template to disk and create docx file
-  fs.writeFile(config.template, output)
-  zip(config.folder, path)
+  fs.writeFile config.template, output, (err) ->
+    zip(config.folder, path)
 
 module.exports = compile
