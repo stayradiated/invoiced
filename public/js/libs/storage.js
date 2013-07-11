@@ -21,11 +21,13 @@
       this.getClientInvoiceCount = __bind(this.getClientInvoiceCount, this);
       this.getClientInvoices = __bind(this.getClientInvoices, this);
       this.getInvoices = __bind(this.getInvoices, this);
+      this.saveClient = __bind(this.saveClient, this);
       this.getClient = __bind(this.getClient, this);
       this.searchClients = __bind(this.searchClients, this);
       this.getClients = __bind(this.getClients, this);
       this.saveInvoice = __bind(this.saveInvoice, this);
       this._query = __bind(this._query, this);
+      this.escape = __bind(this.escape, this);
       this.end = __bind(this.end, this);
       this.start = __bind(this.start, this);
       Storage.__super__.constructor.apply(this, arguments);
@@ -72,43 +74,31 @@
     };
 
     Storage.prototype.saveInvoice = function(_arg) {
-      var client, details, invoice, row, rowKey, table, _i, _len, _results,
-        _this = this;
+      var details, invoice, query, row, table, _i, _len, _results;
       details = _arg.details, table = _arg.table;
-      client = {
-        name: details.clientName,
-        address: details.clientAddress,
-        city: details.clientCity,
-        postcode: details.clientPostcode
-      };
       invoice = {
+        clientId: details.clientId,
         id: details.invoiceId,
         date: details.invoiceDate,
         customer: details.jobCustomer,
         site: details.jobSite,
         cost: details.jobAmount,
-        paid: false
+        paid: false,
+        dateUpdated: (new Date()).toFormat('YYYY-MM-DD HH24:MI:SS')
       };
-      rowKey = {
-        invoiceId: details.invoiceId
+      console.log(invoice);
+      query = {
+        invoice: 'INSERT INTO invoices SET ? ON DUPLICATE KEY UPDATE ?',
+        row: 'INSERT INTO rows SET ? ON DUPLICATE KEY UPDATE ?',
+        empty: 'DELETE FROM rows WHERE invoiceId=?'
       };
-      this._query("SELECT COUNT(id) as count FROM invoices WHERE id = " + details.invoiceId).then(function(result) {
-        var invoiceQuery;
-        invoiceQuery = result[0].count > 0 ? "UPDATE INTO clients SET ? WHERE id=" + details.invoiceId : 'INSERT INTO invoices SET ?';
-        return console.log(invoiceQuery);
-      });
-      return;
-      this._query('INSERT INTO clients SET ?', client).then(function(result) {
-        invoice.clientId = result.insertId;
-        return _this._query(invoiceQuery, invoice);
-      });
+      this._query(query.invoice, [invoice, invoice]);
+      this._query(query.empty, details.invoiceId);
       _results = [];
       for (_i = 0, _len = table.length; _i < _len; _i++) {
         row = table[_i];
-        _results.push(this._query('INSERT INTO rows SET ?', row).then(function(result) {
-          rowKey.rowId = result.insertId;
-          return _this._query('INSERT INTO tables SET ?', rowKey);
-        }));
+        row.invoiceId = details.invoiceId;
+        _results.push(this._query(query.row, [row, row]));
       }
       return _results;
     };
@@ -118,12 +108,20 @@
     };
 
     Storage.prototype.searchClients = function(query) {
+      console.log('searching for', query);
       query = this.escape(query);
       return this._query("SELECT * FROM clients WHERE\nname LIKE '%" + query + "%' OR\naddress LIKE '%" + query + "%' OR\ncity LIKE '%" + query + "%' OR\npostcode LIKE '%" + query + "%'");
     };
 
     Storage.prototype.getClient = function(id) {
       return this._query('SELECT * FROM clients WHERE id=?', id);
+    };
+
+    Storage.prototype.saveClient = function(client) {
+      var sql;
+      client.dateUpdated = (new Date()).toFormat('YYYY-MM-DD HH24:MI:SS');
+      sql = 'INSERT INTO clients SET ? ON DUPLICATE KEY UPDATE ?';
+      return this._query(sql, [client, client]);
     };
 
     Storage.prototype.getInvoices = function() {
@@ -148,7 +146,7 @@
     };
 
     Storage.prototype.getRows = function(invoiceId) {
-      return this._query("SELECT rows.* FROM tables\nINNER JOIN rows ON tables.rowId=rows.id\nWHERE invoiceId=?", invoiceId);
+      return this._query("SELECT * FROM rows WHERE invoiceId=?", invoiceId);
     };
 
     return Storage;

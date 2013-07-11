@@ -1,19 +1,40 @@
 .search {
+
+  $sidebar_width: 300px;
+  $container_width: 800px;
+  
+  .create-client {
+    padding: 20px;
+    @include pos(0, auto, 0, -$sidebar_width);
+    width: $sidebar_width;
+    background: $wet_asphalt;
+    @include box-sizing(border-box);
+    @include transition(left 0.5s);
+  }
+
+  &.show-sidebar {
+    .create-client {
+      left: 0
+    }
+    .container {
+      margin-left: -($container_width / 2) + ($sidebar_width / 2)
+    }
+  }
+
   @include pos(0, 0, 0, 0);
   background: $midnight_blue;
   z-index: 5;
   overflow-y: hidden;
-  @include transition(opacity 0.5s);
 
   .container {
-    $width: 800px;
-    width: $width;
+    width: $container_width;
     @include pos(100px, auto, 20px, 50%);
-    margin-left: -$width / 2;
+    margin-left: -$container_width / 2;
     overflow-y: hidden;
+    @include transition(opacity 0.5s, margin 0.5s);
   }
 
-  input {
+  input[type=search] {
     display: block;
     border: 0;
     border-radius: 4px;
@@ -68,7 +89,7 @@
     padding-bottom: 20px;
   }
 
-  button {
+  .container button {
     @include pos(10px, 0, auto , auto);
   }
 

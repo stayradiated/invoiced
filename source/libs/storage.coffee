@@ -27,7 +27,7 @@ class Storage extends Base.Event
   end: =>
     @db.end()
 
-  escape: (text) ->
+  escape: (text) =>
     text.replace(/(['"!?\.])/, '\\$1')
 
   _query: (args...) =>
@@ -43,44 +43,33 @@ class Storage extends Base.Event
   # Save the details and table objects into a MySQL database
   saveInvoice: ({details, table}) =>
 
-    client =
-      name:      details.clientName
-      address:   details.clientAddress
-      city:      details.clientCity
-      postcode:  details.clientPostcode
-
     invoice =
-      id:        details.invoiceId
-      date:      details.invoiceDate
-      customer:  details.jobCustomer
-      site:      details.jobSite
-      cost:      details.jobAmount
-      paid:      false
+      clientId:    details.clientId
+      id:          details.invoiceId
+      date:        details.invoiceDate
+      customer:    details.jobCustomer
+      site:        details.jobSite
+      cost:        details.jobAmount
+      paid:        false
+      dateUpdated: (new Date()).toFormat('YYYY-MM-DD HH24:MI:SS')
 
-    rowKey =
-      invoiceId: details.invoiceId
+    console.log invoice
 
-    @_query(
-      "SELECT COUNT(id) as count FROM invoices WHERE id = #{details.invoiceId}"
-    ).then (result) =>
-
-      invoiceQuery = if result[0].count > 0
-        "UPDATE INTO clients SET ? WHERE id=#{details.invoiceId}"
-      else
-        'INSERT INTO invoices SET ?'
-
-      console.log invoiceQuery
-
-    return
-
-    @_query('INSERT INTO clients SET ?', client).then (result) =>
-      invoice.clientId = result.insertId
-      @_query(invoiceQuery, invoice)
-
+    query =
+      invoice: 'INSERT INTO invoices SET ? ON DUPLICATE KEY UPDATE ?'
+      row: 'INSERT INTO rows SET ? ON DUPLICATE KEY UPDATE ?'
+      empty: 'DELETE FROM rows WHERE invoiceId=?'
+      
+    # Update client details
+    @_query(query.invoice, [invoice, invoice])
+    
+    # Delete existing rows
+    @_query(query.empty, details.invoiceId)
+    
+    # Insert rows into database
     for row in table
-      @_query('INSERT INTO rows SET ?', row).then (result) =>
-        rowKey.rowId = result.insertId
-        @_query('INSERT INTO tables SET ?', rowKey)
+      row.invoiceId = details.invoiceId
+      @_query(query.row, [row, row])
 
   # Get an array of all clients from the database
   getClients: =>
@@ -88,6 +77,7 @@ class Storage extends Base.Event
 
   # Search all clients
   searchClients: (query) =>
+    console.log 'searching for', query
     query = @escape query
     @_query """SELECT * FROM clients WHERE
       name LIKE '%#{query}%' OR
@@ -98,6 +88,11 @@ class Storage extends Base.Event
   # Get a single client
   getClient: (id) =>
     @_query 'SELECT * FROM clients WHERE id=?', id
+
+  saveClient: (client) =>
+    client.dateUpdated = (new Date()).toFormat('YYYY-MM-DD HH24:MI:SS')
+    sql = 'INSERT INTO clients SET ? ON DUPLICATE KEY UPDATE ?'
+    @_query sql, [client, client]
 
   # Get an array of all invoices from the database
   getInvoices: =>
@@ -120,8 +115,6 @@ class Storage extends Base.Event
 
   # Get all table rows in an invoice
   getRows: (invoiceId) =>
-    @_query """SELECT rows.* FROM tables
-      INNER JOIN rows ON tables.rowId=rows.id
-      WHERE invoiceId=?""", invoiceId
+    @_query "SELECT * FROM rows WHERE invoiceId=?", invoiceId
 
 module.exports = Storage

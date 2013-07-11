@@ -12,6 +12,7 @@ Table = require '../controllers/table'
 Details = require '../controllers/details'
 Snippets = require '../controllers/snippets'
 Header = require '../controllers/header'
+Clients = require '../controllers/clients'
 
 docx = require '../libs/docx'
 Storage = require '../libs/storage'
@@ -19,12 +20,13 @@ Storage = require '../libs/storage'
 class App extends Base.Controller
 
   elements:
-    'header':     'header'
-    '.table':     'table'
-    '.search':    'search'
-    '.details':   'details'
-    '.snippets':  'snippets'
-    '#save-file': 'file'
+    'header':           'header'
+    '.table':           'table'
+    '.search':          'search'
+    '.details':         'details'
+    '.snippets':        'snippets'
+    '#save-file':       'file'
+    '.client-details':  'clientDetails'
 
   events:
     'click .toggle-sidebar': 'toggle'
@@ -44,7 +46,8 @@ class App extends Base.Controller
     @details = new Details(el: @details)
     @snippets = new Snippets(el: @snippets)
     @header = new Header(el: @header)
-
+    @clientDetails = new Clients(el: @clientDetails)
+    
     @header.on 'generate', => @file.click()
     @header.on 'save', @saveInvoice
     @header.on 'open', => @search.show()
@@ -55,6 +58,8 @@ class App extends Base.Controller
       storage: @storage
 
     @search.on 'select:invoice', @openInvoice
+    @search.on 'create:client', @createClient
+    @search.on 'create:invoice', @createInvoice
     
     # Display search page
     @search.search()
@@ -79,8 +84,19 @@ class App extends Base.Controller
   toggle: =>
     @el.toggleClass('no-snippets')
 
+  createClient: (client) =>
+    @storage.saveClient(client)
+
+  createInvoice: (client) =>
+    @clientDetails.model.refresh(client, true)
+    @details.model.refresh({
+      clientId: client.id
+    }, true)
+    @table.rows.refresh({}, true)
+
   # Open an invoice
-  openInvoice: (details, table) =>
+  openInvoice: (client, details, table) =>
+    @clientDetails.model.refresh(client, true)
     @details.model.refresh(details, true)
     @table.rows.refresh(table, true)
 

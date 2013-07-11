@@ -13,12 +13,9 @@
     __extends(Detail, _super);
 
     Detail.prototype.defaults = {
+      clientId: -1,
       invoiceId: 7300,
       invoiceDate: new Date().toYMD(),
-      clientName: '',
-      clientAddress: '',
-      clientCity: '',
-      clientPostcode: '',
       jobCustomer: '',
       jobSite: '',
       jobAmount: 0
@@ -51,10 +48,10 @@
         invoiceId: this.invoiceId,
         invoiceDate: this.getInvoiceDate(),
         invoiceDue: this.getDueDate().toUpperCase(),
-        clientName: this.clientName.toUpperCase(),
-        clientAddress: this.clientAddress.toUpperCase(),
-        clientCity: this.clientCity.toUpperCase(),
-        clientPostcode: this.clientPostcode,
+        clientName: this.client.name.toUpperCase(),
+        clientAddress: this.client.address.toUpperCase(),
+        clientCity: this.client.city.toUpperCase(),
+        clientPostcode: this.client.postcode,
         jobCustomer: this.jobCustomer.toUpperCase(),
         jobSite: this.jobSite.toUpperCase(),
         jobAmount: this.jobAmount,

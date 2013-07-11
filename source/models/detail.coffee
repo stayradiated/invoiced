@@ -5,12 +5,9 @@ require 'date-utils'
 class Detail extends Base.Model
 
   defaults:
+    clientId: -1
     invoiceId: 7300
     invoiceDate: new Date().toYMD()
-    clientName: ''
-    clientAddress: ''
-    clientCity: ''
-    clientPostcode: ''
     jobCustomer: ''
     jobSite: ''
     jobAmount: 0
@@ -29,13 +26,16 @@ class Detail extends Base.Model
 
   # Create our own custom exporter
   export: =>
+
     invoiceId: @invoiceId
     invoiceDate: @getInvoiceDate()
     invoiceDue: @getDueDate().toUpperCase()
-    clientName: @clientName.toUpperCase()
-    clientAddress: @clientAddress.toUpperCase()
-    clientCity: @clientCity.toUpperCase()
-    clientPostcode: @clientPostcode
+
+    clientName: @client.name.toUpperCase()
+    clientAddress: @client.address.toUpperCase()
+    clientCity: @client.city.toUpperCase()
+    clientPostcode: @client.postcode
+
     jobCustomer: @jobCustomer.toUpperCase()
     jobSite: @jobSite.toUpperCase()
     jobAmount: @jobAmount

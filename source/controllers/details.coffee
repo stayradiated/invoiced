@@ -7,10 +7,6 @@ class Details extends Base.Controller
   elements:
     '.invoice-id': 'invoiceId'
     '.invoice-date': 'invoiceDate'
-    '.client-name': 'clientName'
-    '.client-address': 'clientAddress'
-    '.client-city': 'clientCity'
-    '.client-postcode': 'clientPostcode'
     '.job-customer': 'jobCustomer'
     '.job-site': 'jobSite'
     '.job-amount': 'jobAmount'
@@ -25,6 +21,7 @@ class Details extends Base.Controller
 
   # Detect input name and update model
   update: (e) =>
+    console.log 'updating details'
     name = @elements[ '.' + e.target.className]
     value = e.target.value
     # Parse numbers

@@ -12,8 +12,28 @@
   <input id="save-file" style="display: none" type="file" nwsaveas>
   
   <div class="search">
+
+    <div class="create-client">
+      <h2>Create Client</h2>
+      <form class="client-details">
+        <div class="control">
+          <input class="client-name" placeholder="Name" type="text" />
+        </div>
+        <div class="control">
+          <input class="client-address" placeholder="Street Address" type="text" />
+        </div>
+        <div class="control">
+          <input class="client-city" placeholder="City" type="text" />
+        </div>
+        <div class="control">
+          <input class="client-postcode" placeholder="Post Code" type="text" />
+        </div>
+        <button class="primary">Create Client</button>
+      </form>
+    </div>
+
     <div class="container">
-      <input type="search" placeholder="What are you looking for?" autofocus /> 
+      <input type="search" class="search-box" placeholder="What are you looking for?" autofocus /> 
       <div class="clients">
         <h1>Clients</h1>
         <button class="new">New Client</button>
@@ -49,22 +69,6 @@
       </div>
       <div class="control">
         <input class="invoice-date" type="date" placeholder="Date" />
-      </div>
-    </form>
-
-    <h2>Client Details</h2>
-    <form>
-      <div class="control">
-        <input class="client-name" placeholder="Name" type="text" />
-      </div>
-      <div class="control">
-        <input class="client-address" placeholder="Street Address" type="text" />
-      </div>
-      <div class="control">
-        <input class="client-city" placeholder="City" type="text" />
-      </div>
-      <div class="control">
-        <input class="client-postcode" placeholder="Post Code" type="text" />
       </div>
     </form>
 

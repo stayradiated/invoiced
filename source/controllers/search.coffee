@@ -1,7 +1,8 @@
 # Dependencies
 require 'date-utils'
 Base       = require 'base'
-Detail    = require '../models/detail'
+Detail     = require '../models/detail'
+Client     = require '../models/client'
 When       = require 'when'
 When.delay = require 'when/delay'
 _          = require 'underscore'
@@ -14,17 +15,23 @@ class Search extends Base.Controller
     invoice: new Base.View('search.invoice')
 
   elements:
-    'input': 'input'
+    'input.search-box': 'input'
     '.clients ul': 'clients'
     '.invoices ul': 'invoices'
+    
+    '.client-name': 'clientName'
+    '.client-address': 'clientAddress'
+    '.client-city': 'clientCity'
+    '.client-postcode': 'clientPostcode'
 
   events:
-    'keyup input': 'queryChange'
-    'change input': 'queryChange'
+    'keyup input.search-box': 'queryChange'
+    'change input.search-box': 'queryChange'
     'click .clients li': 'selectClient'
     'click .invoices li': 'selectInvoice'
     'click .invoices .new': 'createInvoice'
-    'click .clients .new': 'createClient'
+    'click .clients .new': 'toggleClient'
+    'submit .client-details': 'createClient'
 
   constructor: ->
 
@@ -143,24 +150,31 @@ class Search extends Base.Controller
 
       # Create details
       details =
+        clientId: client.id
         invoiceId: invoice.id
         invoiceDate: invoice.date.toYMD()
         jobSite: invoice.site
         jobCustomer: invoice.customer
         jobAmount: invoice.cost
-        clientName: client.name
-        clientAddress: client.address
-        clientCity: client.city
-        clientPostcode: client.postcode
 
-      @trigger 'select:invoice', details, rows
+      @trigger 'select:invoice', client, details, rows
       @hide()
 
-  createClient: =>
-    console.log 'creating a new client'
+  toggleClient: =>
+    @el.toggleClass('show-sidebar')
+
+  createClient: (e) =>
+    e.preventDefault()
+    client =
+      name: @clientName.val()
+      address: @clientAddress.val()
+      city: @clientCity.val()
+      postcode: @clientPostcode.val()
+    @trigger 'create:client', client
+    @search()
 
   createInvoice: =>
-    console.log 'creating a new invoice'
+    @trigger 'create:invoice', @active.client
     @hide()
 
 module.exports = Search
