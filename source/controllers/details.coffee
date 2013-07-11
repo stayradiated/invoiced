@@ -1,28 +1,27 @@
 
 Base = require 'base'
-Detail = require '../models/detail'
+Invoice = require '../models/invoice'
 
 class Details extends Base.Controller
 
   elements:
-    '.invoice-id': 'invoiceId'
-    '.invoice-date': 'invoiceDate'
-    '.job-customer': 'jobCustomer'
-    '.job-site': 'jobSite'
-    '.job-amount': 'jobAmount'
+    '.invoice-id':       'input-id'
+    '.invoice-date':     'input-date'
+    '.invoice-site':     'input-site'
+    '.invoice-cost':     'input-cost'
+    '.invoice-customer': 'input-customer'
 
   events:
     'change input': 'update'
 
   constructor: ->
     super
-    @model = new Detail()
+    @model = new Invoice()
     @model.on 'refresh', @render
 
   # Detect input name and update model
   update: (e) =>
-    console.log 'updating details'
-    name = @elements[ '.' + e.target.className]
+    name = @elements[ '.' + e.target.className][6..]
     value = e.target.value
     # Parse numbers
     if e.target.attributes.type.value is 'number'
@@ -32,7 +31,8 @@ class Details extends Base.Controller
   # Populate the input fields with model data
   render: =>
     for selector, name of @elements
-      @[name].val @model[name]
+      attrName = name[6..]
+      @[name].val @model[attrName]
     return
 
 module.exports = Details

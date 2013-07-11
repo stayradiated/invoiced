@@ -40,20 +40,14 @@ class Storage extends Base.Event
     @db.query(args...)
     return deferred.promise
 
-  # Save the details and table objects into a MySQL database
-  saveInvoice: ({details, table}) =>
 
-    invoice =
-      clientId:    details.clientId
-      id:          details.invoiceId
-      date:        details.invoiceDate
-      customer:    details.jobCustomer
-      site:        details.jobSite
-      cost:        details.jobAmount
-      paid:        false
-      dateUpdated: (new Date()).toFormat('YYYY-MM-DD HH24:MI:SS')
+  # Save the invoice and rows objects into a MySQL database
+  saveInvoice: ({invoice, rows}) =>
 
-    console.log invoice
+    # Set dateUpdated
+    invoice.dateUpdated = (new Date()).toFormat('YYYY-MM-DD HH24:MI:SS')
+
+    console.log 'Saving', invoice, rows
 
     query =
       invoice: 'INSERT INTO invoices SET ? ON DUPLICATE KEY UPDATE ?'
@@ -64,12 +58,13 @@ class Storage extends Base.Event
     @_query(query.invoice, [invoice, invoice])
     
     # Delete existing rows
-    @_query(query.empty, details.invoiceId)
+    @_query(query.empty, invoice.id)
     
     # Insert rows into database
-    for row in table
-      row.invoiceId = details.invoiceId
+    for row in rows
+      row.invoiceId = invoice.id
       @_query(query.row, [row, row])
+
 
   # Get an array of all clients from the database
   getClients: =>

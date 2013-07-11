@@ -15,7 +15,7 @@
 
     <div class="create-client">
       <h2>Create Client</h2>
-      <form class="client-details">
+      <form class="create-client-details">
         <div class="control">
           <input class="client-name" placeholder="Name" type="text" />
         </div>
@@ -75,17 +75,27 @@
     <h2>Job Details</h2>
     <form>
       <div class="control">
-        <input class="job-customer" type="text" placeholder="Customer" />
+        <input class="invoice-customer" type="text" placeholder="Customer" />
       </div>
       <div class="control">
-        <input class="job-site" type="text" placeholder="Site" />
+        <input class="invoice-site" type="text" placeholder="Site" />
       </div>
       <div class="control">
-        <input class="job-amount" type="number" placeholder="Amount" />
+        <input class="invoice-cost" type="number" placeholder="Amount" />
       </div>
     </form>
 
     <hr />
+
+    <form class="client-details">
+      <h2>Client</h2>
+      <div class="client-name"></div>
+      <div class="client-address"></div>
+      <div class="client-city"></div>
+      <div class="client-postcode"></div>
+      <button class="secondary">Edit Details</button>
+      <button class="secondary">Change Client</button>
+    </form>
     
   </section>
 

@@ -31,7 +31,7 @@ class Search extends Base.Controller
     'click .invoices li': 'selectInvoice'
     'click .invoices .new': 'createInvoice'
     'click .clients .new': 'toggleClient'
-    'submit .client-details': 'createClient'
+    'submit .create-client-details': 'createClient'
 
   constructor: ->
 
@@ -74,6 +74,8 @@ class Search extends Base.Controller
       @el.css 'opacity', '1'
     return true
   
+
+
   # Render a list of clients to the dom
   renderClients: (clients) =>
     @clients.html @template.client.render
@@ -81,8 +83,11 @@ class Search extends Base.Controller
 
   # Render a list of invoices to the dom
   renderInvoices: (invoices) =>
-    @invoices.html @template.invoice.render(invoices: invoices)
+    @invoices.html @template.invoice.render
+      invoices: invoices
   
+
+
   # Search the database for a client
   search: =>
     query = @input.val()
@@ -141,23 +146,14 @@ class Search extends Base.Controller
     invoiceId = $el.data('id')
     @active.invoice = @temp.invoices[invoiceId]
 
+    # Make sure the date stays as a string
+    @active.invoice.date = @active.invoice.date.toYMD()
+
     # Load invoice rows
     @storage.getRows(invoiceId).then (rows) =>
 
       # Namespace client and invoice
-      invoice = @active.invoice
-      client = @active.client
-
-      # Create details
-      details =
-        clientId: client.id
-        invoiceId: invoice.id
-        invoiceDate: invoice.date.toYMD()
-        jobSite: invoice.site
-        jobCustomer: invoice.customer
-        jobAmount: invoice.cost
-
-      @trigger 'select:invoice', client, details, rows
+      @trigger 'select:invoice', @active.client, @active.invoice, rows
       @hide()
 
   toggleClient: =>

@@ -1,0 +1,17 @@
+.client-details {
+  background: $wet_asphalt;
+  padding: 20px;
+  @include box-sizing(border-box);
+  border-radius: 4px;
+
+  h2 {
+    margin-top: 0;
+  }
+  .client-name {
+    font-weight: bold;
+  }
+  div {
+    color: $white;
+    line-height: 21px;
+  }
+}

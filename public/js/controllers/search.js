@@ -46,7 +46,7 @@
       'click .invoices li': 'selectInvoice',
       'click .invoices .new': 'createInvoice',
       'click .clients .new': 'toggleClient',
-      'submit .client-details': 'createClient'
+      'submit .create-client-details': 'createClient'
     };
 
     function Search() {
@@ -171,19 +171,9 @@
       this.active.el.invoice = $el.addClass('active');
       invoiceId = $el.data('id');
       this.active.invoice = this.temp.invoices[invoiceId];
+      this.active.invoice.date = this.active.invoice.date.toYMD();
       return this.storage.getRows(invoiceId).then(function(rows) {
-        var client, details, invoice;
-        invoice = _this.active.invoice;
-        client = _this.active.client;
-        details = {
-          clientId: client.id,
-          invoiceId: invoice.id,
-          invoiceDate: invoice.date.toYMD(),
-          jobSite: invoice.site,
-          jobCustomer: invoice.customer,
-          jobAmount: invoice.cost
-        };
-        _this.trigger('select:invoice', client, details, rows);
+        _this.trigger('select:invoice', _this.active.client, _this.active.invoice, rows);
         return _this.hide();
       });
     };

@@ -77,9 +77,10 @@ class App extends Base.Controller
 
   # Compile a word document and save it to `path`
   buildDoc: (path) =>
-    details = @details.model.export()
-    table = @table.rows.export()
-    docx(path, details, table)
+    docx path,
+      client: @clientDetails.model.export()
+      invoice: @details.model.export()
+      rows: @table.model.export()
 
   toggle: =>
     @el.toggleClass('no-snippets')
@@ -92,18 +93,18 @@ class App extends Base.Controller
     @details.model.refresh({
       clientId: client.id
     }, true)
-    @table.rows.refresh({}, true)
+    @table.model.refresh({}, true)
 
   # Open an invoice
-  openInvoice: (client, details, table) =>
+  openInvoice: (client, invoice, table) =>
     @clientDetails.model.refresh(client, true)
-    @details.model.refresh(details, true)
-    @table.rows.refresh(table, true)
+    @details.model.refresh(invoice, true)
+    @table.model.refresh(table, true)
 
   # Save an invoice to the database
   saveInvoice: =>
     @storage.saveInvoice
-      details: @details.model.toJSON()
-      table: @table.rows.toJSON()
+      invoice: @details.model.toJSON()
+      rows: @table.model.toJSON()
 
 module.exports = App

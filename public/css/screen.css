@@ -463,6 +463,21 @@ button.nav.button-save:hover {
   text-align: center;
   margin-top: 20px; }
 
+.client-details {
+  background: #34495e;
+  padding: 20px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 4px; }
+.client-details h2 {
+  margin-top: 0; }
+.client-details .client-name {
+  font-weight: bold; }
+.client-details div {
+  color: white;
+  line-height: 21px; }
+
 body {
   overflow-x: hidden;
   -webkit-user-select: none;

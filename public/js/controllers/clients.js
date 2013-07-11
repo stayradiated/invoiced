@@ -20,10 +20,12 @@
     };
 
     Clients.prototype.events = {
-      'change input': 'update'
+      'change input': 'update',
+      'submit': 'submit'
     };
 
     function Clients() {
+      this.submit = __bind(this.submit, this);
       this.render = __bind(this.render, this);
       this.update = __bind(this.update, this);
       Clients.__super__.constructor.apply(this, arguments);
@@ -43,9 +45,13 @@
       _ref = this.elements;
       for (selector in _ref) {
         name = _ref[selector];
-        this[name].val(this.model[name]);
+        this[name].html(this.model[name]);
       }
       return this;
+    };
+
+    Clients.prototype.submit = function(e) {
+      return e.preventDefault();
     };
 
     return Clients;

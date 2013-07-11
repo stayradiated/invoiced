@@ -2,6 +2,11 @@ fs = require 'fs'
 zip = require './zip'
 When = require 'when'
 
+# Merge two objects together
+merge = (to, from) ->
+  for own key, val of from
+    to[key] = val
+
 # Super simple templating engine
 tmpl = (template, namespace) ->
 
@@ -57,35 +62,45 @@ loadFiles = (fn) ->
     if fn then fn()
 
 # Compile template and create docx file
-compile = (path, details={}, table=[]) ->
+compile = (path, {client, invoice, rows}) ->
 
+  # Load templates and then compile after that
   if not loaded
     args = arguments
     return loadFiles ->
       compile.apply(this, args)
 
-  # Compile rows
-  details.rows = ""
+  # Compile document
+  data = {}
+
+  data.rows = ""
   startDate = ''
   jobDate = ''
-  for row in table
+
+  # Compile rows
+  for row in rows
     row.jobDate = jobDate
     switch row.type
       when 'heading'
-        details.rows += tmpl(content.rowHeading, row)
+        data.rows += tmpl(content.rowHeading, row)
       when 'number'
-        details.rows += tmpl(content.rowNumber, row)
+        data.rows += tmpl(content.rowNumber, row)
       when 'bullet'
-        details.rows += tmpl(content.rowBullet, row)
+        data.rows += tmpl(content.rowBullet, row)
       when 'section'
         jobDate = row.name
         if startDate is '' then startDate = jobDate
     jobDate = '' unless row.type is 'section'
 
-  details.jobDate = startDate
+  # The first job date becomes the start date
+  data.jobDate = startDate
+
+  # Merge data with client and invoice
+  merge(data, client)
+  merge(data, invoice)
 
   # Compile document
-  output = tmpl(content.document, details)
+  output = tmpl(content.document, data)
 
   # Save template to disk and create docx file
   fs.writeFile config.template, output, (err) ->

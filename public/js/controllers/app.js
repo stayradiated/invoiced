@@ -106,10 +106,11 @@
     };
 
     App.prototype.buildDoc = function(path) {
-      var details, table;
-      details = this.details.model["export"]();
-      table = this.table.rows["export"]();
-      return docx(path, details, table);
+      return docx(path, {
+        client: this.clientDetails.model["export"](),
+        invoice: this.details.model["export"](),
+        rows: this.table.model["export"]()
+      });
     };
 
     App.prototype.toggle = function() {
@@ -125,19 +126,19 @@
       this.details.model.refresh({
         clientId: client.id
       }, true);
-      return this.table.rows.refresh({}, true);
+      return this.table.model.refresh({}, true);
     };
 
-    App.prototype.openInvoice = function(client, details, table) {
+    App.prototype.openInvoice = function(client, invoice, table) {
       this.clientDetails.model.refresh(client, true);
-      this.details.model.refresh(details, true);
-      return this.table.rows.refresh(table, true);
+      this.details.model.refresh(invoice, true);
+      return this.table.model.refresh(table, true);
     };
 
     App.prototype.saveInvoice = function() {
       return this.storage.saveInvoice({
-        details: this.details.model.toJSON(),
-        table: this.table.rows.toJSON()
+        invoice: this.details.model.toJSON(),
+        rows: this.table.model.toJSON()
       });
     };
 

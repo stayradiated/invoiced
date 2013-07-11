@@ -12,6 +12,7 @@ class Clients extends Base.Controller
 
   events:
     'change input': 'update'
+    'submit': 'submit'
 
   constructor: ->
     super
@@ -25,7 +26,10 @@ class Clients extends Base.Controller
 
   render: =>
     for selector, name of @elements
-      @[name].val @model[name]
+      @[name].html @model[name]
     return this
+
+  submit: (e) =>
+    e.preventDefault()
 
 module.exports = Clients

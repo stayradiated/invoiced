@@ -2,7 +2,7 @@
 Base = require 'base'
 $ = require 'jqueryify'
 TableRow = require '../controllers/table.row'
-Rows = require '../models/row'
+Row = require '../models/row'
 
 class Table extends Base.Controller
 
@@ -16,11 +16,11 @@ class Table extends Base.Controller
   constructor: ->
     super
     @count = 1
-    @rows = new Rows()
-    @rows.on 'create:model', @addRow
-    @rows.on 'destroy:model', @removeRow
-    @rows.on 'change', @update
-    @rows.on 'refresh', @render
+    @model = new Row()
+    @model.on 'create:model', @addRow
+    @model.on 'destroy:model', @removeRow
+    @model.on 'change', @update
+    @model.on 'refresh', @render
     
     # Base uses a different version of jQuery
     $(@table).sortable
@@ -30,7 +30,7 @@ class Table extends Base.Controller
       stop: (e, ui) =>
         row = ui.item.data('item')
         index = ui.item.index()
-        @rows.move(row, index)
+        @model.move(row, index)
 
   
   # Create a new TableRow and append it to the table
@@ -47,13 +47,13 @@ class Table extends Base.Controller
 
   update: =>
     @count = 1
-    @rows.forEach (row) =>
+    @model.forEach (row) =>
       if row.type is 'number'
         row.number = @count++
 
   render: =>
     @table.empty()
-    @rows.forEach (row) =>
+    @model.forEach (row) =>
       @addRow(row, nofocus: true)
 
   # Instantiate a new Row
@@ -80,7 +80,7 @@ class Table extends Base.Controller
     if details.type is 'number'
       details.number = @count++
 
-    @rows.create(details)
+    @model.create(details)
   
   # Handle keyboard shortcuts
   keydown: (e) =>

@@ -13,4 +13,10 @@ class Client extends Base.Model
   constructor: ->
     super
 
+  export: =>
+    clientName: @name.toUpperCase()
+    clientAddress: @address.toUpperCase()
+    clientCity: @city.toUpperCase()
+    clientPostcode: @postcode
+
 module.exports = Client

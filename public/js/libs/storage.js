@@ -74,30 +74,21 @@
     };
 
     Storage.prototype.saveInvoice = function(_arg) {
-      var details, invoice, query, row, table, _i, _len, _results;
-      details = _arg.details, table = _arg.table;
-      invoice = {
-        clientId: details.clientId,
-        id: details.invoiceId,
-        date: details.invoiceDate,
-        customer: details.jobCustomer,
-        site: details.jobSite,
-        cost: details.jobAmount,
-        paid: false,
-        dateUpdated: (new Date()).toFormat('YYYY-MM-DD HH24:MI:SS')
-      };
-      console.log(invoice);
+      var invoice, query, row, rows, _i, _len, _results;
+      invoice = _arg.invoice, rows = _arg.rows;
+      invoice.dateUpdated = (new Date()).toFormat('YYYY-MM-DD HH24:MI:SS');
+      console.log('Saving', invoice, rows);
       query = {
         invoice: 'INSERT INTO invoices SET ? ON DUPLICATE KEY UPDATE ?',
         row: 'INSERT INTO rows SET ? ON DUPLICATE KEY UPDATE ?',
         empty: 'DELETE FROM rows WHERE invoiceId=?'
       };
       this._query(query.invoice, [invoice, invoice]);
-      this._query(query.empty, details.invoiceId);
+      this._query(query.empty, invoice.id);
       _results = [];
-      for (_i = 0, _len = table.length; _i < _len; _i++) {
-        row = table[_i];
-        row.invoiceId = details.invoiceId;
+      for (_i = 0, _len = rows.length; _i < _len; _i++) {
+        row = rows[_i];
+        row.invoiceId = invoice.id;
         _results.push(this._query(query.row, [row, row]));
       }
       return _results;
