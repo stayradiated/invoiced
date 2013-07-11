@@ -92,9 +92,15 @@
       rowKey = {
         invoiceId: details.invoiceId
       };
+      this._query("SELECT COUNT(id) as count FROM invoices WHERE id = " + details.invoiceId).then(function(result) {
+        var invoiceQuery;
+        invoiceQuery = result[0].count > 0 ? "UPDATE INTO clients SET ? WHERE id=" + details.invoiceId : 'INSERT INTO invoices SET ?';
+        return console.log(invoiceQuery);
+      });
+      return;
       this._query('INSERT INTO clients SET ?', client).then(function(result) {
         invoice.clientId = result.insertId;
-        return _this._query('INSERT INTO invoices SET ?', invoice);
+        return _this._query(invoiceQuery, invoice);
       });
       _results = [];
       for (_i = 0, _len = table.length; _i < _len; _i++) {

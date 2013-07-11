@@ -60,9 +60,22 @@ class Storage extends Base.Event
     rowKey =
       invoiceId: details.invoiceId
 
+    @_query(
+      "SELECT COUNT(id) as count FROM invoices WHERE id = #{details.invoiceId}"
+    ).then (result) =>
+
+      invoiceQuery = if result[0].count > 0
+        "UPDATE INTO clients SET ? WHERE id=#{details.invoiceId}"
+      else
+        'INSERT INTO invoices SET ?'
+
+      console.log invoiceQuery
+
+    return
+
     @_query('INSERT INTO clients SET ?', client).then (result) =>
       invoice.clientId = result.insertId
-      @_query('INSERT INTO invoices SET ?', invoice)
+      @_query(invoiceQuery, invoice)
 
     for row in table
       @_query('INSERT INTO rows SET ?', row).then (result) =>
