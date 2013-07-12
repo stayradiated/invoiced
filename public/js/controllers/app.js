@@ -84,9 +84,13 @@
       this.snippets.model.on('before:destroy:model', this.storage.deleteSnippet);
       this.snippets.on('load:snippet', this.loadSnippet);
       this.snippets.on('save:snippet', this.storage.saveSnippet);
-      this.header.on('generate', this.file.click);
+      this.header.on('generate', function() {
+        return _this.file.click();
+      });
       this.header.on('save', this.saveInvoice);
-      this.header.on('open', this.search.show);
+      this.header.on('open', function() {
+        return _this.search.show();
+      });
       this.search = new Search({
         el: this.search,
         storage: this.storage

@@ -60,9 +60,9 @@ class App extends Base.Controller
     
 
     # Header pane buttons
-    @header.on 'generate', @file.click
+    @header.on 'generate', => @file.click()
     @header.on 'save', @saveInvoice
-    @header.on 'open', @search.show
+    @header.on 'open', => @search.show()
 
     # Show search window
     @search = new Search
