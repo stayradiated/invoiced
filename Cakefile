@@ -1,4 +1,4 @@
-{spawn} = require 'child_process'
+{exec, spawn} = require 'child_process'
 
 # Configuration
 input = 'source/'
@@ -6,7 +6,7 @@ output = 'public/js/'
 
 option '-w', '--watch', 'Watch the folder for changes'
 
-task 'build', 'Start server', (options) ->
+task 'build', 'Build coffeescript files', (options) ->
   
   # Modules
   cmd = 'coffee'
@@ -24,4 +24,18 @@ task 'build', 'Start server', (options) ->
   terminal = spawn(cmd, args)
   terminal.stdout.on 'data', (data) -> console.log(data.toString())
   terminal.stderr.on 'data', (data) -> console.log(data.toString())
+
+
+task 'package', 'Package application', ->
+
+  base = '~/Applications/node-webkit-win/'
+  nw = base + 'nw.exe'
+  zip = base + 'app.nw'
+  out = base + 'invoicer.exe'
+
+  console.log 'Packing files'
+  exec "zip -r #{zip} *", ->
+    console.log 'Merging with node-webkit'
+    exec "cat #{nw} + #{zip} > #{out}", ->
+      console.log 'Built to', out
 
