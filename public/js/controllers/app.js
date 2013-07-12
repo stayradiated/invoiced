@@ -142,7 +142,11 @@
     App.prototype.setupHeader = function(el) {
       var _this = this;
       this.header = new Header({
-        el: el
+        el: el,
+        detect: {
+          details: this.details.model,
+          table: this.table.model
+        }
       });
       this.header.on('generate', function() {
         return _this.file.click();
@@ -167,7 +171,6 @@
       if (client == null) {
         client = this.clientDetails.model;
       }
-      console.log(client);
       this.details.model.refresh({
         clientId: client.id,
         customer: client.name,
@@ -184,10 +187,11 @@
     };
 
     App.prototype.saveInvoice = function() {
-      return storage.saveInvoice({
+      storage.saveInvoice({
         invoice: this.details.model.toJSON(),
         rows: this.table.model.toJSON()
       });
+      return this.header.resetStatus();
     };
 
     return App;

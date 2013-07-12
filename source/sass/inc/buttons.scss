@@ -70,33 +70,3 @@ button.new {
   }
 }
 
-button.nav {
-  height: 50px;
-  padding: 0 30px;
-  background: transparent;
-  color: $white;
-  border: 0;
-  font-size: 14px;
-  margin: 0;
-  @include transition(background 0.15s);
-
-  &:hover {
-    background: $wet_asphalt;
-  }
-
-  &:last-child {
-    border-right: 0;
-  }
-
-  &.button-open:hover {
-    background: $nephritis;
-  }
-
-  &.button-generate:hover {
-    background: $carrot;
-  }
-
-  &.button-save:hover {
-    background: $wisteria;
-  }
-}

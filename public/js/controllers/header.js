@@ -10,13 +10,9 @@
   Header = (function(_super) {
     __extends(Header, _super);
 
-    function Header() {
-      this.saveInvoice = __bind(this.saveInvoice, this);
-      this.openInvoice = __bind(this.openInvoice, this);
-      this.createInvoice = __bind(this.createInvoice, this);
-      this.generate = __bind(this.generate, this);
-      Header.__super__.constructor.apply(this, arguments);
-    }
+    Header.prototype.elements = {
+      '.button-save': 'saveButton'
+    };
 
     Header.prototype.events = {
       'click .button-generate': 'generate',
@@ -25,18 +21,42 @@
       'click .button-save': 'saveInvoice'
     };
 
+    function Header() {
+      this.saveInvoice = __bind(this.saveInvoice, this);
+      this.openInvoice = __bind(this.openInvoice, this);
+      this.createInvoice = __bind(this.createInvoice, this);
+      this.generate = __bind(this.generate, this);
+      this.resetStatus = __bind(this.resetStatus, this);
+      this.markChanged = __bind(this.markChanged, this);
+      Header.__super__.constructor.apply(this, arguments);
+      this.detect.details.on('change', this.markChanged);
+      this.detect.table.on('create:model change:model destroy:model', this.markChanged);
+      this.detect.details.on('refresh', this.resetStatus);
+      this.pending = false;
+    }
+
+    Header.prototype.markChanged = function() {
+      this.pending = true;
+      return this.saveButton.addClass('pending');
+    };
+
+    Header.prototype.resetStatus = function() {
+      this.pending = false;
+      return this.saveButton.removeClass('pending');
+    };
+
     Header.prototype.generate = function() {
       return this.trigger('generate');
     };
 
     Header.prototype.createInvoice = function() {
-      if (window.confirm("Are you sure you want to create a new invoice?\nYou will lose any unsaved changes to the current invoice.")) {
+      if (!this.pending || window.confirm("Are you sure you want to create a new invoice?\nYou will lose any unsaved changes to the current invoice.")) {
         return this.trigger('create');
       }
     };
 
     Header.prototype.openInvoice = function() {
-      if (window.confirm('Are you sure? You will lose any unsaved changes to the current invoice.')) {
+      if (!this.pending || window.confirm('Are you sure? You will lose any unsaved changes to the current invoice.')) {
         return this.trigger('open');
       }
     };

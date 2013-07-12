@@ -44,6 +44,39 @@ header h1 {
 header nav {
   float: right;
   font-size: 0; }
+header button.nav {
+  height: 50px;
+  padding: 0 30px;
+  background: transparent;
+  color: white;
+  border: 0;
+  font-size: 14px;
+  margin: 0;
+  -webkit-transition: background 0.15s;
+  -moz-transition: background 0.15s;
+  -o-transition: background 0.15s;
+  transition: background 0.15s; }
+header button.nav:hover {
+  background: #34495e; }
+header button.nav:last-child {
+  border-right: 0; }
+header button.nav.button-open:hover {
+  background: #27ae60; }
+header button.nav.button-generate:hover {
+  background: #e67e22; }
+header button.nav.button-save:hover {
+  background: #8e44ad; }
+header .button-save.pending {
+  position: relative; }
+header .button-save.pending:after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #e67e22;
+  height: 6px; }
 
 form input {
   width: 100%;
@@ -341,29 +374,6 @@ button.new {
   transition: background 0.15s; }
 button.new:hover {
   background: #3498d8; }
-
-button.nav {
-  height: 50px;
-  padding: 0 30px;
-  background: transparent;
-  color: white;
-  border: 0;
-  font-size: 14px;
-  margin: 0;
-  -webkit-transition: background 0.15s;
-  -moz-transition: background 0.15s;
-  -o-transition: background 0.15s;
-  transition: background 0.15s; }
-button.nav:hover {
-  background: #34495e; }
-button.nav:last-child {
-  border-right: 0; }
-button.nav.button-open:hover {
-  background: #27ae60; }
-button.nav.button-generate:hover {
-  background: #e67e22; }
-button.nav.button-save:hover {
-  background: #8e44ad; }
 
 .no-create-client .search .create-client {
   left: -300px; }

@@ -63,7 +63,6 @@ class App extends Base.Controller
 
     # Show search window
     @setupSearch @search
-
     
     # Display search page
     @search.search()
@@ -138,7 +137,12 @@ class App extends Base.Controller
   # {{{
 
   setupHeader: (el) =>
-    @header = new Header(el: el)
+    @header = new Header
+      el: el
+      detect:
+        details: @details.model
+        table: @table.model
+
     @header.on 'generate', => @file.click()
     @header.on 'save', @saveInvoice
     @header.on 'open', => @search.show()
@@ -164,7 +168,6 @@ class App extends Base.Controller
   
   createInvoice: (client) =>
     client ?= @clientDetails.model
-    console.log client
     @details.model.refresh({
       clientId: client.id
       customer: client.name
@@ -184,6 +187,7 @@ class App extends Base.Controller
     storage.saveInvoice
       invoice: @details.model.toJSON()
       rows: @table.model.toJSON()
+    @header.resetStatus()
 
   # }}}
 module.exports = App
