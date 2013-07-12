@@ -147,7 +147,10 @@ class Search extends Base.Controller
     @active.invoice = @temp.invoices[invoiceId]
 
     # Make sure the date stays as a string
-    @active.invoice.date = @active.invoice.date.toYMD()
+    if @active.invoice.date instanceof Date
+      @active.invoice.date = @active.invoice.date.toYMD()
+    else
+      console.log @active.invoice.date
 
     # Load invoice rows
     @storage.getRows(invoiceId).then (rows) =>
@@ -167,6 +170,7 @@ class Search extends Base.Controller
       city: @clientCity.val()
       postcode: @clientPostcode.val()
     @trigger 'create:client', client
+    @toggleClient()
     @search()
 
   createInvoice: =>

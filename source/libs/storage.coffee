@@ -65,6 +65,14 @@ class Storage extends Base.Event
       row.invoiceId = invoice.id
       @_query(query.row, [row, row])
 
+  deleteSnippet: (snippet) =>
+    @_query 'DELETE FROM snippets WHERE id=?', snippet.id
+
+  saveSnippet: (snippet) =>
+    @_query 'INSERT INTO snippets SET ?', snippet.toJSON()
+
+  getSnippets: =>
+    @_query 'SELECT * FROM snippets'
 
   # Get an array of all clients from the database
   getClients: =>

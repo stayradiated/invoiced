@@ -81,16 +81,25 @@ class Table extends Base.Controller
       details.number = @count++
 
     @model.create(details)
+
+  # Create a new row with the correct type
+  autoCreateRow: (content='') =>
+    lastRow = @table.find('li:last')
+    if lastRow.length > 0
+      type = if lastRow.data('item').type is 'bullet' then 'bullet' else 'number'
+    else
+      type = 'number'
+    @createRow(type: type, name: content)
   
+
   # Handle keyboard shortcuts
   keydown: (e) =>
     switch e.keyCode
       when 9 # tab
-        $row = $(e.target).parent()
-        if $row.is(':last-child')
+        return if e.shiftKey
+        if $(e.target).parent().is(':last-child')
           e.preventDefault()
-          type = if $row.data('item').type is 'bullet' then 'bullet' else 'number'
-          @createRow(type: type)
+          @autoCreateRow()
       when 38 # up
         $(e.target).parent().prev('li').find('input').focus()
       when 40 # down

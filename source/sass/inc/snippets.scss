@@ -27,5 +27,38 @@
     background: $midnight_blue;
     color: $white;
   }
+  
+  .delete {
+    float: right;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    background: $clouds;
+    cursor: pointer;
+    @include transition(background 0.15s);
+    margin: 10px 5px 0 5px;
+
+    &:hover {
+      background: $carrot;
+    }
+
+    &:after, &:before {
+      content: "";
+      display: block;
+      @include pos(9px, auto, auto, 5px);
+      width: 10px;
+      height: 2px;
+      background: $white;
+    }
+
+    &:after {
+      @include transform(rotate(45deg));
+    }
+
+    &:before {
+      @include transform(rotate(-45deg));
+    }
+  }
 
 }

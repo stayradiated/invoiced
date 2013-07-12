@@ -27,6 +27,7 @@
 
     function Table() {
       this.keydown = __bind(this.keydown, this);
+      this.autoCreateRow = __bind(this.autoCreateRow, this);
       this.createRow = __bind(this.createRow, this);
       this.render = __bind(this.render, this);
       this.update = __bind(this.update, this);
@@ -117,17 +118,32 @@
       return this.model.create(details);
     };
 
+    Table.prototype.autoCreateRow = function(content) {
+      var lastRow, type;
+      if (content == null) {
+        content = '';
+      }
+      lastRow = this.table.find('li:last');
+      if (lastRow.length > 0) {
+        type = lastRow.data('item').type === 'bullet' ? 'bullet' : 'number';
+      } else {
+        type = 'number';
+      }
+      return this.createRow({
+        type: type,
+        name: content
+      });
+    };
+
     Table.prototype.keydown = function(e) {
-      var $row, type;
       switch (e.keyCode) {
         case 9:
-          $row = $(e.target).parent();
-          if ($row.is(':last-child')) {
+          if (e.shiftKey) {
+            return;
+          }
+          if ($(e.target).parent().is(':last-child')) {
             e.preventDefault();
-            type = $row.data('item').type === 'bullet' ? 'bullet' : 'number';
-            return this.createRow({
-              type: type
-            });
+            return this.autoCreateRow();
           }
           break;
         case 38:

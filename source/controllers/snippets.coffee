@@ -1,27 +1,55 @@
 
 Base = require 'base'
 Snippet = require '../models/snippet'
+$ = require 'jqueryify'
 
 class Snippets extends Base.Controller
 
   template: new Base.View('snippet')
 
   elements:
-    '.snippets': 'list'
+    'ul': 'list'
 
   events:
+    'click .delete': 'deleteSnippet'
+    'click .snippet': 'loadSnippet'
     'click .new-snippet': 'createSnippet'
 
   constructor: ->
     super
-    @snippets = new Snippet()
-    @snippets.on 'create:model', @addSnippet
+    @model = new Snippet()
+    @model.on 'create:model', @addOne
+    @model.on 'destroy:model', @remove
+    @model.on 'refresh', @render
 
-  addSnippet: (snippet) =>
-    @list.append @template.render(snippet)
+  render: =>
+    @model.forEach (snippet) =>
+      @addOne(snippet)
+    return this
+
+  addOne: (snippet) =>
+    view = $ @template.render(snippet)
+    @list.append(view)
+    snippet.view = view
+    view.data('item', snippet)
+
+  remove: (snippet) =>
+    snippet.view.remove()
+
+  deleteSnippet: (e) =>
+    e.stopPropagation()
+    return unless window.confirm('Are you sure you want to delete that snippet?')
+    snippet = $(e.currentTarget).parent().data('item')
+    snippet.destroy()
     
   createSnippet: =>
-    console.log 'creating a new snippet'
-    @snippets.create()
+    name = window.prompt('Enter Snippet')
+    return unless name
+    snippet = @model.create(content: name)
+    @trigger 'save:snippet', snippet
+
+  loadSnippet: (e) =>
+    snippet = $(e.currentTarget).data('item')
+    @trigger 'load:snippet', snippet
 
 module.exports = Snippets

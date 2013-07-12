@@ -4,6 +4,7 @@ Base = require 'base'
 class Snippet extends Base.Model
 
   defaults:
+    id: null
     content: 'A new snippet'
 
   constructor: ->

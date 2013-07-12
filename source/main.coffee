@@ -4,7 +4,7 @@ $ = require 'jqueryify'
 # Node-Webkit debugging tools
 
 gui = require 'nw.gui'
-win = window.win = gui.Window.get()
+win = gui.Window.get()
 
 window.log = console.log.bind(console)
 

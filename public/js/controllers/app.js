@@ -52,6 +52,7 @@
       this.createInvoice = __bind(this.createInvoice, this);
       this.createClient = __bind(this.createClient, this);
       this.toggle = __bind(this.toggle, this);
+      this.loadSnippet = __bind(this.loadSnippet, this);
       this.buildDoc = __bind(this.buildDoc, this);
       this.saveFile = __bind(this.saveFile, this);
       var _this = this;
@@ -77,13 +78,15 @@
       this.clientDetails = new Clients({
         el: this.clientDetails
       });
-      this.header.on('generate', function() {
-        return _this.file.click();
+      this.storage.getSnippets().then(function(array) {
+        return _this.snippets.model.refresh(array, true);
       });
+      this.snippets.model.on('before:destroy:model', this.storage.deleteSnippet);
+      this.snippets.on('load:snippet', this.loadSnippet);
+      this.snippets.on('save:snippet', this.storage.saveSnippet);
+      this.header.on('generate', this.file.click);
       this.header.on('save', this.saveInvoice);
-      this.header.on('open', function() {
-        return _this.search.show();
-      });
+      this.header.on('open', this.search.show);
       this.search = new Search({
         el: this.search,
         storage: this.storage
@@ -111,6 +114,10 @@
         invoice: this.details.model["export"](),
         rows: this.table.model["export"]()
       });
+    };
+
+    App.prototype.loadSnippet = function(snippet) {
+      return this.table.autoCreateRow(snippet.content);
     };
 
     App.prototype.toggle = function() {

@@ -234,6 +234,44 @@ form input::-webkit-input-placeholder {
 .snippets li:hover {
   background: #2c3e50;
   color: white; }
+.snippets .delete {
+  float: right;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  background: #ecf0f1;
+  cursor: pointer;
+  -webkit-transition: background 0.15s;
+  -moz-transition: background 0.15s;
+  -o-transition: background 0.15s;
+  transition: background 0.15s;
+  margin: 10px 5px 0 5px; }
+.snippets .delete:hover {
+  background: #e67e22; }
+.snippets .delete:after, .snippets .delete:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 9px;
+  right: auto;
+  bottom: auto;
+  left: 5px;
+  width: 10px;
+  height: 2px;
+  background: white; }
+.snippets .delete:after {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg); }
+.snippets .delete:before {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg); }
 
 .button-bar {
   background: #ecf0f1;

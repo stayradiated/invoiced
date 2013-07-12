@@ -171,7 +171,11 @@
       this.active.el.invoice = $el.addClass('active');
       invoiceId = $el.data('id');
       this.active.invoice = this.temp.invoices[invoiceId];
-      this.active.invoice.date = this.active.invoice.date.toYMD();
+      if (this.active.invoice.date instanceof Date) {
+        this.active.invoice.date = this.active.invoice.date.toYMD();
+      } else {
+        console.log(this.active.invoice.date);
+      }
       return this.storage.getRows(invoiceId).then(function(rows) {
         _this.trigger('select:invoice', _this.active.client, _this.active.invoice, rows);
         return _this.hide();
@@ -192,6 +196,7 @@
         postcode: this.clientPostcode.val()
       };
       this.trigger('create:client', client);
+      this.toggleClient();
       return this.search();
     };
 

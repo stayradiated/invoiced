@@ -25,6 +25,9 @@
       this.getClient = __bind(this.getClient, this);
       this.searchClients = __bind(this.searchClients, this);
       this.getClients = __bind(this.getClients, this);
+      this.getSnippets = __bind(this.getSnippets, this);
+      this.saveSnippet = __bind(this.saveSnippet, this);
+      this.deleteSnippet = __bind(this.deleteSnippet, this);
       this.saveInvoice = __bind(this.saveInvoice, this);
       this._query = __bind(this._query, this);
       this.escape = __bind(this.escape, this);
@@ -92,6 +95,18 @@
         _results.push(this._query(query.row, [row, row]));
       }
       return _results;
+    };
+
+    Storage.prototype.deleteSnippet = function(snippet) {
+      return this._query('DELETE FROM snippets WHERE id=?', snippet.id);
+    };
+
+    Storage.prototype.saveSnippet = function(snippet) {
+      return this._query('INSERT INTO snippets SET ?', snippet.toJSON());
+    };
+
+    Storage.prototype.getSnippets = function() {
+      return this._query('SELECT * FROM snippets');
     };
 
     Storage.prototype.getClients = function() {

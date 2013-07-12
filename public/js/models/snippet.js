@@ -10,6 +10,7 @@
     __extends(Snippet, _super);
 
     Snippet.prototype.defaults = {
+      id: null,
       content: 'A new snippet'
     };
 

@@ -47,10 +47,22 @@ class App extends Base.Controller
     @snippets = new Snippets(el: @snippets)
     @header = new Header(el: @header)
     @clientDetails = new Clients(el: @clientDetails)
+
+
+    # Render snippets
+    @storage.getSnippets().then (array) =>
+      @snippets.model.refresh(array, true)
+
+    # Snippet events
+    @snippets.model.on 'before:destroy:model', @storage.deleteSnippet
+    @snippets.on 'load:snippet', @loadSnippet
+    @snippets.on 'save:snippet', @storage.saveSnippet
     
-    @header.on 'generate', => @file.click()
+
+    # Header pane buttons
+    @header.on 'generate', @file.click
     @header.on 'save', @saveInvoice
-    @header.on 'open', => @search.show()
+    @header.on 'open', @search.show
 
     # Show search window
     @search = new Search
@@ -81,6 +93,9 @@ class App extends Base.Controller
       client: @clientDetails.model.export()
       invoice: @details.model.export()
       rows: @table.model.export()
+
+  loadSnippet: (snippet) =>
+    @table.autoCreateRow(snippet.content)
 
   toggle: =>
     @el.toggleClass('no-snippets')
