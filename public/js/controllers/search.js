@@ -32,11 +32,7 @@
     Search.prototype.elements = {
       'input.search-box': 'input',
       '.clients ul': 'clients',
-      '.invoices ul': 'invoices',
-      '.client-name': 'clientName',
-      '.client-address': 'clientAddress',
-      '.client-city': 'clientCity',
-      '.client-postcode': 'clientPostcode'
+      '.invoices ul': 'invoices'
     };
 
     Search.prototype.events = {
@@ -44,15 +40,11 @@
       'change input.search-box': 'queryChange',
       'click .clients li': 'selectClient',
       'click .invoices li': 'selectInvoice',
-      'click .invoices .new': 'createInvoice',
-      'click .clients .new': 'toggleClient',
-      'submit .create-client-details': 'createClient'
+      'click .invoices .new': 'createInvoice'
     };
 
     function Search() {
       this.createInvoice = __bind(this.createInvoice, this);
-      this.createClient = __bind(this.createClient, this);
-      this.toggleClient = __bind(this.toggleClient, this);
       this.selectInvoice = __bind(this.selectInvoice, this);
       this.selectClient = __bind(this.selectClient, this);
       this.search = __bind(this.search, this);
@@ -116,17 +108,17 @@
       var query,
         _this = this;
       query = this.input.val();
-      return this.storage.searchClients(query).then(function(clients) {
+      return storage.searchClients(query).then(function(clients) {
         var client, requests;
         requests = (function() {
           var _i, _len, _results;
           _results = [];
           for (_i = 0, _len = clients.length; _i < _len; _i++) {
             client = clients[_i];
-            _results.push(this.storage.getClientInvoiceCount(client.id));
+            _results.push(storage.getClientInvoiceCount(client.id));
           }
           return _results;
-        }).call(_this);
+        })();
         return When.all(requests).then(function(results) {
           var i, _i, _len;
           _this.temp.clients = {};
@@ -150,7 +142,7 @@
       this.active.el.client = $el.addClass('active');
       clientId = $el.data('id');
       this.active.client = this.temp.clients[clientId];
-      return this.storage.getClientInvoices(clientId).then(function(invoices) {
+      return storage.getClientInvoices(clientId).then(function(invoices) {
         var invoice, _i, _len;
         _this.temp.invoices = {};
         for (_i = 0, _len = invoices.length; _i < _len; _i++) {
@@ -176,28 +168,10 @@
       } else {
         console.log(this.active.invoice.date);
       }
-      return this.storage.getRows(invoiceId).then(function(rows) {
+      return storage.getRows(invoiceId).then(function(rows) {
         _this.trigger('select:invoice', _this.active.client, _this.active.invoice, rows);
         return _this.hide();
       });
-    };
-
-    Search.prototype.toggleClient = function() {
-      return this.el.toggleClass('show-sidebar');
-    };
-
-    Search.prototype.createClient = function(e) {
-      var client;
-      e.preventDefault();
-      client = {
-        name: this.clientName.val(),
-        address: this.clientAddress.val(),
-        city: this.clientCity.val(),
-        postcode: this.clientPostcode.val()
-      };
-      this.trigger('create:client', client);
-      this.toggleClient();
-      return this.search();
     };
 
     Search.prototype.createInvoice = function() {

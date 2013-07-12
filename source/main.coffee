@@ -1,11 +1,8 @@
 
 $ = require 'jqueryify'
 
-# Node-Webkit debugging tools
-
 gui = require 'nw.gui'
-win = gui.Window.get()
-
+wind = window.win = gui.Window.get()
 window.log = console.log.bind(console)
 
 $(document).on 'keydown', (e) ->
@@ -13,14 +10,14 @@ $(document).on 'keydown', (e) ->
 
     when 82 # r
       if e.ctrlKey
-        window.app.storage.end()
+        window.app.storage.end() unless e.shiftKey
         win.reloadDev()
 
     when 68 # d
       if e.ctrlKey
         win.showDevTools()
 
-window.App = require './js/controllers/app'
+App = require './js/controllers/app'
 
 $ ->
   window.app = new App

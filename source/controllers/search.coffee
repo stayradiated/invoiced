@@ -18,11 +18,6 @@ class Search extends Base.Controller
     'input.search-box': 'input'
     '.clients ul': 'clients'
     '.invoices ul': 'invoices'
-    
-    '.client-name': 'clientName'
-    '.client-address': 'clientAddress'
-    '.client-city': 'clientCity'
-    '.client-postcode': 'clientPostcode'
 
   events:
     'keyup input.search-box': 'queryChange'
@@ -30,8 +25,6 @@ class Search extends Base.Controller
     'click .clients li': 'selectClient'
     'click .invoices li': 'selectInvoice'
     'click .invoices .new': 'createInvoice'
-    'click .clients .new': 'toggleClient'
-    'submit .create-client-details': 'createClient'
 
   constructor: ->
 
@@ -58,6 +51,11 @@ class Search extends Base.Controller
     @shown = true
     @fadeout = 500 # milliseconds - get from search.scss
 
+
+  #
+  # SHOW/HIDE
+  # {{{
+
   # Hide the search window
   hide: =>
     @shown = false
@@ -74,8 +72,11 @@ class Search extends Base.Controller
       @el.css 'opacity', '1'
     return true
   
-
-
+  # }}}
+  #
+  # RENDER
+  # {{{
+  
   # Render a list of clients to the dom
   renderClients: (clients) =>
     @clients.html @template.client.render
@@ -87,17 +88,21 @@ class Search extends Base.Controller
       invoices: invoices
   
 
+  # }}}
+  #
+  # SEARCH
+  # {{{
 
   # Search the database for a client
   search: =>
     query = @input.val()
 
     # Search database
-    @storage.searchClients(query).then (clients) =>
+    storage.searchClients(query).then (clients) =>
       
       # Get the amount of invoices for each client
       requests = for client in clients
-        @storage.getClientInvoiceCount(client.id)
+        storage.getClientInvoiceCount(client.id)
       
       # When all requests are finished
       When.all(requests).then (results) =>
@@ -113,6 +118,11 @@ class Search extends Base.Controller
         @renderClients(clients)
 
 
+  # }}}
+  #
+  # SELECTING
+  # {{{
+  
   # Set the current client and display invoices
   selectClient: (e) =>
 
@@ -124,7 +134,7 @@ class Search extends Base.Controller
     @active.client = @temp.clients[clientId]
 
     # Load client invoices
-    @storage.getClientInvoices(clientId).then (invoices) =>
+    storage.getClientInvoices(clientId).then (invoices) =>
 
       # Cache invoices
       @temp.invoices = {}
@@ -153,25 +163,11 @@ class Search extends Base.Controller
       console.log @active.invoice.date
 
     # Load invoice rows
-    @storage.getRows(invoiceId).then (rows) =>
+    storage.getRows(invoiceId).then (rows) =>
 
       # Namespace client and invoice
       @trigger 'select:invoice', @active.client, @active.invoice, rows
       @hide()
-
-  toggleClient: =>
-    @el.toggleClass('show-sidebar')
-
-  createClient: (e) =>
-    e.preventDefault()
-    client =
-      name: @clientName.val()
-      address: @clientAddress.val()
-      city: @clientCity.val()
-      postcode: @clientPostcode.val()
-    @trigger 'create:client', client
-    @toggleClient()
-    @search()
 
   createInvoice: =>
     @trigger 'create:invoice', @active.client

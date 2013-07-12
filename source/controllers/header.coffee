@@ -16,10 +16,13 @@ class Header extends Base.Controller
     @trigger('generate')
 
   createInvoice: =>
-    @trigger('create')
+    if window.confirm """Are you sure you want to create a new invoice?
+      You will lose any unsaved changes to the current invoice."""
+      @trigger('create')
 
   openInvoice: =>
-    @trigger('open')
+    if window.confirm 'Are you sure? You will lose any unsaved changes to the current invoice.'
+      @trigger('open')
 
   saveInvoice: =>
     @trigger('save')

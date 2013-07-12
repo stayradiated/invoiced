@@ -30,11 +30,15 @@
     };
 
     Header.prototype.createInvoice = function() {
-      return this.trigger('create');
+      if (window.confirm("Are you sure you want to create a new invoice?\nYou will lose any unsaved changes to the current invoice.")) {
+        return this.trigger('create');
+      }
     };
 
     Header.prototype.openInvoice = function() {
-      return this.trigger('open');
+      if (window.confirm('Are you sure? You will lose any unsaved changes to the current invoice.')) {
+        return this.trigger('open');
+      }
     };
 
     Header.prototype.saveInvoice = function() {

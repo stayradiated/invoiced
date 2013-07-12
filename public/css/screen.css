@@ -365,6 +365,11 @@ button.nav.button-generate:hover {
 button.nav.button-save:hover {
   background: #8e44ad; }
 
+.no-create-client .search .create-client {
+  left: -300px; }
+.no-create-client .search .container {
+  margin-left: -400px; }
+
 .search {
   position: absolute;
   top: 0;
@@ -380,7 +385,7 @@ button.nav.button-save:hover {
   top: 0;
   right: auto;
   bottom: 0;
-  left: -300px;
+  left: 0;
   width: 300px;
   background: #34495e;
   -webkit-box-sizing: border-box;
@@ -390,10 +395,6 @@ button.nav.button-save:hover {
   -moz-transition: left 0.5s;
   -o-transition: left 0.5s;
   transition: left 0.5s; }
-.search.show-sidebar .create-client {
-  left: 0; }
-.search.show-sidebar .container {
-  margin-left: -250px; }
 .search .container {
   width: 800px;
   position: absolute;
@@ -401,7 +402,7 @@ button.nav.button-save:hover {
   right: auto;
   bottom: 20px;
   left: 50%;
-  margin-left: -400px;
+  margin-left: -250px;
   overflow-y: hidden;
   -webkit-transition: opacity 0.5s, margin 0.5s;
   -moz-transition: opacity 0.5s, margin 0.5s;

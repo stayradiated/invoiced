@@ -1,83 +1,80 @@
 
-fs = require 'fs'
-
-Base = require 'base'
+# NodeJS Dependencies
+fs      = require 'fs'
+Base    = require 'base'
+docx    = require '../libs/docx'
+Storage = require '../libs/storage'
 
 # Configure swig templates
 Base.View.swig.init
   root: __dirname + '/../../../source/views'
 
-Search = require '../controllers/search'
-Table = require '../controllers/table'
-Details = require '../controllers/details'
+# Controllers
+Table    = require '../controllers/table'
+Search   = require '../controllers/search'
+Header   = require '../controllers/header'
+Details  = require '../controllers/details'
+Clients  = require '../controllers/clients'
 Snippets = require '../controllers/snippets'
-Header = require '../controllers/header'
-Clients = require '../controllers/clients'
+CreateClient = require '../controllers/createClient'
 
-docx = require '../libs/docx'
-Storage = require '../libs/storage'
+# Storage is global so it can be accessed from anywhere
+storage = global.storage = new Storage()
+storage.on 'error', (err, message) ->
+  console.log 'Showing error window'
+  console.log 'Error message:', message
 
 class App extends Base.Controller
 
   elements:
-    'header':           'header'
-    '.table':           'table'
-    '.search':          'search'
-    '.details':         'details'
-    '.snippets':        'snippets'
-    '#save-file':       'file'
-    '.client-details':  'clientDetails'
+    'header':          'header'
+    '.table':          'table'
+    '.search':         'search'
+    '.details':        'details'
+    '.snippets':       'snippets'
+    '#save-file':      'file'
+    '.client-details': 'clientDetails'
+    '.create-client':  'createClient'
 
   events:
-    'click .toggle-sidebar': 'toggle'
+    'click .toggle-sidebar': 'toggleSnippets'
+    'click .toggle-create-client': 'toggleCreateClient'
 
   constructor: ->
     super
 
     # Load database connnection
-    @storage = new Storage()
-    @storage.on 'error', (err, message) ->
-      console.log 'Showing error window'
-      console.log 'Error message:', message
-    @storage.start()
+    @storage = storage
+    storage.start()
 
     # Overwrite elements with controllers
-    @table = new Table(el: @table)
-    @details = new Details(el: @details)
-    @snippets = new Snippets(el: @snippets)
-    @header = new Header(el: @header)
+    @table         = new Table(el: @table)
+    @details       = new Details(el: @details)
     @clientDetails = new Clients(el: @clientDetails)
-
+    
+    # Creating a new Client
+    @setupCreateClient @createClient
 
     # Render snippets
-    @storage.getSnippets().then (array) =>
-      @snippets.model.refresh(array, true)
-
-    # Snippet events
-    @snippets.model.on 'before:destroy:model', @storage.deleteSnippet
-    @snippets.on 'load:snippet', @loadSnippet
-    @snippets.on 'save:snippet', @storage.saveSnippet
-    
+    @setupSnippets @snippets
 
     # Header pane buttons
-    @header.on 'generate', => @file.click()
-    @header.on 'save', @saveInvoice
-    @header.on 'open', => @search.show()
+    @setupHeader @header
 
     # Show search window
-    @search = new Search
-      el: @search
-      storage: @storage
+    @setupSearch @search
 
-    @search.on 'select:invoice', @openInvoice
-    @search.on 'create:client', @createClient
-    @search.on 'create:invoice', @createInvoice
     
     # Display search page
     @search.search()
 
     # Compile word doc when user selects a file
     @file.on 'change', @saveFile
+
+
+  #
+  # GENERATING WORD FILES
+  # {{{
 
   # Display a save file dialogue
   saveFile: (e) =>
@@ -94,20 +91,86 @@ class App extends Base.Controller
       invoice: @details.model.export()
       rows: @table.model.export()
 
-  loadSnippet: (snippet) =>
-    @table.autoCreateRow(snippet.content)
+  # }}}
+  #
+  # SNIPPETS
+  # {{{
 
-  toggle: =>
+  setupSnippets: (el) =>
+    @snippets = new Snippets(el: el)
+    model = @snippets.model
+    
+    # Load snippets from database
+    storage.getSnippets().then (array) =>
+      model.refresh(array, true)
+
+    model.on 'before:destroy:model', storage.deleteSnippet
+
+    @snippets.on 'save:snippet', storage.saveSnippet
+
+    @snippets.on 'load:snippet', (snippet) =>
+      @table.autoCreateRow(snippet.content)
+
+
+  # }}}
+  #
+  # CLIENTS
+  # {{{
+
+  setupCreateClient: (el) =>
+    @createClient  = new CreateClient(el: el)
+    @createClient.on 'toggle', @toggleCreateClient
+
+  # }}}
+  #
+  # TOGGLE
+  # {{{
+  
+  toggleSnippets: =>
     @el.toggleClass('no-snippets')
 
-  createClient: (client) =>
-    @storage.saveClient(client)
+  toggleCreateClient: =>
+    @el.toggleClass('no-create-client')
 
+  # }}}
+  #
+  # HEADER
+  # {{{
+
+  setupHeader: (el) =>
+    @header = new Header(el: el)
+    @header.on 'generate', => @file.click()
+    @header.on 'save', @saveInvoice
+    @header.on 'open', => @search.show()
+    @header.on 'create', @createInvoice
+
+
+  # }}}
+  #
+  # SEARCH
+  # {{{
+
+  setupSearch: (el) =>
+    @search = new Search(el: el)
+    @search.on 'select:invoice', @openInvoice
+    @search.on 'create:client', @createClient
+    @search.on 'create:invoice', @createInvoice
+
+
+  # }}}
+  #
+  # INVOICES
+  # {{{
+  
   createInvoice: (client) =>
-    @clientDetails.model.refresh(client, true)
+    client ?= @clientDetails.model
+    console.log client
     @details.model.refresh({
       clientId: client.id
+      customer: client.name
+      site: client.address
     }, true)
+    @clientDetails.model.refresh(client, true)
     @table.model.refresh({}, true)
 
   # Open an invoice
@@ -118,8 +181,9 @@ class App extends Base.Controller
 
   # Save an invoice to the database
   saveInvoice: =>
-    @storage.saveInvoice
+    storage.saveInvoice
       invoice: @details.model.toJSON()
       rows: @table.model.toJSON()
 
+  # }}}
 module.exports = App
