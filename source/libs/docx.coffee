@@ -11,17 +11,23 @@ merge = (to, from) ->
 tmpl = (template, namespace) ->
 
   fn = (existing, fieldName) ->
-    fields = fieldName.split('.')
-    next = namespace
-    last = fields.length - 1
-    for field, i in fields
-      value = next[field]
-      if i is last then content = value
-      else next = value
+    # fields = fieldName.split('.')
+    # next = namespace
+    # last = fields.length - 1
+    # for field, i in fields
+    #   value = next[field]
+    #   if i is last then content = value
+    #   else next = value
+    content = namespace[fieldName]
     content ?= existing
-    return content
+    return escape(content)
 
   template.replace(/\{{2}([A-Za-z0-9_|.]*)\}{2}/g, fn)
+
+# Escape text to use in a docx file
+escape = (text) ->
+  if typeof text isnt 'string' then text = text.toString()
+  text.replace(/&(?!amp;)/g, '&amp;')
 
 # Configuration
 config = {}

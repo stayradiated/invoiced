@@ -2,6 +2,15 @@
 Base = require 'base'
 require 'date-utils'
 
+# Convert a number into a currencly
+digits = (number) ->
+  number = (Math.round(number * 100) / 100).toString()
+  sections = number.split('.')
+  if sections.length is 1 then return number + '.00'
+  if sections[1].length is 1 then return number + '0'
+  if sections[1].length is 2 then return number
+  if sections[1].length >  2 then return sections[0] + '.' + sections[1][0..1]
+
 class Invoice extends Base.Model
 
   defaults:
@@ -32,9 +41,9 @@ class Invoice extends Base.Model
     invoiceDue: @invoiceDueDate().toUpperCase()
     jobCustomer: @customer.toUpperCase()
     jobSite: @site.toUpperCase()
-    jobAmount: @cost
-    jobGst: Math.floor(@cost * 0.15 * 100) / 100
-    jobBeforeGst: Math.floor((@cost - (@cost * 0.15)) * 100) / 100
+    jobAmount: digits(@cost)
+    jobGst: digits(@cost * 0.15)
+    jobBeforeGst: digits(@cost - (@cost * 0.15))
 
 
 module.exports = Invoice
