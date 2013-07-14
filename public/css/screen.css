@@ -78,6 +78,9 @@ header .button-save.pending:after {
   background: #e67e22;
   height: 6px; }
 
+form label {
+  color: white;
+  line-height: 30px; }
 form input {
   width: 100%;
   height: 40px;

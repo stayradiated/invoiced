@@ -14,6 +14,8 @@
 - Scroll snippets
 - Restyle snippet bar
 
+- Add fields for Labour & Materials and Air Movers
+
 - Add invoice templates. Make a new invoice based on an existing invoice. 
 
     - blank template

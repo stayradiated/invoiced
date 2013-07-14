@@ -20,6 +20,8 @@ class Invoice extends Base.Model
     customer: ''
     site: ''
     cost: 0
+    labour: 0
+    airmover: 0
     paid: 0
 
   constructor: ->
@@ -50,6 +52,8 @@ class Invoice extends Base.Model
     jobAmount: digits(@cost)
     jobGst: digits(@cost * 0.15)
     jobBeforeGst: digits(@cost - (@cost * 0.15))
+    labour: digits(@labour)
+    airmover: digits(@airmover)
 
 
 module.exports = Invoice

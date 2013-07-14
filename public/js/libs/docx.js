@@ -52,7 +52,9 @@
     document: config.docs + 'document.xml.tmpl',
     rowNumber: config.docs + 'row.number.xml.tmpl',
     rowBullet: config.docs + 'row.bullet.xml.tmpl',
-    rowHeading: config.docs + 'row.heading.xml.tmpl'
+    rowHeading: config.docs + 'row.heading.xml.tmpl',
+    rowLabour: config.docs + 'row.labour.xml.tmpl',
+    rowAirMover: config.docs + 'row.airmover.xml.tmpl'
   };
 
   content = {};
@@ -129,6 +131,18 @@
       }
     }
     data.jobDate = startDate;
+    if (invoice.labour !== '0.00') {
+      data.rows += tmpl(content.rowLabour, {
+        cost: invoice.labour
+      });
+    }
+    delete invoice.labour;
+    if (invoice.airmover !== '0.00') {
+      data.rows += tmpl(content.rowAirMover, {
+        cost: invoice.airmover
+      });
+    }
+    delete invoice.airmover;
     merge(data, client);
     merge(data, invoice);
     output = tmpl(content.document, data);

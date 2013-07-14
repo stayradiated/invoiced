@@ -41,6 +41,8 @@ templates =
   rowNumber: config.docs + 'row.number.xml.tmpl'
   rowBullet: config.docs + 'row.bullet.xml.tmpl'
   rowHeading: config.docs + 'row.heading.xml.tmpl'
+  rowLabour: config.docs + 'row.labour.xml.tmpl'
+  rowAirMover: config.docs + 'row.airmover.xml.tmpl'
 
 # Store template contents
 content = {}
@@ -101,6 +103,14 @@ compile = (path, {client, invoice, rows}) ->
 
   # The first job date becomes the start date
   data.jobDate = startDate
+
+  if invoice.labour isnt '0.00'
+    data.rows += tmpl(content.rowLabour, cost: invoice.labour)
+  delete invoice.labour
+
+  if invoice.airmover isnt '0.00'
+    data.rows += tmpl(content.rowAirMover, cost: invoice.airmover)
+  delete invoice.airmover
 
   # Merge data with client and invoice
   merge(data, client)

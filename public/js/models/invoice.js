@@ -37,6 +37,8 @@
       customer: '',
       site: '',
       cost: 0,
+      labour: 0,
+      airmover: 0,
       paid: 0
     };
 
@@ -82,7 +84,9 @@
         jobSite: this.site.toUpperCase(),
         jobAmount: digits(this.cost),
         jobGst: digits(this.cost * 0.15),
-        jobBeforeGst: digits(this.cost - (this.cost * 0.15))
+        jobBeforeGst: digits(this.cost - (this.cost * 0.15)),
+        labour: digits(this.labour),
+        airmover: digits(this.airmover)
       };
     };
 
