@@ -44,8 +44,18 @@
       this["export"] = __bind(this["export"], this);
       this.invoiceDueDate = __bind(this.invoiceDueDate, this);
       this.invoiceDate = __bind(this.invoiceDate, this);
+      this.customerName = __bind(this.customerName, this);
       Invoice.__super__.constructor.apply(this, arguments);
     }
+
+    Invoice.prototype.customerName = function() {
+      var match;
+      match = this.customer.match(/^[a-z]\.\s/i);
+      if (match == null) {
+        match = [''];
+      }
+      return [match[0].slice(0), this.customer.slice(match[0].length)];
+    };
 
     Invoice.prototype.invoiceDate = function() {
       var date;
@@ -64,10 +74,11 @@
 
     Invoice.prototype["export"] = function() {
       return {
+        initial: this.customerName()[0].toUpperCase(),
         invoiceId: this.id,
         invoiceDate: this.invoiceDate(),
         invoiceDue: this.invoiceDueDate().toUpperCase(),
-        jobCustomer: this.customer.toUpperCase(),
+        jobCustomer: this.customerName()[1].toUpperCase(),
         jobSite: this.site.toUpperCase(),
         jobAmount: digits(this.cost),
         jobGst: digits(this.cost * 0.15),

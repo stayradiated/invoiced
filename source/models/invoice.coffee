@@ -25,6 +25,11 @@ class Invoice extends Base.Model
   constructor: ->
     super
 
+  customerName: =>
+    match = @customer.match(/^[a-z]\.\s/i)
+    match ?= ['']
+    return [match[0][0..-1], @customer[match[0].length..]]
+
   invoiceDate: =>
     date = new Date(@date)
     date.toFormat('DD MMMM YYYY')
@@ -36,10 +41,11 @@ class Invoice extends Base.Model
 
   # Create our own custom exporter
   export: =>
+    initial: @customerName()[0].toUpperCase()
     invoiceId: @id
     invoiceDate: @invoiceDate()
     invoiceDue: @invoiceDueDate().toUpperCase()
-    jobCustomer: @customer.toUpperCase()
+    jobCustomer: @customerName()[1].toUpperCase()
     jobSite: @site.toUpperCase()
     jobAmount: digits(@cost)
     jobGst: digits(@cost * 0.15)

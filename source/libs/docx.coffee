@@ -22,7 +22,7 @@ tmpl = (template, namespace) ->
     content ?= existing
     return escape(content)
 
-  template.replace(/\{{2}([A-Za-z0-9_|.]*)\}{2}/g, fn)
+  template.replace(/Z([A-Za-z0-9_|.]*)X/g, fn)
 
 # Escape text to use in a docx file
 escape = (text) ->
@@ -50,6 +50,7 @@ readFile = (name, path) ->
   deferred = When.defer()
   fs.readFile path, (err, contents) ->
     if err
+      console.error err
       return deferred.reject(err)
     deferred.resolve([name, contents.toString()])
   return deferred.promise

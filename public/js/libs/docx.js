@@ -30,7 +30,7 @@
       }
       return escape(content);
     };
-    return template.replace(/\{{2}([A-Za-z0-9_|.]*)\}{2}/g, fn);
+    return template.replace(/Z([A-Za-z0-9_|.]*)X/g, fn);
   };
 
   escape = function(text) {
@@ -64,6 +64,7 @@
     deferred = When.defer();
     fs.readFile(path, function(err, contents) {
       if (err) {
+        console.error(err);
         return deferred.reject(err);
       }
       return deferred.resolve([name, contents.toString()]);
