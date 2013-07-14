@@ -83,8 +83,8 @@
         jobCustomer: this.customerName()[1].toUpperCase(),
         jobSite: this.site.toUpperCase(),
         jobAmount: digits(this.cost),
-        jobGst: digits(this.cost * 0.15),
-        jobBeforeGst: digits(this.cost - (this.cost * 0.15)),
+        jobGst: digits(this.cost / 1.15 * 0.15),
+        jobBeforeGst: digits(this.cost / 1.15),
         labour: digits(this.labour),
         airmover: digits(this.airmover)
       };

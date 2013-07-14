@@ -50,8 +50,8 @@ class Invoice extends Base.Model
     jobCustomer: @customerName()[1].toUpperCase()
     jobSite: @site.toUpperCase()
     jobAmount: digits(@cost)
-    jobGst: digits(@cost * 0.15)
-    jobBeforeGst: digits(@cost - (@cost * 0.15))
+    jobGst: digits(@cost / 1.15 * 0.15)
+    jobBeforeGst: digits(@cost / 1.15)
     labour: digits(@labour)
     airmover: digits(@airmover)
 
