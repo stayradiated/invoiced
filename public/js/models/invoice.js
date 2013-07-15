@@ -35,6 +35,7 @@
       clientId: -1,
       date: new Date().toYMD(),
       customer: '',
+      email: '',
       site: '',
       cost: 0,
       labour: 0,
@@ -86,7 +87,8 @@
         jobGst: digits(this.cost / 1.15 * 0.15),
         jobBeforeGst: digits(this.cost / 1.15),
         labour: digits(this.labour),
-        airmover: digits(this.airmover)
+        airmover: digits(this.airmover),
+        email: this.email
       };
     };
 

@@ -14,15 +14,16 @@ digits = (number) ->
 class Invoice extends Base.Model
 
   defaults:
-    id: 7300
-    clientId: -1
-    date: new Date().toYMD()
-    customer: ''
-    site: ''
-    cost: 0
-    labour: 0
-    airmover: 0
-    paid: 0
+    id:        7300
+    clientId:  -1
+    date:      new Date().toYMD()
+    customer:  ''
+    email:     ''
+    site:      ''
+    cost:      0
+    labour:    0
+    airmover:  0
+    paid:      0
 
   constructor: ->
     super
@@ -43,17 +44,18 @@ class Invoice extends Base.Model
 
   # Create our own custom exporter
   export: =>
-    initial: @customerName()[0].toUpperCase()
-    invoiceId: @id
-    invoiceDate: @invoiceDate()
-    invoiceDue: @invoiceDueDate().toUpperCase()
-    jobCustomer: @customerName()[1].toUpperCase()
-    jobSite: @site.toUpperCase()
-    jobAmount: digits(@cost)
-    jobGst: digits(@cost / 1.15 * 0.15)
-    jobBeforeGst: digits(@cost / 1.15)
-    labour: digits(@labour)
-    airmover: digits(@airmover)
+    initial:       @customerName()[0].toUpperCase()
+    invoiceId:     @id
+    invoiceDate:   @invoiceDate()
+    invoiceDue:    @invoiceDueDate().toUpperCase()
+    jobCustomer:   @customerName()[1].toUpperCase()
+    jobSite:       @site.toUpperCase()
+    jobAmount:     digits(@cost)
+    jobGst:        digits(@cost / 1.15 * 0.15)
+    jobBeforeGst:  digits(@cost / 1.15)
+    labour:        digits(@labour)
+    airmover:      digits(@airmover)
+    email:         @email
 
 
 module.exports = Invoice

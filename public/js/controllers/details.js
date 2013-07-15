@@ -17,6 +17,7 @@
       '.invoice-date': 'input-date',
       '.invoice-site': 'input-site',
       '.invoice-cost': 'input-cost',
+      '.invoice-email': 'input-email',
       '.invoice-labour': 'input-labour',
       '.invoice-customer': 'input-customer',
       '.invoice-airmover': 'input-airmover'
