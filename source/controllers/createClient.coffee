@@ -38,7 +38,9 @@ class CreateClient extends Base.Controller
       address:  @address.val()
       postcode: @postcode.val()
     
-    storage.saveClient(client)
-    @trigger 'toggle'
+    storage.saveClient(client).then =>
+      @clear()
+      @trigger 'toggle'
+      @trigger 'refresh'
 
 module.exports = CreateClient

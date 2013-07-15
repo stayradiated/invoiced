@@ -25,6 +25,7 @@ class Search extends Base.Controller
     'click .clients li': 'selectClient'
     'click .invoices li': 'selectInvoice'
     'click .invoices .new': 'createInvoice'
+    'click .clients .delete': 'toggleDeleteMode'
 
   constructor: ->
 
@@ -92,6 +93,11 @@ class Search extends Base.Controller
   #
   # SEARCH
   # {{{
+  
+  refresh: =>
+    @input.val ''
+    @search()
+
 
   # Search the database for a client
   search: =>
@@ -122,15 +128,29 @@ class Search extends Base.Controller
   #
   # SELECTING
   # {{{
+ 
+  toggleDeleteMode: =>
+    @deleteClientMode = !@deleteClientMode
+    @el.toggleClass 'delete-mode', @deleteClientMode
+
   
   # Set the current client and display invoices
   selectClient: (e) =>
 
-    # Mark element as active
     $el = $(e.currentTarget)
+    clientId = $el.data('id')
+
+    if @deleteClientMode
+      if @temp.clients[clientId].count > 0
+        return window.alert 'Sorry, you must delete all the clients invoices first'
+      if window.confirm 'Are you sure you want to delete that client?'
+        $el.remove()
+        storage.deleteClient(clientId)
+      return
+
+    # Mark element as active
     @active.el.client?.removeClass('active')
     @active.el.client = $el.addClass('active')
-    clientId = $el.data('id')
     @active.client = @temp.clients[clientId]
 
     # Load client invoices
@@ -144,16 +164,23 @@ class Search extends Base.Controller
       # Render inovices
       @renderInvoices(invoices)
 
-
   selectInvoice: (e) =>
 
-    # Mark element as active
     $el = $(e.currentTarget)
+    invoiceId = $el.data('id')
+
+    if @deleteClientMode
+      if window.confirm 'Are you sure you want to delete that invoice?'
+        $el.remove()
+        storage.deleteInvoice(invoiceId)
+        @temp.clients[@temp.invoices[invoiceId].clientId].count -= 1
+      return
+
+    # Mark element as active
     @active.el.invoice?.removeClass('active')
     @active.el.invoice = $el.addClass('active')
     
     # Get ID
-    invoiceId = $el.data('id')
     @active.invoice = @temp.invoices[invoiceId]
 
     # Make sure the date stays as a string

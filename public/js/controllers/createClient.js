@@ -38,7 +38,8 @@
     };
 
     CreateClient.prototype.createClient = function(e) {
-      var client, name, selector, valid, _ref;
+      var client, name, selector, valid, _ref,
+        _this = this;
       e.preventDefault();
       valid = true;
       _ref = this.elements;
@@ -57,8 +58,11 @@
         address: this.address.val(),
         postcode: this.postcode.val()
       };
-      storage.saveClient(client);
-      return this.trigger('toggle');
+      return storage.saveClient(client).then(function() {
+        _this.clear();
+        _this.trigger('toggle');
+        return _this.trigger('refresh');
+      });
     };
 
     return CreateClient;

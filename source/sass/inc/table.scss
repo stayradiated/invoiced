@@ -23,7 +23,7 @@
   }
 
   input {
-    width: calc(100% - 65px);
+    width: calc(100% - 95px);
     height: 40px;
     font-size: 16px;
     border: 2px solid $turquoise;
@@ -64,7 +64,7 @@
 
     input {
       float: left;
-      width: calc(100% - 185px);
+      width: calc(100% - 215px);
     }
   }
 
@@ -78,7 +78,7 @@
 
     input {
       margin-left: 30px;
-      width: calc(100% - 95px);
+      width: calc(100% - 125px);
     }
 
     &:before {
@@ -111,7 +111,22 @@
     input {
       border-left-width: $label_width;
       float: left;
-      width: calc(100% - 65px);
+      width: calc(100% - 95px);
+    }
+  }
+
+  .style {
+    position: relative;
+    background: $clouds;
+    height: 20px;
+    width: 20px;
+    float: right;
+    margin: 10px 5px 0 5px;
+    cursor: pointer;
+    @include transition(background 0.15s);
+
+    &:hover {
+      background: $concrete;
     }
   }
 

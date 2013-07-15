@@ -21,17 +21,19 @@
 
     TableRow.prototype.events = {
       'change input': 'setName',
-      'click .delete': 'delete'
+      'click .delete': 'delete',
+      'click .style': 'style'
     };
 
     function TableRow() {
+      this.style = __bind(this.style, this);
       this.render = __bind(this.render, this);
       this.updateNumber = __bind(this.updateNumber, this);
       this.focus = __bind(this.focus, this);
       this.setName = __bind(this.setName, this);
       this["delete"] = __bind(this["delete"], this);
       TableRow.__super__.constructor.apply(this, arguments);
-      this.row.on('change:number', this.updateNumber);
+      this.listen(this.row, 'change:number', this.updateNumber);
     }
 
     TableRow.prototype["delete"] = function() {
@@ -52,6 +54,24 @@
 
     TableRow.prototype.render = function() {
       return this.template.render(this.row);
+    };
+
+    TableRow.prototype.style = function() {
+      var type;
+      switch (this.row.type) {
+        case 'heading':
+          type = 'number';
+          break;
+        case 'number':
+          type = 'bullet';
+          break;
+        case 'bullet':
+          type = 'heading';
+          break;
+        default:
+          return;
+      }
+      return this.row.type = type;
     };
 
     return TableRow;

@@ -19,6 +19,7 @@ class Table extends Base.Controller
     @model = new Row()
     @model.on 'create:model', @addRow
     @model.on 'destroy:model', @removeRow
+    @model.on 'change:model', @updateRow
     @model.on 'change', @update
     @model.on 'refresh', @render
     
@@ -38,12 +39,26 @@ class Table extends Base.Controller
     view = row.view = new TableRow(row: row)
     view.el = $ view.render()
     view.el.data('item', row)
-    @table.append view.el
+    if opts.pos is 0
+      @table.find("li:eq(#{opts.pos})").before view.el
+    else if opts.pos > 0
+      @table.find("li:eq(#{opts.pos-1})").after view.el
+    else
+      @table.append view.el
     view.bind()
     view.focus() unless opts.nofocus
 
   removeRow: (row) =>
     row.view.el.remove()
+
+  updateRow: (row, value, key) =>
+    if value is 'type'
+      index = row.view.el.index()
+      row.view.unlisten()
+      row.view.unbind()
+      row.view.el.remove()
+      @addRow(row, nofocus: true, pos: index)
+      @update()
 
   update: =>
     @count = 1

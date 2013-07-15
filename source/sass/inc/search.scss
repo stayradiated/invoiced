@@ -85,12 +85,25 @@ $container_width: 800px;
     left: auto;
   }
 
+  .clients:after,
+  .invoices:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 65px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: $wet_asphalt;
+  }
+
   h1 {
     padding-bottom: 20px;
+    float: left;
   }
 
   .container button {
-    @include pos(10px, 0, auto , auto);
+    float: right;
   }
 
   li {
@@ -141,6 +154,16 @@ $container_width: 800px;
     font-size: 16px;
     text-align: center;
     margin-top: 20px;
+  }
+
+  &.delete-mode {
+    .delete {
+      background: $pomegranate;
+    }
+    li:hover {
+      background: $pomegranate;
+      color: $white;
+    }
   }
 
 }

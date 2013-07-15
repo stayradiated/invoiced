@@ -31,6 +31,7 @@
       this.createRow = __bind(this.createRow, this);
       this.render = __bind(this.render, this);
       this.update = __bind(this.update, this);
+      this.updateRow = __bind(this.updateRow, this);
       this.removeRow = __bind(this.removeRow, this);
       this.addRow = __bind(this.addRow, this);
       var _this = this;
@@ -39,6 +40,7 @@
       this.model = new Row();
       this.model.on('create:model', this.addRow);
       this.model.on('destroy:model', this.removeRow);
+      this.model.on('change:model', this.updateRow);
       this.model.on('change', this.update);
       this.model.on('refresh', this.render);
       $(this.table).sortable({
@@ -64,7 +66,13 @@
       });
       view.el = $(view.render());
       view.el.data('item', row);
-      this.table.append(view.el);
+      if (opts.pos === 0) {
+        this.table.find("li:eq(" + opts.pos + ")").before(view.el);
+      } else if (opts.pos > 0) {
+        this.table.find("li:eq(" + (opts.pos - 1) + ")").after(view.el);
+      } else {
+        this.table.append(view.el);
+      }
       view.bind();
       if (!opts.nofocus) {
         return view.focus();
@@ -73,6 +81,21 @@
 
     Table.prototype.removeRow = function(row) {
       return row.view.el.remove();
+    };
+
+    Table.prototype.updateRow = function(row, value, key) {
+      var index;
+      if (value === 'type') {
+        index = row.view.el.index();
+        row.view.unlisten();
+        row.view.unbind();
+        row.view.el.remove();
+        this.addRow(row, {
+          nofocus: true,
+          pos: index
+        });
+        return this.update();
+      }
     };
 
     Table.prototype.update = function() {

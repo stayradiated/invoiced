@@ -14,10 +14,12 @@ class TableRow extends Base.Controller
   events:
     'change input': 'setName'
     'click .delete': 'delete'
+    'click .style': 'style'
 
   constructor: ->
     super
-    @row.on 'change:number', @updateNumber
+    @listen @row,
+      'change:number', @updateNumber
 
   delete: =>
     @row.destroy()
@@ -33,5 +35,16 @@ class TableRow extends Base.Controller
 
   render: =>
     @template.render(@row)
+
+  style: =>
+    switch @row.type
+      when 'heading'
+        type = 'number'
+      when 'number'
+        type = 'bullet'
+      when 'bullet'
+        type = 'heading'
+      else return
+    @row.type = type
 
 module.exports = TableRow

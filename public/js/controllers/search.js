@@ -40,14 +40,17 @@
       'change input.search-box': 'queryChange',
       'click .clients li': 'selectClient',
       'click .invoices li': 'selectInvoice',
-      'click .invoices .new': 'createInvoice'
+      'click .invoices .new': 'createInvoice',
+      'click .clients .delete': 'toggleDeleteMode'
     };
 
     function Search() {
       this.createInvoice = __bind(this.createInvoice, this);
       this.selectInvoice = __bind(this.selectInvoice, this);
       this.selectClient = __bind(this.selectClient, this);
+      this.toggleDeleteMode = __bind(this.toggleDeleteMode, this);
       this.search = __bind(this.search, this);
+      this.refresh = __bind(this.refresh, this);
       this.renderInvoices = __bind(this.renderInvoices, this);
       this.renderClients = __bind(this.renderClients, this);
       this.show = __bind(this.show, this);
@@ -104,6 +107,11 @@
       }));
     };
 
+    Search.prototype.refresh = function() {
+      this.input.val('');
+      return this.search();
+    };
+
     Search.prototype.search = function() {
       var query,
         _this = this;
@@ -132,15 +140,30 @@
       });
     };
 
+    Search.prototype.toggleDeleteMode = function() {
+      this.deleteClientMode = !this.deleteClientMode;
+      return this.el.toggleClass('delete-mode', this.deleteClientMode);
+    };
+
     Search.prototype.selectClient = function(e) {
       var $el, clientId, _ref,
         _this = this;
       $el = $(e.currentTarget);
+      clientId = $el.data('id');
+      if (this.deleteClientMode) {
+        if (this.temp.clients[clientId].count > 0) {
+          return window.alert('Sorry, you must delete all the clients invoices first');
+        }
+        if (window.confirm('Are you sure you want to delete that client?')) {
+          $el.remove();
+          storage.deleteClient(clientId);
+        }
+        return;
+      }
       if ((_ref = this.active.el.client) != null) {
         _ref.removeClass('active');
       }
       this.active.el.client = $el.addClass('active');
-      clientId = $el.data('id');
       this.active.client = this.temp.clients[clientId];
       return storage.getClientInvoices(clientId).then(function(invoices) {
         var invoice, _i, _len;
@@ -157,11 +180,19 @@
       var $el, invoiceId, _ref,
         _this = this;
       $el = $(e.currentTarget);
+      invoiceId = $el.data('id');
+      if (this.deleteClientMode) {
+        if (window.confirm('Are you sure you want to delete that invoice?')) {
+          $el.remove();
+          storage.deleteInvoice(invoiceId);
+          this.temp.clients[this.temp.invoices[invoiceId].clientId].count -= 1;
+        }
+        return;
+      }
       if ((_ref = this.active.el.invoice) != null) {
         _ref.removeClass('active');
       }
       this.active.el.invoice = $el.addClass('active');
-      invoiceId = $el.data('id');
       this.active.invoice = this.temp.invoices[invoiceId];
       if (this.active.invoice.date instanceof Date) {
         this.active.invoice.date = this.active.invoice.date.toYMD();

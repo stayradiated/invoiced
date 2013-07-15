@@ -52,6 +52,9 @@ class App extends Base.Controller
     @details       = new Details(el: @details)
     @clientDetails = new Clients(el: @clientDetails)
     
+    # Show search window
+    @setupSearch @search
+
     # Creating a new Client
     @setupCreateClient @createClient
 
@@ -60,9 +63,6 @@ class App extends Base.Controller
 
     # Header pane buttons
     @setupHeader @header
-
-    # Show search window
-    @setupSearch @search
     
     # Display search page
     @search.search()
@@ -117,8 +117,10 @@ class App extends Base.Controller
   # {{{
 
   setupCreateClient: (el) =>
+    console.log @search
     @createClient  = new CreateClient(el: el)
     @createClient.on 'toggle', @toggleCreateClient
+    @createClient.on 'refresh', @search.refresh
 
   # }}}
   #
@@ -144,9 +146,19 @@ class App extends Base.Controller
         table: @table.model
 
     @header.on 'generate', => @file.click()
-    @header.on 'save', @saveInvoice
     @header.on 'open', => @search.show()
     @header.on 'create', @createInvoice
+
+    # Don't overwrite olther invoices
+    @header.on 'save', =>
+      if @details.model.unsaved
+        storage.invoiceExists(@details.model.id).then (results) =>
+          if results[0].count > 0
+            window.alert 'An invoice already exists with that ID, please choose another one'
+          else
+            @saveInvoice()
+      else
+        @saveInvoice()
 
 
   # }}}
@@ -173,6 +185,7 @@ class App extends Base.Controller
       customer: client.name
       site: client.address
     }, true)
+    @details.model.unsaved = true
     @clientDetails.model.refresh(client, true)
     @table.model.refresh({}, true)
 
@@ -180,6 +193,7 @@ class App extends Base.Controller
   openInvoice: (client, invoice, table) =>
     @clientDetails.model.refresh(client, true)
     @details.model.refresh(invoice, true)
+    @details.model.unsaved = false
     @table.model.refresh(table, true)
 
   # Save an invoice to the database
@@ -187,6 +201,7 @@ class App extends Base.Controller
     storage.saveInvoice
       invoice: @details.model.toJSON()
       rows: @table.model.toJSON()
+    @details.model.unsaved = false
     @header.resetStatus()
 
   # }}}

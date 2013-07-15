@@ -81,10 +81,10 @@
       this.clientDetails = new Clients({
         el: this.clientDetails
       });
+      this.setupSearch(this.search);
       this.setupCreateClient(this.createClient);
       this.setupSnippets(this.snippets);
       this.setupHeader(this.header);
-      this.setupSearch(this.search);
       this.search.search();
       this.file.on('change', this.saveFile);
     }
@@ -125,10 +125,12 @@
     };
 
     App.prototype.setupCreateClient = function(el) {
+      console.log(this.search);
       this.createClient = new CreateClient({
         el: el
       });
-      return this.createClient.on('toggle', this.toggleCreateClient);
+      this.createClient.on('toggle', this.toggleCreateClient);
+      return this.createClient.on('refresh', this.search.refresh);
     };
 
     App.prototype.toggleSnippets = function() {
@@ -151,11 +153,23 @@
       this.header.on('generate', function() {
         return _this.file.click();
       });
-      this.header.on('save', this.saveInvoice);
       this.header.on('open', function() {
         return _this.search.show();
       });
-      return this.header.on('create', this.createInvoice);
+      this.header.on('create', this.createInvoice);
+      return this.header.on('save', function() {
+        if (_this.details.model.unsaved) {
+          return storage.invoiceExists(_this.details.model.id).then(function(results) {
+            if (results[0].count > 0) {
+              return window.alert('An invoice already exists with that ID, please choose another one');
+            } else {
+              return _this.saveInvoice();
+            }
+          });
+        } else {
+          return _this.saveInvoice();
+        }
+      });
     };
 
     App.prototype.setupSearch = function(el) {
@@ -176,6 +190,7 @@
         customer: client.name,
         site: client.address
       }, true);
+      this.details.model.unsaved = true;
       this.clientDetails.model.refresh(client, true);
       return this.table.model.refresh({}, true);
     };
@@ -183,6 +198,7 @@
     App.prototype.openInvoice = function(client, invoice, table) {
       this.clientDetails.model.refresh(client, true);
       this.details.model.refresh(invoice, true);
+      this.details.model.unsaved = false;
       return this.table.model.refresh(table, true);
     };
 
@@ -191,6 +207,7 @@
         invoice: this.details.model.toJSON(),
         rows: this.table.model.toJSON()
       });
+      this.details.model.unsaved = false;
       return this.header.resetStatus();
     };
 

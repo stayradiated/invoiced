@@ -65,6 +65,16 @@ class Storage extends Base.Event
       row.invoiceId = invoice.id
       @_query(query.row, [row, row])
 
+  invoiceExists: (id) =>
+    @_query 'SELECT COUNT(id) as count FROM invoices WHERE id=?', id
+
+  deleteInvoice: (invoiceId) =>
+    @_query 'DELETE FROM invoices WHERE id=?', invoiceId
+    @_query 'DELETE FROM rows WHERE id=?', invoiceId
+
+  deleteClient: (clientId) =>
+    @_query 'DELETE FROM clients WHERE id=?', clientId
+
   deleteSnippet: (snippet) =>
     @_query 'DELETE FROM snippets WHERE id=?', snippet.id
 

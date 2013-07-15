@@ -28,6 +28,9 @@
       this.getSnippets = __bind(this.getSnippets, this);
       this.saveSnippet = __bind(this.saveSnippet, this);
       this.deleteSnippet = __bind(this.deleteSnippet, this);
+      this.deleteClient = __bind(this.deleteClient, this);
+      this.deleteInvoice = __bind(this.deleteInvoice, this);
+      this.invoiceExists = __bind(this.invoiceExists, this);
       this.saveInvoice = __bind(this.saveInvoice, this);
       this._query = __bind(this._query, this);
       this.escape = __bind(this.escape, this);
@@ -95,6 +98,19 @@
         _results.push(this._query(query.row, [row, row]));
       }
       return _results;
+    };
+
+    Storage.prototype.invoiceExists = function(id) {
+      return this._query('SELECT COUNT(id) as count FROM invoices WHERE id=?', id);
+    };
+
+    Storage.prototype.deleteInvoice = function(invoiceId) {
+      this._query('DELETE FROM invoices WHERE id=?', invoiceId);
+      return this._query('DELETE FROM rows WHERE id=?', invoiceId);
+    };
+
+    Storage.prototype.deleteClient = function(clientId) {
+      return this._query('DELETE FROM clients WHERE id=?', clientId);
     };
 
     Storage.prototype.deleteSnippet = function(snippet) {
