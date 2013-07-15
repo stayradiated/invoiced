@@ -116,7 +116,7 @@
     Storage.prototype.searchClients = function(query) {
       console.log('searching for', query);
       query = this.escape(query);
-      return this._query("SELECT * FROM clients WHERE\nname LIKE '%" + query + "%' OR\naddress LIKE '%" + query + "%' OR\ncity LIKE '%" + query + "%' OR\npostcode LIKE '%" + query + "%'");
+      return this._query("SELECT * FROM clients WHERE\nname LIKE '%" + query + "%' OR\naddress LIKE '%" + query + "%' OR\ncity LIKE '%" + query + "%' OR\npostcode LIKE '%" + query + "%'\nORDER BY dateCreated DESC");
     };
 
     Storage.prototype.getClient = function(id) {
@@ -135,7 +135,7 @@
     };
 
     Storage.prototype.getClientInvoices = function(clientId) {
-      return this._query('SELECT * FROM invoices WHERE clientId=?', clientId);
+      return this._query("SELECT * FROM invoices\nWHERE clientId=?\nORDER BY dateUpdated DESC", clientId);
     };
 
     Storage.prototype.getClientInvoiceCount = function(clientId) {

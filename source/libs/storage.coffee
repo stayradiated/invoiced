@@ -86,7 +86,8 @@ class Storage extends Base.Event
       name LIKE '%#{query}%' OR
       address LIKE '%#{query}%' OR
       city LIKE '%#{query}%' OR
-      postcode LIKE '%#{query}%'"""
+      postcode LIKE '%#{query}%'
+      ORDER BY dateCreated DESC"""
 
   # Get a single client
   getClient: (id) =>
@@ -103,7 +104,9 @@ class Storage extends Base.Event
 
   # Get an array of all invoices for a specified client
   getClientInvoices: (clientId) =>
-    @_query 'SELECT * FROM invoices WHERE clientId=?', clientId
+    @_query """SELECT * FROM invoices
+      WHERE clientId=?
+      ORDER BY dateUpdated DESC""", clientId
 
   # Get the number of invoices attached to the clientId
   getClientInvoiceCount: (clientId) =>
