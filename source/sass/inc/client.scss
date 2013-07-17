@@ -1,3 +1,5 @@
+
+// Client Details in Sidebar
 .client-details {
   background: $wet_asphalt;
   padding: 20px;
@@ -14,4 +16,15 @@
     color: $white;
     line-height: 21px;
   }
+}
+
+// Client editor
+.create-client {
+  padding: 20px;
+  @include pos(0, auto, 0, 0);
+  width: $create_client_width;
+  background: $wet_asphalt;
+  @include box-sizing(border-box);
+  @include transition(left 0.5s);
+  z-index: 6;
 }

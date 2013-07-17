@@ -378,7 +378,7 @@ button.toggle-sidebar {
 button.toggle-sidebar:hover {
   background: #7f8c8d; }
 
-button.new {
+button.dark {
   padding: 10px;
   background: #34495e;
   color: white;
@@ -389,13 +389,8 @@ button.new {
   -moz-transition: background 0.15s;
   -o-transition: background 0.15s;
   transition: background 0.15s; }
-button.new:hover {
+button.dark:hover {
   background: #3498d8; }
-
-.no-create-client .search .create-client {
-  left: -300px; }
-.no-create-client .search .container {
-  margin-left: -400px; }
 
 .search {
   position: absolute;
@@ -406,22 +401,6 @@ button.new:hover {
   background: #2c3e50;
   z-index: 5;
   overflow-y: hidden; }
-.search .create-client {
-  padding: 20px;
-  position: absolute;
-  top: 0;
-  right: auto;
-  bottom: 0;
-  left: 0;
-  width: 300px;
-  background: #34495e;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-transition: left 0.5s;
-  -moz-transition: left 0.5s;
-  -o-transition: left 0.5s;
-  transition: left 0.5s; }
 .search .container {
   width: 800px;
   position: absolute;
@@ -555,6 +534,52 @@ button.new:hover {
   color: white;
   line-height: 21px; }
 
+.create-client {
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 300px;
+  background: #34495e;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: left 0.5s;
+  -moz-transition: left 0.5s;
+  -o-transition: left 0.5s;
+  transition: left 0.5s;
+  z-index: 6; }
+
+.invoice-records {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  padding: 20px;
+  background: #34495e;
+  z-index: 7; }
+.invoice-records table {
+  width: 100%; }
+.invoice-records thead tr {
+  border-bottom: 4px solid #2c3e50; }
+.invoice-records th {
+  font-weight: bold; }
+.invoice-records th, .invoice-records td {
+  color: white;
+  padding: 0 10px;
+  line-height: 50px; }
+.invoice-records tr:nth-child(2n) {
+  background: #3d566e; }
+.invoice-records .missing td {
+  color: #bdc3c7;
+  font-style: italic; }
+.invoice-records .missing td:last-child {
+  text-align: center; }
+
 body {
   overflow-x: hidden;
   -webkit-user-select: none;
@@ -652,3 +677,8 @@ section.snippets {
   right: -300px; }
 .no-snippets section.table {
   right: 0; }
+
+.no-create-client .create-client {
+  left: -300px; }
+.no-create-client .search .container {
+  margin-left: -400px; }

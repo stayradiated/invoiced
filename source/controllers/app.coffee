@@ -17,6 +17,7 @@ Details  = require '../controllers/details'
 Clients  = require '../controllers/clients'
 Snippets = require '../controllers/snippets'
 CreateClient = require '../controllers/createClient'
+Records = require '../controllers/records'
 
 # Storage is global so it can be accessed from anywhere
 storage = global.storage = new Storage()
@@ -35,10 +36,12 @@ class App extends Base.Controller
     '#save-file':      'file'
     '.client-details': 'clientDetails'
     '.create-client':  'createClient'
+    '.invoice-records': 'records'
 
   events:
     'click .toggle-sidebar': 'toggleSnippets'
     'click .toggle-create-client': 'toggleCreateClient'
+    'click .show-records': 'showRecords'
 
   constructor: ->
     super
@@ -51,6 +54,7 @@ class App extends Base.Controller
     @table         = new Table(el: @table)
     @details       = new Details(el: @details)
     @clientDetails = new Clients(el: @clientDetails)
+    @records       = new Records(el: @records)
     
     # Show search window
     @setupSearch @search
@@ -132,6 +136,9 @@ class App extends Base.Controller
 
   toggleCreateClient: =>
     @el.toggleClass('no-create-client')
+
+  showRecords: =>
+    @records.show()
 
   # }}}
   #

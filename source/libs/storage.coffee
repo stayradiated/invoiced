@@ -110,7 +110,7 @@ class Storage extends Base.Event
 
   # Get an array of all invoices from the database
   getInvoices: =>
-    @_query 'SELECT * FROM invoices'
+    @_query 'SELECT * FROM invoices ORDER BY id DESC'
 
   # Get an array of all invoices for a specified client
   getClientInvoices: (clientId) =>

@@ -147,7 +147,7 @@
     };
 
     Storage.prototype.getInvoices = function() {
-      return this._query('SELECT * FROM invoices');
+      return this._query('SELECT * FROM invoices ORDER BY id DESC');
     };
 
     Storage.prototype.getClientInvoices = function(clientId) {

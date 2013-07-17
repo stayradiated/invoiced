@@ -1,4 +1,3 @@
-
 Base = require 'base'
 $ = require 'jqueryify'
 TableRow = require '../controllers/table.row'

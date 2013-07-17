@@ -1,3 +1,11 @@
+// Layout config
+
+$header_height: 50px;
+$snippets_width: 300px;
+$create_client_width: 300px;
+$search_width: 800px;
+
+// Imports
 @import "compass/css3";
 @import "compass/reset";
 @import "mixins";
@@ -9,6 +17,7 @@
 @import "inc/buttons";
 @import "inc/search";
 @import "inc/client";
+@import "inc/records";
 
 body {
   overflow-x: hidden;
@@ -60,10 +69,9 @@ hr {
   margin: 20px 0;
 }
 
-// PANELS
 
-$header_height: 50px;
-$snippets_width: 300px;
+
+// PANELS
 
 header {
   @include pos(0, 0, auto, 0);
@@ -107,5 +115,14 @@ section.snippets {
   }
   section.table {
     right: 0;
+  }
+}
+
+.no-create-client {
+  .create-client {
+    left: -$create_client_width;
+  }
+  .search .container {
+    margin-left: -$search_width / 2;
   }
 }

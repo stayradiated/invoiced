@@ -10,46 +10,91 @@
 
   <!-- File Dialogs -->
   <input id="save-file" style="display: none" type="file" nwsaveas>
-  
+
+
+  <!-- Client Editor -->
+  <div class="create-client">
+
+    <h2>Create Client</h2>
+
+    <form class="create-client-details">
+      <div class="control">
+        <input class="client-name" placeholder="Name" type="text" />
+      </div>
+      <div class="control">
+        <input class="client-address" placeholder="Street Address" type="text" />
+      </div>
+      <div class="control">
+        <input class="client-city" placeholder="City" type="text" />
+      </div>
+      <div class="control">
+        <input class="client-postcode" placeholder="Post Code" type="text" />
+      </div>
+      <button class="primary">Create Client</button>
+    </form>
+
+  </div>
+
+
+  <!-- Invoice Records Page -->
+  <div class="invoice-records">
+
+    <h2>Invoice Records</h2>
+
+    <button class="hide">Close</button>
+    <button class="toggle-missing">Show Missing</button>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Date</th>
+          <th>Customer</th>
+          <th>Site</th>
+          <th>Cost</th>
+          <th>Paid</th>
+          <th>Printed</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <ul>
+      <li>
+         
+      </li> 
+    </ul>
+
+  </div>
+
+
+  <!-- Search Page -->
   <div class="search">
-
-    <div class="create-client">
-      <h2>Create Client</h2>
-      <form class="create-client-details">
-        <div class="control">
-          <input class="client-name" placeholder="Name" type="text" />
-        </div>
-        <div class="control">
-          <input class="client-address" placeholder="Street Address" type="text" />
-        </div>
-        <div class="control">
-          <input class="client-city" placeholder="City" type="text" />
-        </div>
-        <div class="control">
-          <input class="client-postcode" placeholder="Post Code" type="text" />
-        </div>
-        <button class="primary">Create Client</button>
-      </form>
-    </div>
-
     <div class="container">
+
       <input type="search" class="search-box" placeholder="What are you looking for?" autofocus /> 
+
       <div class="clients">
         <h1>Clients</h1>
-        <button class="new toggle-create-client">New Client</button>
-        <button class="new delete">Delete</button>
+        <button class="dark subtle toggle-create-client">New Client</button>
+        <button class="dark subtle delete">Delete</button>
         <ul></ul>
       </div>
+
       <div class="invoices">
         <h1>Invoices</h1>
-        <button class="new">New Invoice</button>
+        <button class="dark new">New Invoice</button>
+        <button class="dark show-records">View All</button>
         <ul>
           <p class="message">Select a client</p>
         </ul>
       </div>
+
     </div>
   </div>
 
+
+  <!-- Header -->
   <header class=>
     <h1>InVoice</h1>
     <nav>
@@ -61,6 +106,7 @@
     </nav>
   </header>
 
+  <!-- Invoice Details Editor -->
   <section class="details">
 
     <h2>Invoice Details</h2>
@@ -123,6 +169,8 @@
     
   </section>
 
+
+  <!-- Table Editor -->
   <section class="table">
 
     <h2>Table Rows</h2>
@@ -136,8 +184,11 @@
       <button class="secondary add-row row-bullet">Add Bullet</button>
       <button class="toggle-sidebar">Toggle Snippets</button>
     </div>
+
   </section>
 
+
+  <!-- Snippets Editor -->
   <section class="snippets">
     <h2>Snippets</h2>
     <ul></ul>

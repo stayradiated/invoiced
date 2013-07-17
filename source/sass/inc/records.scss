@@ -1,0 +1,42 @@
+.invoice-records {
+
+  @include pos(0, 0, 0, 0);
+
+  display: none;
+
+  padding: 20px;
+  background: $wet_asphalt;
+  z-index: 7;
+
+  table {
+    width: 100%;
+  }
+
+  thead tr {
+    border-bottom: 4px solid $midnight_blue;
+  }
+
+  th {
+    font-weight: bold;
+  }
+
+  th, td {
+    color: $white;
+    padding: 0 10px;
+    line-height: 50px;
+  }
+
+  tr:nth-child(2n) {
+    background: lighten($wet_asphalt, 5);
+  }
+
+  .missing {
+    td {
+      color: $silver;
+      font-style: italic;
+    }
+    td:last-child {
+      text-align: center;
+    }
+  }
+}
