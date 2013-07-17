@@ -122,7 +122,7 @@
     };
 
     Storage.prototype.getSnippets = function() {
-      return this._query('SELECT * FROM snippets');
+      return this._query('SELECT * FROM snippets ORDER BY content');
     };
 
     Storage.prototype.getClients = function() {

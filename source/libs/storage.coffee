@@ -82,7 +82,7 @@ class Storage extends Base.Event
     @_query 'INSERT INTO snippets SET ?', snippet.toJSON()
 
   getSnippets: =>
-    @_query 'SELECT * FROM snippets'
+    @_query 'SELECT * FROM snippets ORDER BY content'
 
   # Get an array of all clients from the database
   getClients: =>
