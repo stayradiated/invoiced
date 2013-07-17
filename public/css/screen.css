@@ -562,23 +562,56 @@ button.dark:hover {
   padding: 20px;
   background: #34495e;
   z-index: 7; }
-.invoice-records table {
-  width: 100%; }
-.invoice-records thead tr {
+.invoice-records .table {
+  position: absolute;
+  top: 120px;
+  right: 20px;
+  bottom: 20px;
+  left: 20px; }
+.invoice-records .table-head .row {
   border-bottom: 4px solid #2c3e50; }
-.invoice-records th {
+.invoice-records .table-body {
+  position: absolute;
+  top: 54px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto; }
+.invoice-records .row {
+  display: block;
+  width: 100%;
+  font-size: 0; }
+.invoice-records .table-head .cell {
   font-weight: bold; }
-.invoice-records th, .invoice-records td {
+.invoice-records .cell {
   color: white;
+  display: block;
+  display: inline-block;
   padding: 0 10px;
-  line-height: 50px; }
-.invoice-records tr:nth-child(2n) {
+  line-height: 50px;
+  font-size: 16px; }
+.invoice-records .row:nth-child(2n) {
   background: #3d566e; }
-.invoice-records .missing td {
+.invoice-records .id {
+  width: 50px; }
+.invoice-records .date {
+  width: 100px; }
+.invoice-records .customer {
+  width: calc(50% - 197px); }
+.invoice-records .site {
+  width: calc(50% - 250px); }
+.invoice-records .cost {
+  width: 100px; }
+.invoice-records .paid {
+  width: 25px; }
+.invoice-records .printed {
+  width: 25px; }
+.invoice-records .missing .cell {
   color: #bdc3c7;
   font-style: italic; }
-.invoice-records .missing td:last-child {
-  text-align: center; }
+.invoice-records .missing .cell:last-child {
+  text-align: center;
+  width: calc(100% - 90px); }
 
 body {
   overflow-x: hidden;

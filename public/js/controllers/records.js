@@ -16,7 +16,7 @@
     };
 
     Records.prototype.elements = {
-      'table tbody': 'table'
+      '.table-body': 'table'
     };
 
     Records.prototype.events = {
@@ -57,7 +57,7 @@
         for (_i = 0, _len = invoices.length; _i < _len; _i++) {
           invoice = invoices[_i];
           if (_this.showMissing && lastId) {
-            for (id = _j = _ref = lastId + 1, _ref1 = invoice.id - 1; _j >= _ref1; id = _j += -1) {
+            for (id = _j = _ref = lastId - 1, _ref1 = invoice.id + 1; _j >= _ref1; id = _j += -1) {
               html += _this.template.missing.render({
                 id: id
               });

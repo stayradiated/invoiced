@@ -8,35 +8,82 @@
   background: $wet_asphalt;
   z-index: 7;
 
-  table {
-    width: 100%;
+  .table {
+    @include pos(120px, 20px, 20px, 20px);
   }
 
-  thead tr {
+  .table-head, .table-body {
+  }
+
+  .table-head .row {
     border-bottom: 4px solid $midnight_blue;
   }
 
-  th {
+  .table-body {
+    @include pos(54px, 0, 0, 0);
+    overflow-y: auto;
+  }
+
+  .row {
+    display: block;
+    width: 100%;
+    font-size: 0;
+  }
+
+  .table-head .cell {
     font-weight: bold;
   }
 
-  th, td {
+  .cell {
     color: $white;
+    display: block;
+    display: inline-block;
     padding: 0 10px;
     line-height: 50px;
+    font-size: 16px;
   }
 
-  tr:nth-child(2n) {
+  .row:nth-child(2n) {
     background: lighten($wet_asphalt, 5);
   }
 
+  // Widths
+  .id {
+    width: 50px;
+  }
+
+  .date {
+    width: 100px;
+  }
+
+  .customer {
+    width: calc(50% - 197px);
+  }
+
+  .site {
+    width: calc(50% - 250px);
+  }
+
+  .cost {
+    width: 100px;
+  }
+
+  .paid {
+    width: 25px;
+  }
+
+  .printed {
+    width: 25px;
+  }
+
   .missing {
-    td {
+    .cell {
       color: $silver;
       font-style: italic;
     }
-    td:last-child {
+    .cell:last-child {
       text-align: center;
+      width: calc(100% - 90px);
     }
   }
 }

@@ -8,7 +8,7 @@ class Records extends Base.Controller
     record: new Base.View('record')
 
   elements:
-    'table tbody': 'table'
+    '.table-body': 'table'
 
   events:
     'click .hide': 'hide'
@@ -35,7 +35,7 @@ class Records extends Base.Controller
     storage.getInvoices().then (invoices) =>
       for invoice in invoices
         if @showMissing and lastId
-          for id in [lastId+1..invoice.id-1] by -1
+          for id in [lastId-1 .. invoice.id+1] by -1
             html += @template.missing.render(id: id)
         html += @template.record.render invoice
         lastId = invoice.id

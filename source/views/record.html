@@ -1,9 +1,9 @@
-<tr>
-  <td>{{id}}</td>
-  <td>{{date.toFormat('DD MMM YYYY')}}</td>
-  <td>{{customer}}</td>
-  <td>{{site}}</td>
-  <td>${{cost}}</td>
-  <td>{% if paid %}&#10004;{% endif %}</td>
-  <td>{% if printed %}&#10004;{% endif %}</td>
-</tr>
+<div class="row">
+  <div class="cell id">{{id}}</div>
+  <div class="cell date">{{date.toFormat('DD MMM YYYY')}}</div>
+  <div class="cell customer">{{customer}}</div>
+  <div class="cell site">{{site}}</div>
+  <div class="cell cost">${{cost}}</div>
+  <div class="cell paid">{% if paid %}&#10004;{% endif %}</div>
+  <div class="cell printed">{% if printed %}&#10004;{% endif %}</div>
+</div>
