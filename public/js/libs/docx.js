@@ -43,7 +43,7 @@
 
   config = {};
 
-  config.docs = __dirname + '/../../../templates/';
+  config.docs = __dirname + '/../../../template/';
 
   config.folder = config.docs + 'template/';
 
