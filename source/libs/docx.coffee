@@ -21,7 +21,7 @@ escape = (text) ->
 
 # Configuration
 config = {}
-config.docs = __dirname + '/../../../templates/'
+config.docs = __dirname + '/../../../template/'
 config.folder = config.docs + 'template/'
 config.template = config.folder + 'word/document.xml'
 

@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
 --
 
 CREATE TABLE IF NOT EXISTS `invoices` (
-  `id` int(11) unsigned NOT NULL,
+  `id` varchar(20) NOT NULL,
   `clientId` int(11) unsigned DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `date` date DEFAULT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `invoices` (
 
 CREATE TABLE IF NOT EXISTS `rows` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `invoiceId` int(11) unsigned NOT NULL,
+  `invoiceId` varchar(50) NOT NULL,
   `type` varchar(20) NOT NULL DEFAULT '',
   `number` int(11) DEFAULT NULL,
   `name` varchar(500) DEFAULT NULL,
