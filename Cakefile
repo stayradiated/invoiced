@@ -26,7 +26,7 @@ task 'build', 'Build coffeescript files', (options) ->
   terminal.stderr.on 'data', (data) -> console.log(data.toString())
 
 
-task 'package', 'Package application', ->
+task 'package_win', 'Package application (for Windows)', ->
 
   base = '~/Applications/node-webkit-win/'
   nw = base + 'nw.exe'
@@ -39,3 +39,12 @@ task 'package', 'Package application', ->
     exec "cat #{nw} + #{zip} > #{out}", ->
       console.log 'Built to', out
 
+task 'package_mac', 'Package application (for Mac)', ->
+
+  app = '~/Applications/node-webkit.app'
+  filename = 'invoicer.app'
+  out = "#{filename}/Contents/Resources/app.nw"
+
+  exec "cp -r #{app} #{filename}"
+  exec "mkdir -p #{out}"
+  exec "cp -r public source template node_modules package.json #{out}"
