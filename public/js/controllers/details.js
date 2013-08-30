@@ -40,7 +40,7 @@
       name = this.elements['.' + e.target.className].slice(6);
       value = e.target.value;
       if (e.target.attributes.type.value === 'number') {
-        value = parseFloat(value, 10);
+        value = parseFloat(value, 10) || 0;
       }
       return this.model[name] = value;
     };
