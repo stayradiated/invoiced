@@ -81,6 +81,7 @@ CREATE TABLE IF NOT EXISTS `rows` (
 
 CREATE TABLE IF NOT EXISTS `snippets` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `content` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
