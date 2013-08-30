@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `invoices` (
 
 CREATE TABLE IF NOT EXISTS `rows` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `invoiceId` varchar(50) NOT NULL,
+  `invoiceId` varchar(20) NOT NULL,
   `type` varchar(20) NOT NULL DEFAULT '',
   `number` int(11) DEFAULT NULL,
   `name` varchar(500) DEFAULT NULL,
