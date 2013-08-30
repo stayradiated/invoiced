@@ -45,6 +45,20 @@ task 'package_mac', 'Package application (for Mac)', ->
   filename = 'invoicer.app'
   out = "#{filename}/Contents/Resources/app.nw"
 
-  exec "cp -r #{app} #{filename}"
-  exec "mkdir -p #{out}"
-  exec "cp -r public source template node_modules package.json #{out}"
+  commands = [
+    "rm -rf #{filename}",
+    "cp -r #{app} #{filename}",
+    "mkdir -p #{out}",
+    "cp -r public source template node_modules package.json #{out}"
+  ]
+
+  i = -1
+  run = ->
+    i++
+    return if i >= commands.length
+    console.log commands[i]
+    exec commands[i], run
+
+  run()
+
+
