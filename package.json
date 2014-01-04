@@ -4,21 +4,20 @@
   "description": "Generator Word Documents",
   "author": "George Czabania",
   "license": "BSD",
-
   "main": "public/index.html",
   "window": {
     "toolbar": false,
     "height": 860,
     "width": 1235
   },
-
   "dependencies": {
-    "base": "git://github.com/stayradiated/Base.git#master",
+    "base": "git://github.com/stayradiated/base.git#master",
     "jqueryify": "*",
     "date-utils": "*",
     "archiver": "*",
     "underscore": "*",
     "when": "*",
-    "mysql": "2.0.0-alpha8"
+    "mysql": "2.0.0-alpha8",
+    "swig": "~1.2.2"
   }
 }

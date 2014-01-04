@@ -1,25 +1,25 @@
 
 Base = require 'base'
 
-class CreateClient extends Base.Controller
+class CreateClient extends Base.View
 
-  elements:
-    '.client-name': 'name'
-    '.client-address': 'address'
-    '.client-city': 'city'
-    '.client-postcode': 'postcode'
+  ui:
+    name: '.client-name'
+    address: '.client-address'
+    city: '.client-city'
+    postcode: '.client-postcode'
 
   events:
     'submit .create-client-details': 'createClient'
 
   constructor: ->
     super
-    @city.val 'Rotorua'
+    @ui.city.val 'Rotorua'
 
   clear: ->
-    for selector, name of @elements
-      @[name].val ''
-    @city.val 'Rotorua'
+    for name, el of @ui when not 'city'
+      el.val ''
+    @ui.city.val 'Rotorua'
 
   # Create a new client
   createClient: (e) =>
@@ -33,11 +33,11 @@ class CreateClient extends Base.Controller
     return unless valid
 
     client =
-      name:     @name.val()
-      city:     @city.val()
-      address:  @address.val()
-      postcode: @postcode.val()
-    
+      name:     @ui.name.val()
+      city:     @ui.city.val()
+      address:  @ui.address.val()
+      postcode: @ui.postcode.val()
+
     storage.saveClient(client).then =>
       @clear()
       @trigger 'toggle'

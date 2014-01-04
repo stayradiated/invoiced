@@ -57,7 +57,7 @@
 
     return Details;
 
-  })(Base.Controller);
+  })(Base.View);
 
   module.exports = Details;
 

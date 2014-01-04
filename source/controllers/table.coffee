@@ -3,7 +3,7 @@ $ = require 'jqueryify'
 TableRow = require '../controllers/table.row'
 Row = require '../models/row'
 
-class Table extends Base.Controller
+class Table extends Base.View
 
   elements:
     '.rows': 'table'
@@ -21,7 +21,7 @@ class Table extends Base.Controller
     @model.on 'change:model', @updateRow
     @model.on 'change', @update
     @model.on 'refresh', @render
-    
+
     # Base uses a different version of jQuery
     $(@table).sortable
       axis: 'y'
@@ -32,7 +32,7 @@ class Table extends Base.Controller
         index = ui.item.index()
         @model.move(row, index)
 
-  
+
   # Create a new TableRow and append it to the table
   addRow: (row, opts={}) =>
     view = row.view = new TableRow(row: row)
@@ -104,7 +104,7 @@ class Table extends Base.Controller
     else
       type = 'number'
     @createRow(type: type, name: content)
-  
+
 
   # Handle keyboard shortcuts
   keydown: (e) =>

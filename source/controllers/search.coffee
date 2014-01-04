@@ -3,21 +3,22 @@ require 'date-utils'
 Base       = require 'base'
 Detail     = require '../models/detail'
 Client     = require '../models/client'
+Template   = require '../libs/template'
 When       = require 'when'
 When.delay = require 'when/delay'
 _          = require 'underscore'
 $          = require 'jqueryify'
 
-class Search extends Base.Controller
+class Search extends Base.View
 
   template:
-    client: new Base.View('search.client')
-    invoice: new Base.View('search.invoice')
+    client: new Template('search.client')
+    invoice: new Template('search.invoice')
 
-  elements:
-    'input.search-box': 'input'
-    '.clients ul': 'clients'
-    '.invoices ul': 'invoices'
+  ui:
+    input:     'input.search-box'
+    clients:   '.clients ul'
+    invoices:  '.invoices ul'
 
   events:
     'keyup input.search-box': 'queryChange'
@@ -72,44 +73,44 @@ class Search extends Base.Controller
     When.delay(1).then =>
       @el.css 'opacity', '1'
     return true
-  
+
   # }}}
   #
   # RENDER
   # {{{
-  
+
   # Render a list of clients to the dom
   renderClients: (clients) =>
-    @clients.html @template.client.render
+    @ui.clients.html @template.client.render
       clients: clients
 
   # Render a list of invoices to the dom
   renderInvoices: (invoices) =>
-    @invoices.html @template.invoice.render
+    @ui.invoices.html @template.invoice.render
       invoices: invoices
-  
+
 
   # }}}
   #
   # SEARCH
   # {{{
-  
+
   refresh: =>
-    @input.val ''
+    @ui.input.val ''
     @search()
 
 
   # Search the database for a client
   search: =>
-    query = @input.val()
+    query = @ui.input.val()
 
     # Search database
     storage.searchClients(query).then (clients) =>
-      
+
       # Get the amount of invoices for each client
       requests = for client in clients
         storage.getClientInvoiceCount(client.id)
-      
+
       # When all requests are finished
       When.all(requests).then (results) =>
 
@@ -128,12 +129,12 @@ class Search extends Base.Controller
   #
   # SELECTING
   # {{{
- 
+
   toggleDeleteMode: =>
     @deleteClientMode = !@deleteClientMode
     @el.toggleClass 'delete-mode', @deleteClientMode
 
-  
+
   # Set the current client and display invoices
   selectClient: (e) =>
 
@@ -179,7 +180,7 @@ class Search extends Base.Controller
     # Mark element as active
     @active.el.invoice?.removeClass('active')
     @active.el.invoice = $el.addClass('active')
-    
+
     # Get ID
     @active.invoice = @temp.invoices[invoiceId]
 

@@ -56,7 +56,7 @@
 
     return Clients;
 
-  })(Base.Controller);
+  })(Base.View);
 
   module.exports = Clients;
 

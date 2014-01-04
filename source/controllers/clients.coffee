@@ -2,7 +2,7 @@
 Base = require 'base'
 Client = require '../models/client'
 
-class Clients extends Base.Controller
+class Clients extends Base.View
 
   elements:
     '.client-name': 'name'

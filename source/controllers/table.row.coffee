@@ -1,11 +1,11 @@
-
 Base = require 'base'
+Template = require '../libs/template'
 
 window.Rows = require '../models/row'
 
-class TableRow extends Base.Controller
+class TableRow extends Base.View
 
-  template: new Base.View('table.row')
+  template: new Template('table.row')
 
   elements:
     'input': 'input'

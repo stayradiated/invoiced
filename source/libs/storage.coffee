@@ -53,13 +53,13 @@ class Storage extends Base.Event
       invoice: 'INSERT INTO invoices SET ? ON DUPLICATE KEY UPDATE ?'
       row: 'INSERT INTO rows SET ? ON DUPLICATE KEY UPDATE ?'
       empty: 'DELETE FROM rows WHERE invoiceId=?'
-      
+
     # Update client details
     @_query(query.invoice, [invoice, invoice])
-    
+
     # Delete existing rows
     @_query(query.empty, invoice.id)
-    
+
     # Insert rows into database
     for row in rows
       row.invoiceId = invoice.id

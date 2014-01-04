@@ -67,7 +67,7 @@
 
     return Header;
 
-  })(Base.Controller);
+  })(Base.View);
 
   module.exports = Header;
 

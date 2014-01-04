@@ -10,11 +10,11 @@
   CreateClient = (function(_super) {
     __extends(CreateClient, _super);
 
-    CreateClient.prototype.elements = {
-      '.client-name': 'name',
-      '.client-address': 'address',
-      '.client-city': 'city',
-      '.client-postcode': 'postcode'
+    CreateClient.prototype.ui = {
+      name: '.client-name',
+      address: '.client-address',
+      city: '.client-city',
+      postcode: '.client-postcode'
     };
 
     CreateClient.prototype.events = {
@@ -24,17 +24,19 @@
     function CreateClient() {
       this.createClient = __bind(this.createClient, this);
       CreateClient.__super__.constructor.apply(this, arguments);
-      this.city.val('Rotorua');
+      this.ui.city.val('Rotorua');
     }
 
     CreateClient.prototype.clear = function() {
-      var name, selector, _ref;
-      _ref = this.elements;
-      for (selector in _ref) {
-        name = _ref[selector];
-        this[name].val('');
+      var el, name, _ref;
+      _ref = this.ui;
+      for (name in _ref) {
+        el = _ref[name];
+        if (!'city') {
+          el.val('');
+        }
       }
-      return this.city.val('Rotorua');
+      return this.ui.city.val('Rotorua');
     };
 
     CreateClient.prototype.createClient = function(e) {
@@ -53,10 +55,10 @@
         return;
       }
       client = {
-        name: this.name.val(),
-        city: this.city.val(),
-        address: this.address.val(),
-        postcode: this.postcode.val()
+        name: this.ui.name.val(),
+        city: this.ui.city.val(),
+        address: this.ui.address.val(),
+        postcode: this.ui.postcode.val()
       };
       return storage.saveClient(client).then(function() {
         _this.clear();
@@ -67,7 +69,7 @@
 
     return CreateClient;
 
-  })(Base.Controller);
+  })(Base.View);
 
   module.exports = CreateClient;
 

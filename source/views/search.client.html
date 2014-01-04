@@ -1,9 +1,11 @@
-{% for client in clients %}
-<li data-id="{{ client.id }}">
-<p class="name"><strong>{{ client.name }}</strong></p>
-<p class="count">{{ client.count }}</p>
-<p class="address">{{ client.address }}, {{ client.city }}, {{  client.postcode }}</p>
-</li>
+{% if clients.length %}
+  {% for client in clients %}
+    <li data-id="{{ client.id }}">
+    <p class="name"><strong>{{ client.name }}</strong></p>
+    <p class="count">{{ client.count }}</p>
+    <p class="address">{{ client.address }}, {{ client.city }}, {{  client.postcode }}</p>
+    </li>
+  {% endfor %}
 {% else %}
-<div class="message">Couldn't find any clients</div>
-{% endfor %}
+  <div class="message">Couldn't find any clients</div>
+{% endif %}

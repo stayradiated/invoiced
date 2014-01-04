@@ -2,7 +2,7 @@
 Base = require 'base'
 Invoice = require '../models/invoice'
 
-class Details extends Base.Controller
+class Details extends Base.View
 
   elements:
     '.invoice-id':       'input-id'

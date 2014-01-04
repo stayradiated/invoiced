@@ -1,11 +1,11 @@
-
 Base = require 'base'
 Snippet = require '../models/snippet'
+Template = require '../libs/template'
 $ = require 'jqueryify'
 
-class Snippets extends Base.Controller
+class Snippets extends Base.View
 
-  template: new Base.View('snippet')
+  template: new Template('snippet')
 
   elements:
     'ul': 'list'
@@ -41,7 +41,7 @@ class Snippets extends Base.Controller
     return unless window.confirm('Are you sure you want to delete that snippet?')
     snippet = $(e.currentTarget).parent().data('item')
     snippet.destroy()
-    
+
   createSnippet: =>
     name = window.prompt('Enter Snippet')
     return unless name

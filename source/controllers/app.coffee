@@ -1,15 +1,13 @@
 
 # NodeJS Dependencies
 fs      = require 'fs'
+swig    = require 'swig'
 Base    = require 'base'
 docx    = require '../libs/docx'
 Storage = require '../libs/storage'
 
-# Configure swig templates
-Base.View.swig.init
-  root: __dirname + '/../../../source/views'
 
-# Controllers
+# Views
 Table    = require '../controllers/table'
 Search   = require '../controllers/search'
 Header   = require '../controllers/header'
@@ -25,18 +23,18 @@ storage.on 'error', (err, message) ->
   console.log 'Showing error window'
   console.log 'Error message:', message
 
-class App extends Base.Controller
+class App extends Base.View
 
-  elements:
-    'header':          'header'
-    '.table':          'table'
-    '.search':         'search'
-    '.details':        'details'
-    '.snippets':       'snippets'
-    '#save-file':      'file'
-    '.client-details': 'clientDetails'
-    '.create-client':  'createClient'
-    '.invoice-records': 'records'
+  ui:
+    header:         'header'
+    table:          '.table'
+    search:         '.search'
+    details:        '.details'
+    snippets:       '.snippets'
+    file:           '#save-file'
+    clientDetails:  '.client-details'
+    createClient:   '.create-client'
+    records:        '.invoice-records'
 
   events:
     'click .toggle-sidebar': 'toggleSnippets'
@@ -51,28 +49,28 @@ class App extends Base.Controller
     storage.start()
 
     # Overwrite elements with controllers
-    @table         = new Table(el: @table)
-    @details       = new Details(el: @details)
-    @clientDetails = new Clients(el: @clientDetails)
-    @records       = new Records(el: @records)
-    
+    @ui.table         = new Table(el: @ui.table)
+    @ui.details       = new Details(el: @ui.details)
+    @ui.clientDetails = new Clients(el: @ui.clientDetails)
+    @ui.records       = new Records(el: @ui.records)
+
     # Show search window
-    @setupSearch @search
+    @setupSearch @ui.search
 
     # Creating a new Client
-    @setupCreateClient @createClient
+    @setupCreateClient @ui.createClient
 
     # Render snippets
-    @setupSnippets @snippets
+    @setupSnippets @ui.snippets
 
     # Header pane buttons
-    @setupHeader @header
-    
+    @setupHeader @ui.header
+
     # Display search page
-    @search.search()
+    @ui.search.search()
 
     # Compile word doc when user selects a file
-    @file.on 'change', @saveFile
+    @ui.file.on 'change', @saveFile
 
 
   #
@@ -90,9 +88,9 @@ class App extends Base.Controller
   # Compile a word document and save it to `path`
   buildDoc: (path) =>
     docx path,
-      client: @clientDetails.model.export()
-      invoice: @details.model.export()
-      rows: @table.model.export()
+      client: @ui.clientDetails.model.export()
+      invoice: @ui.details.model.export()
+      rows: @ui.table.model.export()
 
   # }}}
   #
@@ -100,19 +98,19 @@ class App extends Base.Controller
   # {{{
 
   setupSnippets: (el) =>
-    @snippets = new Snippets(el: el)
-    model = @snippets.model
-    
+    @ui.snippets = new Snippets(el: el)
+    model = @ui.snippets.model
+
     # Load snippets from database
     storage.getSnippets().then (array) =>
       model.refresh(array, true)
 
     model.on 'before:destroy:model', storage.deleteSnippet
 
-    @snippets.on 'save:snippet', storage.saveSnippet
+    @ui.snippets.on 'save:snippet', storage.saveSnippet
 
-    @snippets.on 'load:snippet', (snippet) =>
-      @table.autoCreateRow(snippet.content)
+    @ui.snippets.on 'load:snippet', (snippet) =>
+      @ui.table.autoCreateRow(snippet.content)
 
 
   # }}}
@@ -121,16 +119,16 @@ class App extends Base.Controller
   # {{{
 
   setupCreateClient: (el) =>
-    console.log @search
-    @createClient  = new CreateClient(el: el)
-    @createClient.on 'toggle', @toggleCreateClient
-    @createClient.on 'refresh', @search.refresh
+    console.log 'creating a new client', this
+    @ui.createClient  = new CreateClient(el: el)
+    @ui.createClient.on 'toggle', @toggleCreateClient
+    @ui.createClient.on 'refresh', @ui.search.refresh
 
   # }}}
   #
   # TOGGLE
   # {{{
-  
+
   toggleSnippets: =>
     @el.toggleClass('no-snippets')
 
@@ -138,7 +136,7 @@ class App extends Base.Controller
     @el.toggleClass('no-create-client')
 
   showRecords: =>
-    @records.show()
+    @ui.records.show()
 
   # }}}
   #
@@ -146,20 +144,20 @@ class App extends Base.Controller
   # {{{
 
   setupHeader: (el) =>
-    @header = new Header
+    @ui.header = new Header
       el: el
       detect:
-        details: @details.model
-        table: @table.model
+        details: @ui.details.model
+        table: @ui.table.model
 
-    @header.on 'generate', => @file.click()
-    @header.on 'open', => @search.show()
-    @header.on 'create', @createInvoice
+    @ui.header.on 'generate', => @ui.file.click()
+    @ui.header.on 'open', => @ui.search.show()
+    @ui.header.on 'create', @createInvoice
 
     # Don't overwrite olther invoices
-    @header.on 'save', =>
-      if @details.model.unsaved
-        storage.invoiceExists(@details.model.id).then (results) =>
+    @ui.header.on 'save', =>
+      if @ui.details.model.unsaved
+        storage.invoiceExists(@ui.details.model.id).then (results) =>
           if results[0].count > 0
             window.alert 'An invoice already exists with that ID, please choose another one'
           else
@@ -174,42 +172,42 @@ class App extends Base.Controller
   # {{{
 
   setupSearch: (el) =>
-    @search = new Search(el: el)
-    @search.on 'select:invoice', @openInvoice
-    @search.on 'create:client', @createClient
-    @search.on 'create:invoice', @createInvoice
+    @ui.search = new Search(el: el)
+    @ui.search.on 'select:invoice', @openInvoice
+    @ui.search.on 'create:client', @ui.createClient
+    @ui.search.on 'create:invoice', @createInvoice
 
 
   # }}}
   #
   # INVOICES
   # {{{
-  
+
   createInvoice: (client) =>
-    client ?= @clientDetails.model
-    @details.model.refresh({
+    client ?= @ui.clientDetails.model
+    @ui.details.model.refresh({
       clientId: client.id
       customer: client.name
       site: client.address
     }, true)
-    @details.model.unsaved = true
-    @clientDetails.model.refresh(client, true)
-    @table.model.refresh({}, true)
+    @ui.details.model.unsaved = true
+    @ui.clientDetails.model.refresh(client, true)
+    @ui.table.model.refresh({}, true)
 
   # Open an invoice
   openInvoice: (client, invoice, table) =>
-    @clientDetails.model.refresh(client, true)
-    @details.model.refresh(invoice, true)
-    @details.model.unsaved = false
-    @table.model.refresh(table, true)
+    @ui.clientDetails.model.refresh(client, true)
+    @ui.details.model.refresh(invoice, true)
+    @ui.details.model.unsaved = false
+    @ui.table.model.refresh(table, true)
 
   # Save an invoice to the database
   saveInvoice: =>
     storage.saveInvoice
-      invoice: @details.model.toJSON()
-      rows: @table.model.toJSON()
-    @details.model.unsaved = false
-    @header.resetStatus()
+      invoice: @ui.details.model.toJSON()
+      rows: @ui.table.model.toJSON()
+    @ui.details.model.unsaved = false
+    @ui.header.resetStatus()
 
   # }}}
 module.exports = App

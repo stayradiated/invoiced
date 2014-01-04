@@ -178,7 +178,7 @@
 
     return Table;
 
-  })(Base.Controller);
+  })(Base.View);
 
   module.exports = Table;
 

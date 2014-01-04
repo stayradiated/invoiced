@@ -1,7 +1,7 @@
 
 Base = require 'base'
 
-class Header extends Base.Controller
+class Header extends Base.View
 
   elements:
     '.button-save': 'saveButton'
@@ -11,10 +11,10 @@ class Header extends Base.Controller
     'click .button-new': 'createInvoice'
     'click .button-open': 'openInvoice'
     'click .button-save': 'saveInvoice'
-  
+
   constructor: ->
     super
-    
+
     @detect.details.on 'change', @markChanged
     @detect.table.on 'create:model change:model destroy:model', @markChanged
     @detect.details.on 'refresh', @resetStatus

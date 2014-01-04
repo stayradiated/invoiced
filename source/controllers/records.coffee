@@ -1,11 +1,11 @@
-
 Base = require 'base'
+Template = require '../libs/template'
 
-class Records extends Base.Controller
+class Records extends Base.View
 
   template:
-    missing: new Base.View('record.missing')
-    record: new Base.View('record')
+    missing: new Template('record.missing')
+    record: new Template('record')
 
   elements:
     '.table-body': 'table'
@@ -21,7 +21,7 @@ class Records extends Base.Controller
   show: =>
     @render()
     @el.show()
-    
+
   hide: =>
     @el.hide()
 
