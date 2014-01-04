@@ -44,13 +44,16 @@ CREATE TABLE IF NOT EXISTS `clients` (
 --
 
 CREATE TABLE IF NOT EXISTS `invoices` (
-  `id` int(11) unsigned NOT NULL,
+  `id` varchar(20) NOT NULL,
   `clientId` int(11) unsigned DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `customer` varchar(100) DEFAULT NULL,
   `site` varchar(100) DEFAULT '',
   `cost` float DEFAULT NULL,
   `paid` tinyint(1) DEFAULT NULL,
+  `labour` float DEFAULT NULL,
+  `airmover` float DEFAULT NULL,
   `dateCreated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dateUpdated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
@@ -65,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `invoices` (
 
 CREATE TABLE IF NOT EXISTS `rows` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `invoiceId` int(11) unsigned NOT NULL,
+  `invoiceId` varchar(20) NOT NULL,
   `type` varchar(20) NOT NULL DEFAULT '',
   `number` int(11) DEFAULT NULL,
   `name` varchar(500) DEFAULT NULL,
@@ -81,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `rows` (
 
 CREATE TABLE IF NOT EXISTS `snippets` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `content` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 

@@ -28,7 +28,7 @@ class Details extends Base.View
     value = e.target.value
     # Parse numbers
     if e.target.attributes.type.value is 'number'
-      value = parseFloat(value, 10)
+      value = parseFloat(value, 10) or 0
     @model[name] = value
 
   # Populate the input fields with model data

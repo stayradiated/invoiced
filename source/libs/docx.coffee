@@ -9,19 +9,9 @@ merge = (to, from) ->
 
 # Super simple templating engine
 tmpl = (template, namespace) ->
-
   fn = (existing, fieldName) ->
-    # fields = fieldName.split('.')
-    # next = namespace
-    # last = fields.length - 1
-    # for field, i in fields
-    #   value = next[field]
-    #   if i is last then content = value
-    #   else next = value
     content = namespace[fieldName]
-    content ?= existing
-    return escape(content)
-
+    return if content? then escape(content) else existing
   template.replace(/Z([A-Za-z0-9_|.]*)X/g, fn)
 
 # Escape text to use in a docx file
@@ -31,7 +21,7 @@ escape = (text) ->
 
 # Configuration
 config = {}
-config.docs = __dirname + '/../../../docs/'
+config.docs = __dirname + '/../../../template/'
 config.folder = config.docs + 'template/'
 config.template = config.folder + 'word/document.xml'
 

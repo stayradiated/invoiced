@@ -25,10 +25,11 @@
     fn = function(existing, fieldName) {
       var content;
       content = namespace[fieldName];
-      if (content == null) {
-        content = existing;
+      if (content != null) {
+        return escape(content);
+      } else {
+        return existing;
       }
-      return escape(content);
     };
     return template.replace(/Z([A-Za-z0-9_|.]*)X/g, fn);
   };
@@ -42,7 +43,7 @@
 
   config = {};
 
-  config.docs = __dirname + '/../../../docs/';
+  config.docs = __dirname + '/../../../template/';
 
   config.folder = config.docs + 'template/';
 
