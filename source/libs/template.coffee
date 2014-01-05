@@ -1,11 +1,11 @@
 swig = require 'swig'
 
-folder = __dirname + '/../../../source/views/'
+templates = __dirname + '/../../../source/templates/'
 
 class Template
 
   constructor: (filename) ->
-    @path = folder + filename + '.html'
+    @path = templates + filename + '.html'
     @template = swig.compileFile @path
 
   render: (obj) =>

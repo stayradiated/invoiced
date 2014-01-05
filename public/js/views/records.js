@@ -17,8 +17,8 @@
       record: new Template('record')
     };
 
-    Records.prototype.elements = {
-      '.table-body': 'table'
+    Records.prototype.ui = {
+      table: '.table-body'
     };
 
     Records.prototype.events = {
@@ -68,7 +68,7 @@
           html += _this.template.record.render(invoice);
           lastId = invoice.id;
         }
-        return _this.table.html(html);
+        return _this.ui.table.html(html);
       });
     };
 

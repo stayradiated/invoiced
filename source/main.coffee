@@ -17,7 +17,7 @@ $(document).on 'keydown', (e) ->
       if e.ctrlKey
         win.showDevTools()
 
-App = require './js/controllers/app'
+App = require './js/views/app'
 
 $ ->
   window.app = new App

@@ -10,8 +10,8 @@
   Header = (function(_super) {
     __extends(Header, _super);
 
-    Header.prototype.elements = {
-      '.button-save': 'saveButton'
+    Header.prototype.ui = {
+      save: '.button-save'
     };
 
     Header.prototype.events = {
@@ -37,12 +37,12 @@
 
     Header.prototype.markChanged = function() {
       this.pending = true;
-      return this.saveButton.addClass('pending');
+      return this.ui.save.addClass('pending');
     };
 
     Header.prototype.resetStatus = function() {
       this.pending = false;
-      return this.saveButton.removeClass('pending');
+      return this.ui.save.removeClass('pending');
     };
 
     Header.prototype.generate = function() {

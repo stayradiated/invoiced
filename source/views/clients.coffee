@@ -4,11 +4,11 @@ Client = require '../models/client'
 
 class Clients extends Base.View
 
-  elements:
-    '.client-name': 'name'
-    '.client-address': 'address'
-    '.client-city': 'city'
-    '.client-postcode': 'postcode'
+  ui:
+    name: '.client-name'
+    address: '.client-address'
+    city: '.client-city'
+    postcode: '.client-postcode'
 
   events:
     'change input': 'update'
@@ -18,14 +18,17 @@ class Clients extends Base.View
     super
     @model = new Client()
     @model.on 'refresh', @render
+    for name, el of @ui
+      el.itemName = name
 
   update: (e) =>
-    name = @elements[ '.' + e.target.className]
-    value = e.target.value
+    el = e.target
+    name = el.itemName
+    value = el.value
     @model[name] = value
 
   render: =>
-    for selector, name of @elements
+    for name of @elements
       @[name].html @model[name]
     return this
 

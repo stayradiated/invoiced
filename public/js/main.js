@@ -27,7 +27,7 @@
     }
   });
 
-  App = require('./js/controllers/app');
+  App = require('./js/views/app');
 
   $(function() {
     return window.app = new App({

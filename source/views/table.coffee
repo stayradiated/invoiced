@@ -1,12 +1,12 @@
 Base = require 'base'
 $ = require 'jqueryify'
-TableRow = require '../controllers/table.row'
+TableRow = require '../views/table.row'
 Row = require '../models/row'
 
 class Table extends Base.View
 
-  elements:
-    '.rows': 'table'
+  ui:
+    table: '.rows'
 
   events:
     'click .add-row': 'createRow'
@@ -23,7 +23,7 @@ class Table extends Base.View
     @model.on 'refresh', @render
 
     # Base uses a different version of jQuery
-    $(@table).sortable
+    $(@ui.table).sortable
       axis: 'y'
       handle: '.handle'
       items: 'li'
@@ -39,11 +39,11 @@ class Table extends Base.View
     view.el = $ view.render()
     view.el.data('item', row)
     if opts.pos is 0
-      @table.find("li:eq(#{opts.pos})").before view.el
+      @ui.table.find("li:eq(#{opts.pos})").before view.el
     else if opts.pos > 0
-      @table.find("li:eq(#{opts.pos-1})").after view.el
+      @ui.table.find("li:eq(#{opts.pos-1})").after view.el
     else
-      @table.append view.el
+      @ui.table.append view.el
     view.bind()
     view.focus() unless opts.nofocus
 
@@ -66,7 +66,7 @@ class Table extends Base.View
         row.number = @count++
 
   render: =>
-    @table.empty()
+    @ui.table.empty()
     @model.forEach (row) =>
       @addRow(row, nofocus: true)
 
@@ -98,7 +98,7 @@ class Table extends Base.View
 
   # Create a new row with the correct type
   autoCreateRow: (content='') =>
-    lastRow = @table.find('li:last')
+    lastRow = @ui.table.find('li:last')
     if lastRow.length > 0
       type = if lastRow.data('item').type is 'bullet' then 'bullet' else 'number'
     else

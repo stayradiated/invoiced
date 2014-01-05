@@ -16,9 +16,9 @@
 
     TableRow.prototype.template = new Template('table.row');
 
-    TableRow.prototype.elements = {
-      'input': 'input',
-      'label': 'number'
+    TableRow.prototype.ui = {
+      input: 'input',
+      number: 'label'
     };
 
     TableRow.prototype.events = {
@@ -43,15 +43,15 @@
     };
 
     TableRow.prototype.setName = function(e) {
-      return this.row.name = this.input.val();
+      return this.row.name = this.ui.input.val();
     };
 
     TableRow.prototype.focus = function() {
-      return this.input.focus();
+      return this.ui.input.focus();
     };
 
     TableRow.prototype.updateNumber = function(val) {
-      return this.number.html(val);
+      return this.ui.number.html(val);
     };
 
     TableRow.prototype.render = function() {

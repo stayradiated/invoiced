@@ -15,21 +15,21 @@
 
   Storage = require('../libs/storage');
 
-  Table = require('../controllers/table');
+  Table = require('../views/table');
 
-  Search = require('../controllers/search');
+  Search = require('../views/search');
 
-  Header = require('../controllers/header');
+  Header = require('../views/header');
 
-  Details = require('../controllers/details');
+  Details = require('../views/details');
 
-  Clients = require('../controllers/clients');
+  Clients = require('../views/clients');
 
-  Snippets = require('../controllers/snippets');
+  Snippets = require('../views/snippets');
 
-  CreateClient = require('../controllers/createClient');
+  CreateClient = require('../views/createClient');
 
-  Records = require('../controllers/records');
+  Records = require('../views/records');
 
   storage = global.storage = new Storage();
 
@@ -206,9 +206,13 @@
     };
 
     App.prototype.openInvoice = function(client, invoice, table) {
+      console.log('refreshing clientdetails');
       this.ui.clientDetails.model.refresh(client, true);
+      console.log('refreshing details', this.ui.details.model, invoice);
       this.ui.details.model.refresh(invoice, true);
+      console.log('setting model unsaved');
       this.ui.details.model.unsaved = false;
+      console.log('refreshing table model');
       return this.ui.table.model.refresh(table, true);
     };
 

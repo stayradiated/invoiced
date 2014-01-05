@@ -9,15 +9,15 @@
 
   $ = require('jqueryify');
 
-  TableRow = require('../controllers/table.row');
+  TableRow = require('../views/table.row');
 
   Row = require('../models/row');
 
   Table = (function(_super) {
     __extends(Table, _super);
 
-    Table.prototype.elements = {
-      '.rows': 'table'
+    Table.prototype.ui = {
+      table: '.rows'
     };
 
     Table.prototype.events = {
@@ -43,7 +43,7 @@
       this.model.on('change:model', this.updateRow);
       this.model.on('change', this.update);
       this.model.on('refresh', this.render);
-      $(this.table).sortable({
+      $(this.ui.table).sortable({
         axis: 'y',
         handle: '.handle',
         items: 'li',
@@ -67,11 +67,11 @@
       view.el = $(view.render());
       view.el.data('item', row);
       if (opts.pos === 0) {
-        this.table.find("li:eq(" + opts.pos + ")").before(view.el);
+        this.ui.table.find("li:eq(" + opts.pos + ")").before(view.el);
       } else if (opts.pos > 0) {
-        this.table.find("li:eq(" + (opts.pos - 1) + ")").after(view.el);
+        this.ui.table.find("li:eq(" + (opts.pos - 1) + ")").after(view.el);
       } else {
-        this.table.append(view.el);
+        this.ui.table.append(view.el);
       }
       view.bind();
       if (!opts.nofocus) {
@@ -110,7 +110,7 @@
 
     Table.prototype.render = function() {
       var _this = this;
-      this.table.empty();
+      this.ui.table.empty();
       return this.model.forEach(function(row) {
         return _this.addRow(row, {
           nofocus: true
@@ -146,7 +146,7 @@
       if (content == null) {
         content = '';
       }
-      lastRow = this.table.find('li:last');
+      lastRow = this.ui.table.find('li:last');
       if (lastRow.length > 0) {
         type = lastRow.data('item').type === 'bullet' ? 'bullet' : 'number';
       } else {

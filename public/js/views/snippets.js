@@ -18,8 +18,8 @@
 
     Snippets.prototype.template = new Template('snippet');
 
-    Snippets.prototype.elements = {
-      'ul': 'list'
+    Snippets.prototype.ui = {
+      list: 'ul'
     };
 
     Snippets.prototype.events = {
@@ -53,7 +53,7 @@
     Snippets.prototype.addOne = function(snippet) {
       var view;
       view = $(this.template.render(snippet));
-      this.list.append(view);
+      this.ui.list.append(view);
       snippet.view = view;
       return view.data('item', snippet);
     };

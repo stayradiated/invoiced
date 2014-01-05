@@ -7,8 +7,8 @@ class Records extends Base.View
     missing: new Template('record.missing')
     record: new Template('record')
 
-  elements:
-    '.table-body': 'table'
+  ui:
+    table: '.table-body'
 
   events:
     'click .hide': 'hide'
@@ -39,6 +39,6 @@ class Records extends Base.View
             html += @template.missing.render(id: id)
         html += @template.record.render invoice
         lastId = invoice.id
-      @table.html html
+      @ui.table.html html
 
 module.exports = Records

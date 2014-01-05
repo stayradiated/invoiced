@@ -12,11 +12,11 @@
   Clients = (function(_super) {
     __extends(Clients, _super);
 
-    Clients.prototype.elements = {
-      '.client-name': 'name',
-      '.client-address': 'address',
-      '.client-city': 'city',
-      '.client-postcode': 'postcode'
+    Clients.prototype.ui = {
+      name: '.client-name',
+      address: '.client-address',
+      city: '.client-city',
+      postcode: '.client-postcode'
     };
 
     Clients.prototype.events = {
@@ -28,23 +28,28 @@
       this.submit = __bind(this.submit, this);
       this.render = __bind(this.render, this);
       this.update = __bind(this.update, this);
+      var el, name, _ref;
       Clients.__super__.constructor.apply(this, arguments);
       this.model = new Client();
       this.model.on('refresh', this.render);
+      _ref = this.ui;
+      for (name in _ref) {
+        el = _ref[name];
+        el.itemName = name;
+      }
     }
 
     Clients.prototype.update = function(e) {
-      var name, value;
-      name = this.elements['.' + e.target.className];
-      value = e.target.value;
+      var el, name, value;
+      el = e.target;
+      name = el.itemName;
+      value = el.value;
       return this.model[name] = value;
     };
 
     Clients.prototype.render = function() {
-      var name, selector, _ref;
-      _ref = this.elements;
-      for (selector in _ref) {
-        name = _ref[selector];
+      var name;
+      for (name in this.elements) {
         this[name].html(this.model[name]);
       }
       return this;

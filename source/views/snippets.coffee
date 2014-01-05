@@ -7,8 +7,8 @@ class Snippets extends Base.View
 
   template: new Template('snippet')
 
-  elements:
-    'ul': 'list'
+  ui:
+    list: 'ul'
 
   events:
     'click .delete': 'deleteSnippet'
@@ -29,7 +29,7 @@ class Snippets extends Base.View
 
   addOne: (snippet) =>
     view = $ @template.render(snippet)
-    @list.append(view)
+    @ui.list.append(view)
     snippet.view = view
     view.data('item', snippet)
 

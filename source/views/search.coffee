@@ -1,8 +1,6 @@
 # Dependencies
 require 'date-utils'
 Base       = require 'base'
-Detail     = require '../models/detail'
-Client     = require '../models/client'
 Template   = require '../libs/template'
 When       = require 'when'
 When.delay = require 'when/delay'
@@ -60,6 +58,7 @@ class Search extends Base.View
 
   # Hide the search window
   hide: =>
+    console.log 'running @hide()'
     @shown = false
     @el.css opacity: 0
     When.delay(@fadeout).then =>
@@ -166,7 +165,6 @@ class Search extends Base.View
       @renderInvoices(invoices)
 
   selectInvoice: (e) =>
-
     $el = $(e.currentTarget)
     invoiceId = $el.data('id')
 
@@ -195,6 +193,7 @@ class Search extends Base.View
 
       # Namespace client and invoice
       @trigger 'select:invoice', @active.client, @active.invoice, rows
+      console.log 'hiding app'
       @hide()
 
   createInvoice: =>

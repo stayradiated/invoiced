@@ -3,8 +3,8 @@ Base = require 'base'
 
 class Header extends Base.View
 
-  elements:
-    '.button-save': 'saveButton'
+  ui:
+    save: '.button-save'
 
   events:
     'click .button-generate': 'generate'
@@ -22,11 +22,11 @@ class Header extends Base.View
 
   markChanged: =>
     @pending = true
-    @saveButton.addClass('pending')
+    @ui.save.addClass('pending')
 
   resetStatus: =>
     @pending = false
-    @saveButton.removeClass('pending')
+    @ui.save.removeClass('pending')
 
   generate: =>
     @trigger('generate')

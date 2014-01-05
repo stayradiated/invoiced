@@ -6,16 +6,15 @@ Base    = require 'base'
 docx    = require '../libs/docx'
 Storage = require '../libs/storage'
 
-
 # Views
-Table    = require '../controllers/table'
-Search   = require '../controllers/search'
-Header   = require '../controllers/header'
-Details  = require '../controllers/details'
-Clients  = require '../controllers/clients'
-Snippets = require '../controllers/snippets'
-CreateClient = require '../controllers/createClient'
-Records = require '../controllers/records'
+Table    = require '../views/table'
+Search   = require '../views/search'
+Header   = require '../views/header'
+Details  = require '../views/details'
+Clients  = require '../views/clients'
+Snippets = require '../views/snippets'
+CreateClient = require '../views/createClient'
+Records = require '../views/records'
 
 # Storage is global so it can be accessed from anywhere
 storage = global.storage = new Storage()
@@ -48,7 +47,7 @@ class App extends Base.View
     @storage = storage
     storage.start()
 
-    # Overwrite elements with controllers
+    # Overwrite elements with views
     @ui.table         = new Table(el: @ui.table)
     @ui.details       = new Details(el: @ui.details)
     @ui.clientDetails = new Clients(el: @ui.clientDetails)
@@ -196,9 +195,13 @@ class App extends Base.View
 
   # Open an invoice
   openInvoice: (client, invoice, table) =>
+    console.log 'refreshing clientdetails'
     @ui.clientDetails.model.refresh(client, true)
+    console.log 'refreshing details', @ui.details.model, invoice
     @ui.details.model.refresh(invoice, true)
+    console.log 'setting model unsaved'
     @ui.details.model.unsaved = false
+    console.log 'refreshing table model'
     @ui.table.model.refresh(table, true)
 
   # Save an invoice to the database

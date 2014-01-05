@@ -7,9 +7,9 @@ class TableRow extends Base.View
 
   template: new Template('table.row')
 
-  elements:
-    'input': 'input'
-    'label': 'number'
+  ui:
+    input: 'input'
+    number: 'label'
 
   events:
     'change input': 'setName'
@@ -25,13 +25,13 @@ class TableRow extends Base.View
     @row.destroy()
 
   setName: (e) =>
-    @row.name = @input.val()
+    @row.name = @ui.input.val()
 
   focus: =>
-    @input.focus()
+    @ui.input.focus()
 
   updateNumber: (val) =>
-    @number.html(val)
+    @ui.number.html(val)
 
   render: =>
     @template.render(@row)
