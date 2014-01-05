@@ -118,7 +118,6 @@ class App extends Base.View
   # {{{
 
   setupCreateClient: (el) =>
-    console.log 'creating a new client', this
     @ui.createClient  = new CreateClient(el: el)
     @ui.createClient.on 'toggle', @toggleCreateClient
     @ui.createClient.on 'refresh', @ui.search.refresh
@@ -195,14 +194,13 @@ class App extends Base.View
 
   # Open an invoice
   openInvoice: (client, invoice, table) =>
-    console.log 'refreshing clientdetails'
     @ui.clientDetails.model.refresh(client, true)
-    console.log 'refreshing details', @ui.details.model, invoice
     @ui.details.model.refresh(invoice, true)
-    console.log 'setting model unsaved'
     @ui.details.model.unsaved = false
-    console.log 'refreshing table model'
-    @ui.table.model.refresh(table, true)
+    try
+      @ui.table.model.refresh(table, true)
+    catch e
+      console.dir e
 
   # Save an invoice to the database
   saveInvoice: =>

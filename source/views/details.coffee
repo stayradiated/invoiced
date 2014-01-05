@@ -37,7 +37,7 @@ class Details extends Base.View
   # Populate the input fields with model data
   render: =>
     for name of @ui
-      @[name].val @model[name]
+      @ui[name].val @model[name]
     return
 
 module.exports = Details
