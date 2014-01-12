@@ -131,7 +131,6 @@
     };
 
     App.prototype.setupCreateClient = function(el) {
-      console.log('creating a new client', this);
       this.ui.createClient = new CreateClient({
         el: el
       });
@@ -206,14 +205,16 @@
     };
 
     App.prototype.openInvoice = function(client, invoice, table) {
-      console.log('refreshing clientdetails');
+      var e;
       this.ui.clientDetails.model.refresh(client, true);
-      console.log('refreshing details', this.ui.details.model, invoice);
       this.ui.details.model.refresh(invoice, true);
-      console.log('setting model unsaved');
       this.ui.details.model.unsaved = false;
-      console.log('refreshing table model');
-      return this.ui.table.model.refresh(table, true);
+      try {
+        return this.ui.table.model.refresh(table, true);
+      } catch (_error) {
+        e = _error;
+        return console.dir(e);
+      }
     };
 
     App.prototype.saveInvoice = function() {

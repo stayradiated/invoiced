@@ -73,7 +73,6 @@
 
     Search.prototype.hide = function() {
       var _this = this;
-      console.log('running @hide()');
       this.shown = false;
       this.el.css({
         opacity: 0
@@ -200,7 +199,6 @@
       }
       return storage.getRows(invoiceId).then(function(rows) {
         _this.trigger('select:invoice', _this.active.client, _this.active.invoice, rows);
-        console.log('hiding app');
         return _this.hide();
       });
     };

@@ -37,7 +37,7 @@
       _ref = this.ui;
       for (name in _ref) {
         el = _ref[name];
-        el.itemName = name;
+        el[0].itemName = name;
       }
     }
 
@@ -55,7 +55,7 @@
     Details.prototype.render = function() {
       var name;
       for (name in this.ui) {
-        this[name].val(this.model[name]);
+        this.ui[name].val(this.model[name]);
       }
     };
 

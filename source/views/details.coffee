@@ -22,7 +22,7 @@ class Details extends Base.View
     @model = new Invoice()
     @model.on 'refresh', @render
     for name, el of @ui
-      el.itemName = name
+      el[0].itemName = name
 
   # Detect input name and update model
   update: (e) =>

@@ -10,9 +10,9 @@ class Storage extends Base.Event
 
     # Connect to database
     @db = mysql.createConnection
-      host: '127.0.0.1'
-      user: 'nodejs'
-      password: 'nodejs'
+      host: 'localhost'
+      user: 'george'
+      password: 'george'
       database: 'invoicer'
 
   start: =>
@@ -97,7 +97,7 @@ class Storage extends Base.Event
       address LIKE '%#{query}%' OR
       city LIKE '%#{query}%' OR
       postcode LIKE '%#{query}%'
-      ORDER BY dateCreated DESC"""
+      ORDER BY dateUpdated DESC"""
 
   # Get a single client
   getClient: (id) =>

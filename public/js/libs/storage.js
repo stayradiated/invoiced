@@ -38,9 +38,9 @@
       this.start = __bind(this.start, this);
       Storage.__super__.constructor.apply(this, arguments);
       this.db = mysql.createConnection({
-        host: '127.0.0.1',
-        user: 'nodejs',
-        password: 'nodejs',
+        host: 'localhost',
+        user: 'george',
+        password: 'george',
         database: 'invoicer'
       });
     }
@@ -132,7 +132,7 @@
     Storage.prototype.searchClients = function(query) {
       console.log('searching for', query);
       query = this.escape(query);
-      return this._query("SELECT * FROM clients WHERE\nname LIKE '%" + query + "%' OR\naddress LIKE '%" + query + "%' OR\ncity LIKE '%" + query + "%' OR\npostcode LIKE '%" + query + "%'\nORDER BY dateCreated DESC");
+      return this._query("SELECT * FROM clients WHERE\nname LIKE '%" + query + "%' OR\naddress LIKE '%" + query + "%' OR\ncity LIKE '%" + query + "%' OR\npostcode LIKE '%" + query + "%'\nORDER BY dateUpdated DESC");
     };
 
     Storage.prototype.getClient = function(id) {
