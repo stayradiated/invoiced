@@ -1,5 +1,11 @@
+template
+/*.app
+
 node_modules
 .sass-cache
-/docs
-/template
-*.app
+
+dist/js/*
+dist/css/*
+dist/libs/*
+
+source/_coffee/*

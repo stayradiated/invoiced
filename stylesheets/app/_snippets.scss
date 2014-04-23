@@ -1,0 +1,64 @@
+.snippets {
+
+  h2 {
+    color: $midnight_blue;
+  }
+
+  ul {
+    @include pos(100px, 20px, 100px, 20px);
+    overflow-y: auto;
+  }
+
+  .button-bar {
+    @include pos(auto, 20px, 20px, 20px);
+  }
+
+  li {
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    line-height: 21px;
+    color: $midnight_blue;
+    background: darken($clouds, 3);
+    margin-bottom: 10px;
+  }
+
+  li:hover {
+    background: $midnight_blue;
+    color: $white;
+  }
+  
+  .delete {
+    float: right;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    background: $clouds;
+    cursor: pointer;
+    transition: background 0.15s;
+    margin: 10px 5px 0 5px;
+
+    &:hover {
+      background: $carrot;
+    }
+
+    &:after, &:before {
+      content: "";
+      display: block;
+      @include pos(9px, auto, auto, 5px);
+      width: 10px;
+      height: 2px;
+      background: $white;
+    }
+
+    &:after {
+      transform: rotate(45deg);
+    }
+
+    &:before {
+      transform: rotate(-45deg);
+    }
+  }
+
+}

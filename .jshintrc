@@ -1,0 +1,20 @@
+{
+  "node": true,
+  "browser": true,
+  "globals": {
+
+    "$": true,
+    "_": true,
+
+    "Backbone": true,
+    "Marionette": true,
+    "SockJS": true,
+    "Jandal": true,
+    "moment": true,
+
+    "describe": true,
+    "it": true,
+    "beforeEach": true,
+    "afterEach": true
+  }
+}
