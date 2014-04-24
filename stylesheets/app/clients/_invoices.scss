@@ -1,0 +1,43 @@
+// .invoices-container > .invoices
+
+$height: 70px;
+
+& {
+  @include pos(0, 0, 0, 0);
+}
+
+header {
+  @include pos(0, 0, auto, 0);
+  height: $height;
+
+  h2 {
+    float: left;
+    margin: 0;
+  }
+
+  p {
+    float: left;
+    margin: 0;
+    font-size: 12px;
+    line-height: 10px;
+    color: rgba(#fff, 0.6);
+
+    span:not(:last-child):after {
+      content: '•';
+      margin: 0 8px;
+    }
+  }
+
+  button {
+    float: right;
+  }
+}
+
+.invoice-collection {
+  @include pos($height, 0, 0, 0);
+  overflow: scroll;
+
+  .invoice {
+    @import 'invoice';
+  }
+}

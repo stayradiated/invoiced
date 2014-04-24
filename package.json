@@ -1,6 +1,7 @@
 {
-  "name": "Invoicer",
+  "name": "invoiced",
   "version": "0.1.0",
+  "private": true,
   "description": "Generator Word Documents",
   "author": "George Czabania",
   "license": "BSD",

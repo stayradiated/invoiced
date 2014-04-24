@@ -1,0 +1,57 @@
+// .clients-container > .clients > .client-collection > .client
+
+$height: 65px;
+$space: 5px;
+
+& {
+  background: #3d546c;
+  padding: 0 20px;
+  position: relative;
+  height: $height;
+  margin-bottom: $space;
+}
+
+&.active {
+  background: #182637;
+}
+
+&.selected {
+  background: #dae0e3;
+  h3, p, .invoices-count {
+    color: #1d2934
+  };
+}
+
+&.unpaid {
+  .invoices-count {
+    background: #2e3f51;
+  }
+}
+
+
+
+h3 {
+  margin: 0;
+  line-height: 40px;
+}
+
+p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 10px;
+  color: rgba(#fff, 0.6);
+
+  span:not(:last-child):after {
+    content: '•';
+    margin: 0 8px;
+  }
+}
+
+.invoices-count {
+  @include pos(0, 0, 0, auto);
+  width: $height;
+  line-height: $height;
+  text-align: center;
+  border-left: $space solid $app_background;
+}
+

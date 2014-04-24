@@ -1,0 +1,72 @@
+// .invoices-container > .invoices > .invoice-collection > .invoice
+
+$space: 5px;
+$meta_height: 42px;
+$customer_height: 70px;
+
+$background: #3c546b;
+
+& {
+  margin-bottom: $space * 5;
+}
+
+.meta {
+
+  @extend #group;
+
+  background: $background;
+  line-height: $meta_height;
+  margin-bottom: $space;
+
+  div {
+    padding: 0 20px;
+  }
+
+  .id {
+    float: left;
+    border-right: $space solid $app_background;
+  }
+
+  .created {
+    float: left;
+  }
+
+  .paid-status {
+    float: right;
+    border-left: $space solid $app_background;
+    font-weight: 600;
+  }
+
+}
+
+.customer {
+
+  position: relative;
+  background: $background;
+  padding: 10px;
+  height: $customer_height;
+
+  h3 {
+    margin: 0;
+    @include pos(20px, auto, auto, 20px);
+  }
+
+  h5 {
+    margin: 0;
+    @include pos(50px, auto, auto, 20px);
+  }
+
+  .email {
+    @include pos(20px, auto, auto, 320px);
+  }
+
+  .date {
+    @include pos(50px, auto, auto, 320px);
+  }
+
+  .price {
+    @include pos(10px, 20px);
+    line-height: $customer_height;
+  }
+
+}

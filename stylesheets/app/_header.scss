@@ -1,59 +1,42 @@
-header {
-  
+.header {
+
+  background: darken($app_background, 10);
+  @extend #group;
+
   h1 {
+    padding: 0;
     margin: 0 0 0 20px;
     float: left;
   }
 
   nav {
     float: right; 
-    font-size: 0;
   }
 
-  button.nav {
-    height: 50px;
-    padding: 0 30px;
-    background: transparent;
-    color: $white;
-    border: 0;
-    font-size: 14px;
+  ul {
     margin: 0;
-    transition: background 0.15s;
+    padding: 0;
+  }
+
+  li {
+    list-style-type: none;
+    display: inline-block;
+    padding: 0 20px;
+
+    color: $white;
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
 
     &:hover {
-      background: $wet_asphalt;
+      background: darken($app_background, 5);
     }
 
-    &:last-child {
-      border-right: 0;
-    }
-
-    &.button-open:hover {
-      background: $nephritis;
-    }
-
-    &.button-generate:hover {
-      background: $carrot;
-    }
-
-    &.button-save:hover {
-      background: $wisteria;
+    &.active {
+      background: darken($app_background, 5);
+      box-shadow: inset 0 -5px 0 $peter_river;
     }
   }
 
-  .button-save.pending {
-    position: relative;
-
-    &:after {
-      content: "";
-      display: block;
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: $carrot;
-      height: 6px;
-    }
-
-  }
 }

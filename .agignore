@@ -1,3 +1,4 @@
 dist/libs
 stylesheets/vendor
 source/_coffee/*
+*/_old/*

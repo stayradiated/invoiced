@@ -1,128 +1,15 @@
-// Layout config
 
-$header_height: 50px;
-$snippets_width: 300px;
-$create_client_width: 300px;
-$search_width: 800px;
+// Vendor
+@import "vendor/normalize";
 
-// Imports
-@import "vendor/reset";
-@import "modules/mixins";
+// Modules
 @import "modules/colors";
-@import "modules/buttons";
+@import "modules/vars";
+@import "modules/mixins";
+@import "modules/extends";
+@import "modules/type";
 
+// App
+@import "app/app";
 @import "app/header";
-@import "app/forms";
-@import "app/table";
-@import "app/snippets";
-@import "app/search";
-@import "app/client";
-@import "app/records";
-
-body {
-  overflow-x: hidden;
-
-  // Make it act like a native app
-  -webkit-user-select: none;
-  cursor: default;
-}
-
-strong {
-  font-weight: bold;
-}
-
-em {
-  font-style: italic;
-}
-
-body, input, button {
-  font-family: "Open Sans", sans-serif;
-}
-
-h1, h2, h3 {
-  font-weight: bold;
-}
-
-h1 {
-  font-size: 25px;
-  margin: 20px 0;
-  color: $white;
-  padding-bottom: 20px;
-  border-bottom: 4px solid $wet_asphalt;
-}
-
-h2 {
-  font-size: 16px;
-  margin: 20px 0;
-  color: $white;
-  text-transform: uppercase;
-}
-
-h3 {
-  font-size: 15px;
-}
-
-hr {
-  height: 4px;
-  background: $wet_asphalt;
-  border: 0;
-  margin: 20px 0;
-}
-
-
-
-// PANELS
-
-header {
-  @include pos(0, 0, auto, 0);
-  height: $header_height;
-  line-height: $header_height;
-  background: darken($midnight_blue, 10);
-  color: $white;
-}
-
-section.details {
-  @include pos($header_height, auto, 0, 0);
-  width: 300px;
-  padding: 20px;
-  box-sizing: border-box;
-  background: $midnight_blue;
-  overflow-y: auto;
-}
-
-section.table {
-  @include pos($header_height, $snippets_width, 0, 300px);
-  padding: 20px;
-  box-sizing: border-box;
-  background: $white;
-  overflow-y: auto;
-  transition: right 0.5s;
-}
-
-section.snippets {
-  @include pos($header_height, 0, 0, auto);
-  width: $snippets_width;
-  background: $clouds;
-  padding: 20px;
-  box-sizing: border-box;
-  overflow-y: auto;
-  transition: right 0.5s;
-}
-
-.no-snippets {
-  section.snippets {
-    right: -$snippets_width;
-  }
-  section.table {
-    right: 0;
-  }
-}
-
-.no-create-client {
-  .create-client {
-    left: -$create_client_width;
-  }
-  .search .container {
-    margin-left: -$search_width / 2;
-  }
-}
+@import "app/pages";
