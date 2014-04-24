@@ -5,31 +5,16 @@ global._ = window._;
 global.Backbone = window.Backbone;
 
 var gui = require('nw.gui');
-var win = window.win = gui.Window.get();
-
-window.log = console.log.bind(console);
+var win = gui.Window.get();
 
 $(document).on('keydown', function(e) {
+  if (e.ctrlKey) return true;
   switch (e.keyCode) {
-    case 82:
-      if (e.ctrlKey) {
-        if (!e.shiftKey) {
-          window.app.storage.end();
-        }
-        return win.reloadDev();
-      }
-      break;
-    case 68:
-      if (e.ctrlKey) {
-        return win.showDevTools();
-      }
+    case 82: // r
+      return win.reloadDev();
+    case 68: // d
+      return win.showDevTools();
   }
 });
 
-var App = require('./js/views/app');
-
-$(function() {
-  window.app = new App({
-    el: $('body')
-  });
-});
+window.App = require('./js/app');
