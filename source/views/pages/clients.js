@@ -15,8 +15,12 @@ var Clients = Backbone.Marionette.Layout.extend({
   },
 
   onRender: function () {
-    this.clients.show(new ClientsView());
-    this.invoices.show(new InvoicesView());
+    this.clients.show(new ClientsView({
+      collection: this.collection
+    }));
+    this.invoices.show(new InvoicesView({
+      collection: this.collection.at(0).get('invoices')
+    }));
   }
 
 });

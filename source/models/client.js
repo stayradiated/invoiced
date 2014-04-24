@@ -1,22 +1,25 @@
 'use strict';
 
+var Invoice = require('./invoice');
+var Invoices = require('./invoices');
+
 var Client = Backbone.RelationalModel.extend({
 
+  relations: [{
+    type: Backbone.HasMany,
+    key: 'invoices',
+    relatedModel: Invoice,
+    collectionType: Invoices,
+    reverseRelation: {
+      key: 'invoice'
+    }
+  }],
+
   defaults: {
-    id: null,
     name: '',
     address: '',
     city: '',
     postcode: ''
-  },
-
-  toJSON: function() {
-    return {
-      clientName: this.name.toUpperCase(),
-      clientAddress: this.address.toUpperCase(),
-      clientCity: this.city.toUpperCase(),
-      clientPostcode: this.postcode
-    };
   }
 
 });

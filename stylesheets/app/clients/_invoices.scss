@@ -11,12 +11,12 @@ header {
   height: $height;
 
   h2 {
-    float: left;
     margin: 0;
+    @include pos(0, auto, auto, 0);
   }
 
   p {
-    float: left;
+    @include pos(40px, auto, auto, 0);
     margin: 0;
     font-size: 12px;
     line-height: 10px;
@@ -35,7 +35,8 @@ header {
 
 .invoice-collection {
   @include pos($height, 0, 0, 0);
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 
   .invoice {
     @import 'invoice';

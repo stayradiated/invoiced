@@ -11,8 +11,8 @@ header {
   height: $height;
 
   h2 {
-    float: left;
     margin: 0;
+    @include pos(0, auto, auto, 0);
   }
 
   button {
@@ -22,7 +22,8 @@ header {
 
 .client-collection {
   @include pos($height, 0, 0, 0);
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 
   .client {
     @import 'client';

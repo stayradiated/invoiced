@@ -1,0 +1,11 @@
+.invoice
+  .meta
+    .id.number= id
+    .created= 'Created: ' + created.toFormat('YY MM DD')
+    .paid-status Not Paid
+  .customer
+    h3= customer
+    h5= address
+    .email= email
+    .date= date
+    .price.number= cost
