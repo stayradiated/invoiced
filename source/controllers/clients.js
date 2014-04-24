@@ -16,7 +16,9 @@ var ClientsController = function () {
   console.log(invoices);
 
   invoices.add({
+    id: 7300,
     created: new Date(),
+    date: new Date(),
     customer: 'Will Turner',
     email: 'will@gmail.com',
     site: 'The Armory',

@@ -1,6 +1,9 @@
+'use strict';
+
 var log = require('log_');
 var gulp = require('gulp');
 var sass = require('gulp-sass');
+var concat = require('gulp-concat');
 var connect = require('gulp-connect');
 var autoprefix = require('gulp-autoprefixer');
 var through = require('through');
@@ -51,9 +54,26 @@ gulp.task('scripts', function () {
   return browserify('./source/app.js')
     .transform(jadeify)
     .bundle()
-    .pipe(source('init.js'))
+    .pipe(source('app.js'))
     .pipe(gulp.dest('dist/js'))
     .pipe(connect.reload());
+});
+
+gulp.task('libs', function () {
+  return gulp.src([
+    'source/libs/jquery.js',
+    'source/libs/jquery-ui.js',
+    'source/libs/underscore.js',
+    'source/libs/backbone.js',
+    'source/libs/backbone.marionette.js',
+    'source/libs/backbone.relational.js',
+    'source/libs/backbone.localstorage.js',
+    'source/libs/jade.js',
+    'source/libs/moment.js',
+    'source/libs/numeral.js'
+  ])
+    .pipe(concat('libs.js'))
+    .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('connect', ['watch'], function () {
