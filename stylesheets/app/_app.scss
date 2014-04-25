@@ -3,14 +3,13 @@ body {
   user-select: none;
   cursor: default;
   background: $app_background;
-}
 
-.header-container {
-  @include pos(0, 0, auto, 0);
-  height: $header_height;
-  line-height: $header_height;
-}
+  & > .header-container {
+    @include pos(0, 0, auto, 0);
+  }
 
-.page-container {
-  @include pos($header_height, 0, 0, 0);
+  & > .page-container {
+    @include pos($header_height, 0, 0, 0);
+  }
+
 }

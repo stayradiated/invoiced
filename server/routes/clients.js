@@ -6,6 +6,7 @@ var clients = {
   all: function (req, res) {
     query('clients')
     .select()
+    .orderBy('dateUpdated', 'desc')
     .then(rest(res))
     .catch(rest.catch(res));
   },
@@ -22,6 +23,7 @@ var clients = {
     query('invoices')
     .select()
     .where({ clientId: req.params.id })
+    .orderBy('dateUpdated', 'desc')
     .then(rest(res))
     .catch(rest.catch(res));
   },

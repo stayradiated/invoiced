@@ -1,6 +1,6 @@
 'use strict';
 
-var Row = Backbone.RelationalModel.extend({
+var Row = Backbone.Model.extend({
 
   defaults: { 
     name: '',

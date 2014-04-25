@@ -1,8 +1,10 @@
 'use strict';
 
+var App = require('../../app');
 var template = require('../../utils/template');
 var ClientsView = require('../clients/clients');
 var InvoicesView = require('../clients/invoices');
+var InvoicesCollection = require('../../models/invoices');
 
 var Clients = Backbone.Marionette.Layout.extend({
 
@@ -14,13 +16,27 @@ var Clients = Backbone.Marionette.Layout.extend({
     invoices: '.invoices-container'
   },
 
+  initialize: function () {
+    this.listenTo(App, 'select:client', this.selectClient);
+  },
+
   onRender: function () {
     this.clients.show(new ClientsView({
       collection: this.options.clients
     }));
-    this.invoices.show(new InvoicesView({
-      collection: this.options.invoices
-    }));
+  },
+
+  selectClient: function (client) {
+    var self = this;
+    var collection = new InvoicesCollection({
+      client: client.id
+    });
+    collection.fetch({ reset: true }).then(function () {
+      self.invoices.show(new InvoicesView({
+        model: client,
+        collection: collection
+      }));
+    });
   }
 
 });

@@ -3,17 +3,7 @@
 var Row = require('./row');
 var Rows = require('./rows');
 
-var Invoice = Backbone.RelationalModel.extend({
-
-  relations: [{
-    type: Backbone.HasMany,
-    key: 'rows',
-    relatedModel: Row,
-    collectionType: Rows,
-    reverseRelation: {
-      key: 'invoice',
-    }
-  }],
+var Invoice = Backbone.Model.extend({
 
   defaults: {
     id: null,

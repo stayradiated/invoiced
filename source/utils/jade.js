@@ -4,6 +4,7 @@ module.exports = {
   '../../jade/clients/clients.jade': require('../../jade/clients/clients.jade'),
   '../../jade/clients/invoice.jade': require('../../jade/clients/invoice.jade'),
   '../../jade/clients/invoices.jade': require('../../jade/clients/invoices.jade'),
+  '../../jade/editor/details.jade': require('../../jade/editor/details.jade'),
   '../../jade/pages/clients.jade': require('../../jade/pages/clients.jade'),
   '../../jade/pages/editor.jade': require('../../jade/pages/editor.jade'),
   '../../jade/pages/invoices.jade': require('../../jade/pages/invoices.jade'),

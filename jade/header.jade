@@ -1,16 +1,15 @@
 h1.logo Invoiced
   span.glyphicons.shopping_cart
 nav
-  ul
-    li.settings
-      span.glyphicons.settings
-      | Settings
-    li.editor
-      span.glyphicons.pen
-      | Editor
-    li.clients.active
-      span.glyphicons.group
-      | Clients
-    li.invoices
-      span.glyphicons.notes
-      | Invoices
+  a.settings(href='#settings')
+    span.glyphicons.settings
+    | Settings
+  a.editor(href='#editor')
+    span.glyphicons.pen
+    | Editor
+  a.clients.active(href='#clients')
+    span.glyphicons.group
+    | Clients
+  a.invoices(href='#invoices')
+    span.glyphicons.notes
+    | Invoices

@@ -4,14 +4,16 @@ $height: 65px;
 $space: 5px;
 
 & {
+  display: block;
   background: #3d546c;
   padding: 0 20px;
   position: relative;
   height: $height;
   margin-bottom: $space;
+  text-decoration: none;
 }
 
-&.active {
+&:hover {
   background: #182637;
 }
 

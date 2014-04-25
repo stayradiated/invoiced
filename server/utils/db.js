@@ -4,9 +4,9 @@ var knex = Knex.initialize({
   client: 'mysql',
   connection: {
     host: '127.0.0.1',
-    user: 'root',
-    password: 'root',
-    database: 'invoicer',
+    user: 'nodejs',
+    password: 'nodejs',
+    database: 'invoiced',
     charset: 'utf8'
   }
 });

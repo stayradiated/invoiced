@@ -11,6 +11,7 @@
     "SockJS": true,
     "Jandal": true,
     "moment": true,
+    "FastClick": true,
 
     "describe": true,
     "it": true,

@@ -8,6 +8,7 @@ App.addRegions({
 });
 
 $(function() {
+  FastClick.attach(document.body);
   App.start();
 });
 

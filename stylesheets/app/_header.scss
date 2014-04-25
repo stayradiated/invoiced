@@ -1,12 +1,12 @@
 .header {
 
+  height: $header_height;
+  line-height: $header_height;
   background: darken($app_background, 10);
-  @extend #group;
 
   h1 {
     padding: 0;
     margin: 0 0 0 20px;
-    float: left;
 
     .glyphicons {
       margin-left: 14px;
@@ -14,22 +14,17 @@
   }
 
   nav {
-    float: right; 
+    @include pos(0, 0);
   }
 
-  ul {
-    margin: 0;
-    padding: 0;
-  }
-
-  li {
-    list-style-type: none;
+  a {
     display: inline-block;
     padding: 0 25px;
 
     color: $white;
     font-size: 16px;
     font-weight: 700;
+    text-decoration: none;
 
     cursor: pointer;
 
