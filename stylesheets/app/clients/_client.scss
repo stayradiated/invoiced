@@ -17,7 +17,7 @@ $space: 5px;
 
 &.selected {
   background: #dae0e3;
-  h3, p, .invoices-count {
+  h3, span, .invoices-count {
     color: #1d2934
   };
 }
@@ -39,7 +39,10 @@ p {
   margin: 0;
   font-size: 12px;
   line-height: 10px;
-  color: rgba(#fff, 0.6);
+
+  span {
+    color: rgba(#fff, 0.6);
+  }
 
   span:not(:last-child):after {
     content: '•';

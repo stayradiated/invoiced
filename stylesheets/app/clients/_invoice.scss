@@ -1,8 +1,8 @@
 // .invoices-container > .invoices > .invoice-collection > .invoice
 
 $space: 5px;
-$meta_height: 42px;
-$customer_height: 70px;
+$meta_height: 40px;
+$customer_height: 50px;
 
 $background: #3c546b;
 
@@ -42,26 +42,31 @@ $background: #3c546b;
   padding: 10px;
   height: $customer_height;
 
+  $top: 10px;
+  $edge: 30px;
+  $center: 50%;
+
+
   h3 {
     margin: 0;
-    @include pos(20px, auto, auto, 20px);
+    @include pos($top, auto, auto, $edge);
   }
 
   h5 {
     margin: 0;
-    @include pos(50px, auto, auto, 20px);
+    @include pos($center, auto, auto, $edge);
   }
 
   .email {
-    @include pos(20px, auto, auto, 320px);
+    @include pos($top, auto, auto, $center);
   }
 
   .date {
-    @include pos(50px, auto, auto, 320px);
+    @include pos($center, auto, auto, $center);
   }
 
   .price {
-    @include pos(10px, 20px);
+    @include pos($top, $edge);
     line-height: $customer_height;
   }
 }

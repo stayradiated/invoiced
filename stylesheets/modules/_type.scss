@@ -1,3 +1,8 @@
+html {
+  // prevent text size adjustment on orientation change
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   font-family: 'open sans', sans-serif;
 }

@@ -20,7 +20,10 @@ header {
     margin: 0;
     font-size: 12px;
     line-height: 10px;
-    color: rgba(#fff, 0.6);
+
+    span {
+      color: rgba(#fff, 0.6);
+    }
 
     span:not(:last-child):after {
       content: '•';
@@ -37,6 +40,7 @@ header {
   @include pos($height, 0, 0, 0);
   overflow-y: scroll;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 
   .invoice {
     @import 'invoice';

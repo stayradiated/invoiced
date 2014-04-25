@@ -14,7 +14,8 @@ $padding: 20px;
 }
 
 .invoices-container {
-  @include pos(0, 0, 0, $clients_width + $padding);
+  @include pos(0, 0, 0, $clients_width);
+  margin-left: $padding;
 
   .invoices {
     @import "invoices";
