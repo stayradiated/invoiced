@@ -3,3 +3,29 @@
   display: table;
   clear: both;
 }
+
+#scroll {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: $app_background !important;
+  }
+
+  &::-webkit-scrollbar-track-piece {
+    border-radius: 10px;
+    background-color: $app_background !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: $turquoise;
+    border: 0;
+  }
+}

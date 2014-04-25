@@ -1,9 +1,22 @@
 // .invoices-container > .invoices
 
 $height: 70px;
+$edit_height: $height + 140px;
 
 & {
   @include pos(0, 0, 0, 0);
+}
+
+&.edit {
+  header {
+    height: $edit_height;
+  }
+  .editor {
+    display: block;
+  }
+  .invoice-collection {
+    top: $edit_height + 40px;
+  }
 }
 
 header {
@@ -31,16 +44,50 @@ header {
     }
   }
 
-  button {
+  & > button {
     float: right;
+  }
+
+  .editor {
+    display: none;
+    @include pos($height, 0, 0, 0);
+    height: $edit_height - $height;
+    background: darken($app_background, 10);
+    padding: 10px 0;
+
+    label {
+      display: inline-block;
+      width: 100px;
+      text-align: right;
+      margin-right: 10px;
+      font-weight: 700;
+    }
+
+    input {
+      border: 0;
+      width: 250px;
+      line-height: 20px;
+      padding: 10px 10px;
+      margin-bottom: 10px;
+      outline: 0;
+      color: $black;
+      background: $clouds;
+    }
+
+    input:focus {
+      background: $white;
+    }
+
+    button:first-of-type {
+      margin-left: 110px;
+    }
+
   }
 }
 
 .invoice-collection {
+  @extend #scroll;
   @include pos($height, 0, 0, 0);
-  overflow-y: scroll;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
 
   .invoice {
     @import 'invoice';

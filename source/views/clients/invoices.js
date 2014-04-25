@@ -5,7 +5,7 @@ var Invoice = require('./invoice');
 
 var Invoices = Backbone.Marionette.CompositeView.extend({
 
-  className: 'invoices',
+  className: 'invoices edit',
   template: template('clients/invoices'),
 
   itemView: Invoice,
