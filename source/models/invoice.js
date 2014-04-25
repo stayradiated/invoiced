@@ -1,6 +1,5 @@
 'use strict';
 
-require('date-utils');
 var Row = require('./row');
 var Rows = require('./rows');
 
@@ -34,14 +33,13 @@ var Invoice = Backbone.RelationalModel.extend({
   },
 
   invoiceDate: function() {
-    var date = new Date(this.date);
-    return date.toFormat('DD MMMM YYYY');
+    return moment(this.date).format('DD MMMM YYYY');
   },
 
   invoiceDueDate: function() {
-    var date = new Date(this.date);
+    var date = moment(this.date);
     date.add({ days: 7 });
-    return date.toFormat('DD MMMM YYYY');
+    return date.format('DD MMMM YYYY');
   }
 
 });

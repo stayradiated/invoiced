@@ -4,7 +4,7 @@ var Client = require('./client');
 
 var Clients = Backbone.Collection.extend({
 
-  localStorage: new Backbone.LocalStorage('clients'),
+  url: 'clients',
 
   model: Client
 
