@@ -1,0 +1,25 @@
+{
+  "name": "invoiced-server",
+  "version": "0.0.0",
+  "description": "Server for Invoiced",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stayradiated/invoiced.git"
+  },
+  "author": "George Czabania",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stayradiated/invoiced/issues"
+  },
+  "homepage": "https://github.com/stayradiated/invoiced",
+  "private": true,
+  "dependencies": {
+    "express": "^4.1.0",
+    "knex": "^0.5.13",
+    "mysql": "^2.1.1"
+  }
+}
