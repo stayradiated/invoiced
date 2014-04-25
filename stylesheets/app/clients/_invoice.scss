@@ -29,6 +29,11 @@ $background: #3c546b;
     float: left;
   }
 
+  .updated {
+    float: left;
+    border-left: $space solid $app_background;
+  }
+
   .paid-status {
     float: right;
     border-left: $space solid $app_background;

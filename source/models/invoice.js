@@ -16,14 +16,27 @@ var Invoice = Backbone.RelationalModel.extend({
   }],
 
   defaults: {
-    created: null,
+    id: null,
+    clientId: null,
+
     customer: '',
-    email: '',
     site: '',
+    email: '',
+
     cost: 0,
     labour: 0,
     airmover: 0,
-    paid: 0
+    paid: 0,
+
+    dateCreated: '',
+    dateUpdated: ''
+  },
+
+  initialize: function () {
+    var date = this.get('date');
+    if (! (date instanceof Date)) {
+      this.set('date', new Date(date));
+    }
   },
 
   customerName: function() {

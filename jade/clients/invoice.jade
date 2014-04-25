@@ -1,20 +1,32 @@
 .meta
   .id.number
     = id
+
   .created
     span.halflings.inbox
-    = 'Created: ' + moment(created).format('Do MMMM YYYY')
+    = 'Created: ' + moment(dateCreated).format('Do MMMM YYYY')
+
+  .updated
+    span.halflings.inbox
+    = 'Last Updated: ' + moment(dateUpdated).format('Do MMMM YYYY')
+
   button.paid-status
     span.halflings.remove
     | Not Paid
+
 .customer
+
   h3
     = customer
+
   h5
     = site
-  .email
-    span.halflings.envelope
-    = email
+
+  if email
+    .email
+      span.halflings.envelope
+      = email
+
   .date
     span.halflings.calendar
     = moment(date).format('Do MMMM YYYY')
