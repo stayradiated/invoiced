@@ -1,6 +1,9 @@
 
 // Vendor
 @import "vendor/normalize";
+@import "vendor/brick";
+@import "vendor/glyphicons";
+@import "vendor/halflings";
 
 // Modules
 @import "modules/colors";
@@ -8,6 +11,8 @@
 @import "modules/mixins";
 @import "modules/extends";
 @import "modules/type";
+@import "modules/buttons";
+@import "modules/icons";
 
 // App
 @import "app/app";

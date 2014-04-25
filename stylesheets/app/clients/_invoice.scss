@@ -11,9 +11,7 @@ $background: #3c546b;
 }
 
 .meta {
-
   @extend #group;
-
   background: $background;
   line-height: $meta_height;
   margin-bottom: $space;
@@ -36,11 +34,9 @@ $background: #3c546b;
     border-left: $space solid $app_background;
     font-weight: 600;
   }
-
 }
 
 .customer {
-
   position: relative;
   background: $background;
   padding: 10px;
@@ -68,5 +64,4 @@ $background: #3c546b;
     @include pos(10px, 20px);
     line-height: $customer_height;
   }
-
 }

@@ -25,6 +25,16 @@ var ClientsController = function () {
     cost: 200
   });
 
+  invoices.add({
+    id: 7301,
+    created: new Date(),
+    date: new Date(),
+    customer: 'Bill Turner',
+    email: 'bill@gmail.com',
+    site: 'The Pirate Ship',
+    cost: 30.21
+  });
+
 };
 
 _.extend(ClientsController.prototype, {

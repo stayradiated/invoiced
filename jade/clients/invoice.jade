@@ -1,10 +1,22 @@
 .meta
-  .id.number= id
-  .created= 'Created: ' + moment(created).format('Do MMMM YYYY')
-  .paid-status Not Paid
+  .id.number
+    = id
+  .created
+    span.halflings.inbox
+    = 'Created: ' + moment(created).format('Do MMMM YYYY')
+  button.paid-status
+    span.halflings.remove
+    | Not Paid
 .customer
-  h3= customer
-  h5= site
-  .email= email
-  .date= moment(date).format('Do MMMM YYYY')
-  .price.number= numeral(cost).format('$0,0.00')
+  h3
+    = customer
+  h5
+    = site
+  .email
+    span.halflings.envelope
+    = email
+  .date
+    span.halflings.calendar
+    = moment(date).format('Do MMMM YYYY')
+  .price.number
+    = numeral(cost).format('$0,0.00')
