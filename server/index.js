@@ -1,13 +1,13 @@
 var express = require('express');
 var app = express();
 
-var clients = require('./routes/clients');
-var invoices = require('./routes/invoices');
-var rows = require('./routes/rows');
+var routes = [
+  'clients', 'invoices', 'rows', 'snippets'
+];
 
-clients.listen(app);
-invoices.listen(app);
-rows.listen(app);
+routes.forEach(function (route) {
+  require('./routes/' + route).listen(app);
+});
 
 app.listen(8080);
 
