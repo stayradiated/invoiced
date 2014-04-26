@@ -1,6 +1,5 @@
 'use strict';
 
-var App = require('../../app');
 var template = require('../../utils/template');
 var ClientsView = require('../clients/clients');
 var InvoicesView = require('../clients/invoices');
@@ -17,7 +16,7 @@ var Clients = Backbone.Marionette.Layout.extend({
   },
 
   initialize: function () {
-    this.listenTo(App, 'select:client', this.selectClient);
+    this.listenTo(this.options.clients, 'select', this.selectClient);
   },
 
   onRender: function () {

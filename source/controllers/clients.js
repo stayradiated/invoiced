@@ -18,7 +18,7 @@ _.extend(ClientsController.prototype, {
 
   open: function (id) {
     var client = this.clients.get(id);
-    App.trigger('select:client', client);
+    client.trigger('select', client);
   }
 
 });
