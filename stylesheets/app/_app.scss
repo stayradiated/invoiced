@@ -6,10 +6,21 @@ body {
 
   & > .header-container {
     @include pos(0, 0, auto, 0);
+    .header {
+      @import 'header';
+    }
   }
 
   & > .page-container {
     @include pos($header_height, 0, 0, 0);
-  }
 
+    .page-clients {
+      @import "clients/layout";
+    }
+
+    .page-editor {
+      @import "editor/layout";
+    }
+
+  }
 }

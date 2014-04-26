@@ -14,17 +14,14 @@
   }
 
   &::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background-color: $app_background !important;
+    background-color: transparent !important;
   }
 
   &::-webkit-scrollbar-track-piece {
-    border-radius: 10px;
-    background-color: $app_background !important;
+    background-color: transparent !important;
   }
 
   &::-webkit-scrollbar-thumb {
-    border-radius: 10px;
     background-color: $turquoise;
     border: 0;
   }

@@ -1,0 +1,36 @@
+// .editor-page
+
+$details_width: 300px;
+$header_height: 40px;
+
+& {
+  background: $white;
+  @include pos(0, 0, 0, 0);
+}
+
+h3 {
+  color: $wet_asphalt;
+}
+
+.header-container {
+  @include pos(0, 0, auto, $details_width);
+  height: $header_height;
+  line-height: $header_height;
+
+  .header {
+    @import 'header';
+  }
+}
+
+.details-container {
+  @extend #scroll;
+  @include pos(0, auto, 0, 0);
+  width: $details_width;
+  padding: 20px;
+  box-sizing: border-box;
+
+  .details {
+    @import 'details';
+  }
+
+}
