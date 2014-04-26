@@ -5,6 +5,8 @@ var Rows = require('./rows');
 
 var Invoice = Backbone.Model.extend({
 
+  urlRoot: 'invoices',
+
   defaults: {
     id: null,
     clientId: null,

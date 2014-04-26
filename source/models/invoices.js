@@ -5,13 +5,13 @@ var Invoice = require('./invoice');
 var Invoices = Backbone.Collection.extend({
 
   url: function () {
-    return 'clients/' + this.clientId + '/invoices';
+    return 'clients/' + this.client.id + '/invoices';
   },
 
   model: Invoice,
 
   initialize: function (options) {
-    this.clientId = options.client;
+    this.client = options.client;
   }
 
 });

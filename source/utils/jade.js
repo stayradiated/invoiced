@@ -9,7 +9,7 @@ module.exports = {
   '../../jade/editor/row_bullet.jade': require('../../jade/editor/row_bullet.jade'),
   '../../jade/editor/row_date.jade': require('../../jade/editor/row_date.jade'),
   '../../jade/editor/row_heading.jade': require('../../jade/editor/row_heading.jade'),
-  '../../jade/editor/row_number.jade': require('../../jade/editor/row_number.jade'),
+  '../../jade/editor/row_item.jade': require('../../jade/editor/row_item.jade'),
   '../../jade/pages/clients.jade': require('../../jade/pages/clients.jade'),
   '../../jade/pages/editor.jade': require('../../jade/pages/editor.jade'),
   '../../jade/pages/invoices.jade': require('../../jade/pages/invoices.jade'),

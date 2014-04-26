@@ -4,7 +4,15 @@ var Row = require('./row');
 
 var Rows = Backbone.Collection.extend({
 
-  model: Row
+  url: function () {
+    return 'invoices/' + this.invoice.id + '/rows';
+  },
+
+  model: Row,
+
+  initialize: function (options) {
+    this.invoice = options.invoice;
+  }
 
 });
 

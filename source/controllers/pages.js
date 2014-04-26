@@ -48,7 +48,8 @@ _.extend(PagesController.prototype, {
   },
 
   openInvoiceInEditor: function (id) {
-    console.log('opening invoice', id);
+    var invoice = this.pages.editor.open(id);
+    App.page.show(this.pages.editor.view(invoice));
   }
 
 });

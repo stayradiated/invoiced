@@ -28,7 +28,7 @@ var Clients = Backbone.Marionette.Layout.extend({
   selectClient: function (client) {
     var self = this;
     var collection = new InvoicesCollection({
-      client: client.id
+      client: client
     });
     collection.fetch({ reset: true }).then(function () {
       self.invoices.show(new InvoicesView({

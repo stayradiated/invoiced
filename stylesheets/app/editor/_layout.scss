@@ -2,9 +2,10 @@
 
 $details_width: 300px;
 $header_height: 40px;
+$app_background: $white;
 
 & {
-  background: $white;
+  background: $app_background;
   @include pos(0, 0, 0, 0);
 }
 
@@ -33,4 +34,15 @@ h3 {
     @import 'details';
   }
 
+}
+
+.rows-container {
+  @extend #scroll;
+  @include pos($header_height, 0, 0, $details_width);
+  padding: 20px;
+  box-sizing: border-box;
+
+  .rows {
+    @import 'rows';
+  }
 }

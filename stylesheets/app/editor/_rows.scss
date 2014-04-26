@@ -1,0 +1,73 @@
+// .page-editor > .rows-container > .rows
+
+$padding: 10px;
+
+.row {
+  margin-bottom: 5px;
+  position: relative;
+
+  span {
+    display: inline-block;
+    color: $wet_asphalt;
+    background: $clouds;
+    line-height: 20px;
+    padding: 10px 10px;
+    box-sizing: border-box;
+    min-width: 40px;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  div {
+    color: $wet_asphalt;
+    background: $clouds;
+    outline: 0;
+    line-height: 20px;
+    border: 2px solid $clouds;
+    padding: $padding - 2px;
+    font-size: 14px;
+
+    &:focus {
+      background: $white;
+      border-color: $peter_river;
+    }
+  }
+}
+
+.row.date {
+  margin-top: 20px;
+  border-bottom: 5px solid $clouds;
+
+  span {
+    background: none;
+    color: $peter_river;
+    text-transform: uppercase;
+  }
+
+  div {
+    background: none;
+    display: inline-block;
+    border-color: transparent;
+  }
+}
+
+.row.heading {
+  div {
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
+
+.row.bullet, .row.item {
+  div {
+    text-indent: $padding;
+    display: inline-block;
+  }
+}
+
+.row.bullet {
+  span {
+    background: none;
+    font-size: 20px;
+  }
+}

@@ -15,6 +15,9 @@ var clients = {
     query('clients')
     .select()
     .where({ id: req.params.id })
+    .then(function (rows) {
+      return rows[0];
+    })
     .then(rest(res))
     .catch(rest.catch(res));
   },

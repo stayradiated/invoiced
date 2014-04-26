@@ -15,6 +15,9 @@ var invoices = {
     .select()
     .where({ id: req.params.id })
     .orderBy('dateUpdated', 'desc')
+    .then(function (rows) {
+      return rows[0];
+    })
     .then(rest(res))
     .catch(rest.catch(res));
   },

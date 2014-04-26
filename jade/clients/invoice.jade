@@ -6,9 +6,10 @@
     span.halflings.inbox
     = 'Created: ' + moment(dateCreated).format('Do MMMM YYYY')
 
-  // .updated
-  //   span.halflings.inbox
-  //   = 'Last Updated: ' + moment(dateUpdated).format('Do MMMM YYYY')
+  .updated
+    span.halflings.inbox
+    // = 'Last Updated: ' + moment(dateUpdated).format('Do MMMM YYYY')
+    a(href='#editor/' + id) Edit
 
   button.paid-status
     span.halflings.remove
