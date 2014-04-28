@@ -2,38 +2,38 @@ h3 Invoice
 
 .control
   label Invoice ID
-  input(type='number', value=id)
+  input(type='number', name='id', value=id)
 
 .control
   label Created At
-  input(type='date', value=date)
+  input(type='date', name='date', value=moment(date).format('YYYY-MM-DD'))
 
 h3 Customer
 
 .control
   label Customer Name
-  input(type='text', value=customer)
+  input(type='text', name='customer', value=customer)
 
 .control
   label Site
-  input(type='text', value=site)
+  input(type='text', name='site', value=site)
 
 .control
   label Email
-  input(type='email', value=email)
+  input(type='email', name='email', value=email)
 
 h3 Cost
 
 .control
   label Airmover Hire
-  input(type='number', value=airmover)
+  input(type='number', name='airmover', value=airmover)
 
 .control
   label Travel
-  input(type='number', value=labour)
+  input(type='number', name='labour', value=labour)
 
 .control
   label Total
-  input(type='number', value=cost)
+  input(type='number', name='cost', value=cost)
 
 

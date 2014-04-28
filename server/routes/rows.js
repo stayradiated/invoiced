@@ -1,28 +1,10 @@
-var query = require('../utils/db');
-var rest = require('../utils/rest');
+'use strict';
 
-var rows = {
+var Table = require('../utils/table');
 
-  all: function (req, res) {
-    query('rows')
-    .select()
-    .then(rest(res))
-    .catch(rest.catch(res));
-  },
-
-  get: function (req, res) {
-    query('rows')
-    .select()
-    .where({ id: req.params.id })
-    .then(rest(res))
-    .catch(rest.catch(res));
-  },
-
-  listen: function (app) {
-    app.get('/rows', rows.all);
-    app.get('/rows/:id', rows.get);
-  }
-
-};
+var rows = new Table({
+  table: 'rows',
+  columns: ['id', 'invoiceid', 'type', 'number', 'name']
+});
 
 module.exports = rows;

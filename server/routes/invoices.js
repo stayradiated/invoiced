@@ -1,41 +1,17 @@
-var query = require('../utils/db');
-var rest = require('../utils/rest');
+'use strict';
 
-var invoices = {
+var Table = require('../utils/table');
 
-  all: function (req, res) {
-    query('invoices')
-    .select()
-    .then(rest(res))
-    .catch(rest.catch(res));
-  },
+var invoices = new Table({
+  table: 'invoices',
+  columns: [
+    'id', 'clientId', 'date', 'customer', 'site', 'email', 'cost',
+    'paid', 'dateUpdated', 'dateCreated', 'labour', 'airmover'
+  ],
+  orderBy: 'dateUpdated',
+  orderByDirection: 'desc'
+});
 
-  get: function (req, res) {
-    query('invoices')
-    .select()
-    .where({ id: req.params.id })
-    .orderBy('dateUpdated', 'desc')
-    .then(function (rows) {
-      return rows[0];
-    })
-    .then(rest(res))
-    .catch(rest.catch(res));
-  },
-
-  getRows: function (req, res) {
-    query('rows')
-    .select()
-    .where({ invoiceId: req.params.id })
-    .then(rest(res))
-    .catch(rest.catch(res));
-  },
-
-  listen: function (app) {
-    app.get('/invoices', invoices.all);
-    app.get('/invoices/:id', invoices.get);
-    app.get('/invoices/:id/rows', invoices.getRows);
-  }
-
-};
+invoices.join('rows', 'invoiceid', 'id');
 
 module.exports = invoices;

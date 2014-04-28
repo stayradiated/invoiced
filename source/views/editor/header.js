@@ -16,8 +16,10 @@ var Header = Backbone.Marionette.ItemView.extend({
   },
 
   save: function () {
+    this.model.save();
+
     this.rows.each(function (row) {
-      row.save(undefined, { patch: true });
+      if (row.hasChanged()) row.save();
     });
   }
 
