@@ -21,9 +21,6 @@ var Editor = Backbone.Marionette.Layout.extend({
     this.details.show(new DetailsView({
       model: this.options.invoice
     }));
-    this.header.show(new HeaderView({
-      model: this.options.invoice
-    }));
 
     var self = this;
 
@@ -34,6 +31,11 @@ var Editor = Backbone.Marionette.Layout.extend({
     rows.fetch({ reset: true }).then(function () {
       self.rows.show(new RowsView({
         collection: rows
+      }));
+
+      self.header.show(new HeaderView({
+        model: self.options.invoice,
+        rows: rows
       }));
     });
   }
