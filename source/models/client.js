@@ -2,16 +2,18 @@
 
 var Invoice = require('./invoice');
 var Invoices = require('./invoices');
+var config = require('../config');
 
 var Client = Backbone.Model.extend({
 
-  urlRoot: 'clients',
+  urlRoot: config.root + '/clients',
 
   defaults: {
     name: '',
     address: '',
     city: '',
-    postcode: ''
+    postcode: '',
+    invoices: 0
   }
 
 });

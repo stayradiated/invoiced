@@ -1,12 +1,13 @@
 'use strict';
 
 var Client = require('./client');
+var config = require('../config');
 
 var Clients = Backbone.Collection.extend({
 
-  url: 'clients',
+  model: Client,
 
-  model: Client
+  url: config.root + '/clients'
 
 });
 

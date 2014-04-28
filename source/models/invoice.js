@@ -2,10 +2,11 @@
 
 var Row = require('./row');
 var Rows = require('./rows');
+var config = require('../config');
 
 var Invoice = Backbone.Model.extend({
 
-  urlRoot: 'invoices',
+  urlRoot: config.root + '/invoices',
 
   defaults: {
     id: null,

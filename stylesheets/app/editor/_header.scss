@@ -3,6 +3,7 @@
 & {
   @extend #group;
   background: darken($wet_asphalt, 5);
+  color: $white;
 }
 
 ul {

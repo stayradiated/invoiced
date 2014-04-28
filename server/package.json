@@ -20,6 +20,7 @@
   "dependencies": {
     "express": "^4.1.0",
     "knex": "^0.5.13",
-    "mysql": "^2.1.1"
+    "mysql": "^2.1.1",
+    "cors": "^2.2.0"
   }
 }

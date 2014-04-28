@@ -5,8 +5,11 @@ var clients = {
 
   all: function (req, res) {
     query('clients')
-    .select()
-    .orderBy('dateUpdated', 'desc')
+    .select('clients.*')
+    .count('invoices.id as invoices')
+    .join('invoices', 'clients.id', '=', 'invoices.clientId')
+    .orderBy('clients.dateUpdated', 'desc')
+    .groupBy('clients.id')
     .then(rest(res))
     .catch(rest.catch(res));
   },

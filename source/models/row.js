@@ -1,6 +1,10 @@
 'use strict';
 
+var config = require('../config');
+
 var Row = Backbone.Model.extend({
+
+  urlRoot: config.root + '/rows',
 
   defaults: { 
     name: '',
