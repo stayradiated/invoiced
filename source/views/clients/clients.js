@@ -9,7 +9,15 @@ var Clients = Backbone.Marionette.CompositeView.extend({
   template: template('clients/clients'),
 
   itemView: Client,
-  itemViewContainer: '.client-collection'
+  itemViewContainer: '.client-collection',
+
+  events: {
+    'click .create-client': 'createClient',
+  },
+
+  createClient: function () {
+    this.collection.create();
+  }
 
 });
 
