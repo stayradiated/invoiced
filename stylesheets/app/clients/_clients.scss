@@ -1,28 +1,33 @@
 // .clients-container > .clients
 
-$height: 70px;
-
 & {
-  @include pos(0, 0, 0, 0);
+  display: flex;
+  flex-direction: column;
 }
 
 header {
-  @include pos(0, 0, auto, 0);
-  height: $height;
+  order: 1;
+  margin-bottom: 20px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
   h2 {
     margin: 0;
-    @include pos(0, auto, auto, 0);
   }
 
   button {
-    float: right;
+    margin-right: 10px;
   }
+
 }
 
 .client-collection {
+  order: 2;
+  flex: 1;
+
   @extend #scroll;
-  @include pos($height, 0, 0, 0);
 
   .client {
     @import 'client';

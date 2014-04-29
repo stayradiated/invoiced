@@ -1,23 +1,32 @@
 $padding: 20px;
 
 & {
-  @include pos($padding, $padding, $padding, $padding);
+  display: flex;
+  padding: $padding;
+  flex-direction: row;
 }
 
 .clients-container {
-  @include pos(0, auto, 0, 0);
-  width: $clients_width;
+  flex: 1;
+  order: 1;
+
+  display: flex;
 
   .clients {
+    flex: 1;
     @import "clients";
   }
 }
 
 .invoices-container {
-  @include pos(0, 0, 0, $clients_width);
+  flex: 2;
+  order: 2;
+
+  display: flex;
   margin-left: $padding;
 
   .invoices {
+    flex: 1;
     @import "invoices";
   }
 }

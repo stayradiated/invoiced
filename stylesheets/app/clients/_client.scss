@@ -4,11 +4,8 @@ $height: 65px;
 $space: 5px;
 
 & {
-  display: block;
+  display: flex;
   background: #3d546c;
-  padding: 0 20px;
-  position: relative;
-  height: $height;
   margin-bottom: $space;
   text-decoration: none;
 }
@@ -31,29 +28,35 @@ $space: 5px;
 }
 
 
+.details {
+  flex: 1;
+  order: 1;
+  padding-left: 20px;
 
-h3 {
-  margin: 0;
-  line-height: 40px;
-}
-
-p {
-  margin: 0;
-  font-size: 12px;
-  line-height: 10px;
-
-  span {
-    color: rgba(#fff, 0.6);
+  h3 {
+    margin: 8px 0 4px;
+    line-height: 25px;
   }
 
-  span:not(:last-child):after {
-    content: '•';
-    margin: 0 8px;
+  p {
+    margin: 0;
+
+    span {
+      color: rgba(#fff, 0.6);
+      font-size: 12px;
+      line-height: 18px;
+    }
+
+    span:not(:last-child):after {
+      content: '•';
+      margin: 0 8px;
+    }
   }
+
 }
 
 .invoices-count {
-  @include pos(0, 0, 0, auto);
+  order: 2;
   width: $height;
   line-height: $height;
   text-align: center;

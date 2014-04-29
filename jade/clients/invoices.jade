@@ -1,28 +1,30 @@
 header
-  h2= name
-  p
-    span.address= address
-    span.city= city
-    span.postcode= postcode
+  .details
+    h2= name
+    p
+      span.address= address
+      span.city= city
+      span.postcode= postcode
+  .buttons
+    button(type="button")
+      span.halflings.pencil
+      | Edit Client Details
+    button.primary(type="button")
+      span.halflings.plus-sign
+      | New Invoice
 
-  button.primary(type="button")
-    span.halflings.plus-sign
-    | New Invoice
-  button(type="button")
-    span.halflings.pencil
-    | Edit Client Details
-
-  .editor
-    label.name Name:
+.editor
+  .row
+    label.name Name
     input.name(placeholder='Name', value=name)
-    label.address Address:
+    label.address Address
     input.address(placeholder='Address', value=address)
-    br
-    label.city City:
+  .row
+    label.city City
     input.city(placeholder='City', value=city)
-    label.postcode Post Code:
+    label.postcode Post Code
     input.postcode(placeholder='Post Code', value=postcode)
-    br
+  .buttons
     button.cancel
       span.halflings.remove
       | Cancel

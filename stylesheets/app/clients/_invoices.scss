@@ -4,38 +4,37 @@ $height: 70px;
 $edit_height: $height + 140px;
 
 & {
-  @include pos(0, 0, 0, 0);
+  display: flex;
+  flex-direction: column;
 }
 
 &.edit {
-  header {
-    height: $edit_height;
-  }
   .editor {
     display: block;
-  }
-  .invoice-collection {
-    top: $edit_height + 40px;
   }
 }
 
 header {
-  @include pos(0, 0, auto, 0);
-  height: $height;
+  order: 1;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  margin-bottom: 20px;
 
   h2 {
-    margin: 0;
-    @include pos(0, auto, auto, 0);
+    margin: 0 0 5px;
+    line-height: 25px;
   }
 
   p {
-    @include pos(40px, auto, auto, 0);
     margin: 0;
-    font-size: 12px;
-    line-height: 10px;
 
     span {
       color: rgba(#fff, 0.6);
+      font-size: 12px;
+      line-height: 18px;
     }
 
     span:not(:last-child):after {
@@ -48,46 +47,55 @@ header {
     float: right;
   }
 
-  .editor {
-    display: none;
-    @include pos($height, 0, 0, 0);
-    height: $edit_height - $height;
-    background: darken($app_background, 10);
-    padding: 10px 0;
+}
 
-    label {
-      display: inline-block;
-      width: 100px;
-      text-align: right;
-      margin-right: 10px;
-      font-weight: 700;
-    }
+.editor {
+  order: 2;
+  display: none;
+  background: darken($app_background, 10);
+  padding: 10px 0;
+  margin-bottom: 20px;
 
-    input {
-      border: 0;
-      width: 250px;
-      line-height: 20px;
-      padding: 10px 10px;
-      margin-bottom: 10px;
-      outline: 0;
-      color: $black;
-      background: $clouds;
-    }
+  .row {
+    display: flex;
+    margin-bottom: 10px;
+    padding-right: 10px;
+  }
 
-    input:focus {
+  label {
+    display: block;
+    width: 80px;
+    text-align: right;
+    margin-right: 10px;
+    font-weight: 700;
+    line-height: 40px;
+  }
+
+  input {
+    flex: 1;
+    display: block;
+    border: 0;
+    line-height: 20px;
+    padding: 10px 10px;
+    outline: 0;
+    color: $black;
+    background: $clouds;
+
+    &:focus {
       background: $white;
     }
+  }
 
-    button:first-of-type {
-      margin-left: 110px;
-    }
 
+  .buttons {
+    margin-left: 85px;
   }
 }
 
 .invoice-collection {
+  flex: 1;
+  order: 3;
   @extend #scroll;
-  @include pos($height, 0, 0, 0);
 
   .invoice {
     @import 'invoice';

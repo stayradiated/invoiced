@@ -11,7 +11,9 @@ $background: #3c546b;
 }
 
 .meta {
-  @extend #group;
+  display: flex;
+  flex-direction: row;
+
   background: $background;
   line-height: $meta_height;
   margin-bottom: $space;
@@ -21,57 +23,60 @@ $background: #3c546b;
   }
 
   .id {
-    float: left;
+    order: 1;
     border-right: $space solid $app_background;
   }
 
   .created {
-    float: left;
+    order: 2;
   }
 
   .updated {
-    float: left;
+    flex: 1;
+    order: 3;
     border-left: $space solid $app_background;
   }
 
   .paid-status {
-    float: right;
+    order: 4;
     border-left: $space solid $app_background;
     font-weight: 600;
   }
 }
 
 .customer {
-  position: relative;
   background: $background;
-  padding: 10px;
-  height: $customer_height;
+  padding: 10px 20px;
+  
+  display: flex;
+  flex-direction: row;
 
-  $top: 10px;
-  $edge: 30px;
-  $center: 50%;
+  .primary {
+    order: 1;
+    flex: 1;
 
+      h3 {
+        margin: 0;
+      }
 
-  h3 {
-    margin: 0;
-    @include pos($top, auto, auto, $edge);
+      h5 {
+        margin: 0;
+      }
   }
 
-  h5 {
-    margin: 0;
-    @include pos($center, auto, auto, $edge);
-  }
+  .secondary {
+    order: 2;
+    flex: 1;
 
-  .email {
-    @include pos($top, auto, auto, $center);
-  }
+    .email {
+    }
 
-  .date {
-    @include pos($center, auto, auto, $center);
+    .date {
+    }
   }
 
   .price {
-    @include pos($top, $edge);
+    order: 3;
     line-height: $customer_height;
   }
 }

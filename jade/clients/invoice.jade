@@ -8,7 +8,7 @@
 
   .updated
     span.halflings.inbox
-    // = 'Last Updated: ' + moment(dateUpdated).format('Do MMMM YYYY')
+    = 'Last Updated: ' + moment(dateUpdated).format('Do MMMM YYYY')
     a(href='#editor/' + id) Edit
 
   button.paid-status
@@ -17,19 +17,24 @@
 
 .customer
 
-  h3
-    = customer
+  .primary
 
-  h5
-    = site
+    h3
+      = customer
 
-  if email
-    .email
-      span.halflings.envelope
-      = email
+    h5
+      = site
+    
+  .secondary
 
-  .date
-    span.halflings.calendar
-    = moment(date).format('Do MMMM YYYY')
+    if email
+      .email
+        span.halflings.envelope
+        = email
+
+    .date
+      span.halflings.calendar
+      = moment(date).format('Do MMMM YYYY')
+
   .price.number
     = numeral(cost).format('$0,0.00')
