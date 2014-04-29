@@ -14,9 +14,11 @@ var Table = function (options) {
 
   this.routes = [
     ['get',   this.root, 'all'],
+    ['post', this.root, 'create'],
     ['get',   this.root + '/:id', 'read'],
     ['put',   this.root + '/:id', 'update'],
-    ['patch', this.root + '/:id', 'update']
+    ['patch', this.root + '/:id', 'update'],
+    ['delete', this.root + '/:id', 'destroy']
   ];
 };
 
@@ -25,6 +27,23 @@ _.extend(Table.prototype, {
   all: function (req, res) {
     query(this.table).select()
     .orderBy(this.orderBy, this.orderByDirection)
+    .then(rest(res))
+    .catch(rest.catch(res));
+  },
+
+  create: function (req, res) {
+    var json = _.pick(req.body, this.columns);
+
+    if (this.timestamps) {
+      json.dateUpdated = new Date();
+      json.dateCreated = new Date();
+    }
+
+    query(this.table).insert(json)
+    .then(function (id) {
+      json.id = id[0];
+      return json;
+    })
     .then(rest(res))
     .catch(rest.catch(res));
   },
@@ -56,6 +75,17 @@ _.extend(Table.prototype, {
     .catch(rest.catch(res));
   },
 
+  destroy: function (req, res) {
+    var id = req.params.id;
+
+    query(this.table).del()
+    .where({ id: id })
+    .then(function () {
+      res.end();
+    })
+    .catch(rest.catch(res));
+  },
+
   join: function (table, column, key) {
 
     var fn = function (req, res) {
@@ -77,7 +107,6 @@ _.extend(Table.prototype, {
       var path = route[1];
       var method = route[0];
       if (_.isString(fn)) fn = this[fn];
-      console.log(method, path);
       app[method](path, fn.bind(this));
     }, this);
   }

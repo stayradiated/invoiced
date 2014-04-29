@@ -20,9 +20,11 @@ var Clients = Backbone.Marionette.Layout.extend({
   },
 
   onRender: function () {
-    this.clients.show(new ClientsView({
+    var clientsView = new ClientsView({
       collection: this.options.clients
-    }));
+    });
+
+    this.clients.show(clientsView);
   },
 
   selectClient: function (client) {

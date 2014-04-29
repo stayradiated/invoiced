@@ -16,11 +16,10 @@ var clients = new Table({
 
 clients.all = function (req, res) {
   query('clients')
-  .select('clients.*')
-  .count('invoices.id as invoices')
-  .join('invoices', 'clients.id', '=', 'invoices.clientId')
+  .select(query.raw(
+    '*, (select count(id) from invoices where clientId = clients.id) as invoices'
+  ))
   .orderBy('clients.dateUpdated', 'desc')
-  .groupBy('clients.id')
   .then(rest(res))
   .catch(rest.catch(res));
 };
