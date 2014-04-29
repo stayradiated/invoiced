@@ -7,9 +7,11 @@ var rest = require('../utils/rest');
 var clients = new Table({
   table: 'clients',
   columns: [
+    'address', 'city', 'id', 'name', 'postcode'
   ],
   orderBy: 'dateUpdated',
-  orderByDirection: 'desc'
+  orderByDirection: 'desc',
+  timestamps: true
 });
 
 clients.all = function (req, res) {

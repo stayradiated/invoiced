@@ -11,6 +11,7 @@ var Client = Backbone.Marionette.ItemView.extend({
   initialize: function () {
     this.$el.attr('href', '#clients/' + this.model.id);
     this.listenTo(this.model, 'select', this.select);
+    this.listenTo(this.model, 'change', this.render);
   },
 
   select: function () {

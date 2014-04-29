@@ -5,11 +5,46 @@ var Invoice = require('./invoice');
 
 var Invoices = Backbone.Marionette.CompositeView.extend({
 
-  className: 'invoices edit',
+  className: 'invoices',
   template: template('clients/invoices'),
 
   itemView: Invoice,
-  itemViewContainer: '.invoice-collection'
+  itemViewContainer: '.invoice-collection',
+
+  ui: {
+    name: 'input.name',
+    address: 'input.address',
+    city: 'input.city',
+    postcode: 'input.postcode'
+  },
+
+  events: {
+    'click .edit-client': 'showEditor',
+    'click .editor .cancel': 'hideEditor',
+    'click .editor .save': 'saveChanges'
+  },
+
+  initialize: function () {
+    this.listenTo(this.model, 'change', this.render);
+  },
+
+  showEditor: function () {
+    this.$el.addClass('edit');
+  },
+
+  hideEditor: function () {
+    this.$el.removeClass('edit');
+  },
+
+  saveChanges: function () {
+    this.hideEditor();
+    this.model.save({
+      name: this.ui.name.val(),
+      address: this.ui.address.val(),
+      city: this.ui.city.val(),
+      postcode: this.ui.postcode.val()
+    }, {patch: true});
+  }
 
 });
 

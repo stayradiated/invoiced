@@ -6,7 +6,9 @@ var cors = require('cors');
 
 var app = express();
 
-app.use(cors());
+app.use(cors({
+  methods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+}));
 app.use(express.static(__dirname + '/../dist'));
 app.use(connect.bodyParser());
 

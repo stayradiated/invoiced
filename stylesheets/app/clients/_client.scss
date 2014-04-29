@@ -16,8 +16,8 @@ $space: 5px;
 
 &.active {
   background: #dae0e3;
-  h3, span, .invoices-count {
-    color: #1d2934
+  h3, p span, .invoices-count {
+    color: #1d2934;
   };
 }
 
@@ -40,19 +40,18 @@ $space: 5px;
 
   p {
     margin: 0;
-
-    span {
-      color: rgba(#fff, 0.6);
-      font-size: 12px;
-      line-height: 18px;
-    }
-
-    span:not(:last-child):after {
-      content: '•';
-      margin: 0 8px;
-    }
   }
 
+  span {
+    color: rgba(#fff, 0.6);
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  span:not(:last-child):after {
+    content: '•';
+    margin: 0 8px;
+  }
 }
 
 .invoices-count {

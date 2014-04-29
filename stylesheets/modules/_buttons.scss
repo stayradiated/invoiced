@@ -8,8 +8,13 @@ button {
   transition: background 0.15s;
 
   background: lighten($app_background, 5);
+
   &:hover {
     background: lighten($app_background, 10);
+  }
+
+  &:focus {
+    box-shadow: inset 0 0 0 2px rgba(#fff, 0.5);
   }
 }
 

@@ -10,11 +10,13 @@ var Table = function (options) {
   this.orderBy = options.orderBy || 'id';
   this.orderByDirection = options.orderByDirection || 'asc';
   this.root = options.root || '/' + this.table;
+  this.timestamps = options.timestamps || false;
 
   this.routes = [
-    ['get', this.root, 'all'],
-    ['get', this.root + '/:id', 'read'],
-    ['put', this.root + '/:id', 'update'],
+    ['get',   this.root, 'all'],
+    ['get',   this.root + '/:id', 'read'],
+    ['put',   this.root + '/:id', 'update'],
+    ['patch', this.root + '/:id', 'update']
   ];
 };
 
@@ -40,10 +42,14 @@ _.extend(Table.prototype, {
 
   update: function (req, res) {
     var json = _.pick(req.body, this.columns);
-    if (! json.hasOwnProperty('id')) return res.status(401).end();
+    var id = req.params.id;
+
+    if (this.timestamps) {
+      json.dateUpdated = new Date();
+    }
 
     query(this.table).update(json)
-    .where({ id: json.id })
+    .where({ id: id })
     .then(function () {
       res.end();
     })
@@ -71,6 +77,7 @@ _.extend(Table.prototype, {
       var path = route[1];
       var method = route[0];
       if (_.isString(fn)) fn = this[fn];
+      console.log(method, path);
       app[method](path, fn.bind(this));
     }, this);
   }
