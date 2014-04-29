@@ -1,22 +1,16 @@
 // .editor-page > .header-container > .header
 
 & {
-  @extend #group;
-  background: darken($wet_asphalt, 5);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   color: $white;
+  background: darken($wet_asphalt, 5);
 }
 
 ul {
   margin: 0;
   padding: 0;
-
-  &.rows {
-    float: left;
-  }
-
-  &.invoice {
-    float: right;
-  }
 }
 
 li {
