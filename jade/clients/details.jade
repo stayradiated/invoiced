@@ -1,14 +1,33 @@
 header
-  .id.number
-    = id
+  h2= id
 
   .created
     span.halflings.calendar
-    = moment(date).format('Do MMMM YYYY')
+    = moment(date).format('ddd Do MMMM YYYY')
+
+  .date-created
+    span.halflings.calendar
+    = moment(dateCreated).format('ddd Do MMMM YYYY hh:mm a')
+
+  .date-updated
+    span.halflings.calendar
+    = moment(dateUpdated).format('ddd Do MMMM YYYY hh:mm a')
 
   .paid-status
+    if ! paid
+      span.halflings.remove
+      | Not Paid
+    else
+      span.halflings.ok
+      | Paid
+
+  button.delete(type='button')
     span.halflings.remove
-    | Not Paid
+    | Delete Invoice
+ 
+  button.secondary.edit(type='button')
+    span.halflings.pencil
+    | Edit Invoice
 
 .customer
 
@@ -19,6 +38,17 @@ header
 
     h5
       = site
+
+    .email
+      = email
+
+    .labour
+      | Labour:
+      = labour
+
+    .airmover
+      | Air Mover:
+      = airmover
 
   .price.number
     = numeral(cost).format('$0,0.00')

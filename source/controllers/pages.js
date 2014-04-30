@@ -35,7 +35,7 @@ _.extend(PagesController.prototype, {
 
   showClientsPage: function () {
     App.trigger('select:page', 'clients');
-    App.page.show(this.pages.clients.view());
+    App.page.show(this.pages.clients.render());
   },
 
   showEditorPage: function () {

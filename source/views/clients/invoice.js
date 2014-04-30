@@ -11,8 +11,13 @@ var Invoice = Backbone.Marionette.ItemView.extend({
     'click': 'select'
   },
 
+  initialize: function () {
+    this.listenTo(this.model, 'change', this.render);
+  },
+
   select: function () {
-    this.trigger('select', this.model);
+    this.trigger('select');
+    this.$el.addClass('active');
   }
 
 });

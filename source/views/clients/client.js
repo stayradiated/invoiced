@@ -4,18 +4,19 @@ var template = require('../../utils/template');
 
 var Client = Backbone.Marionette.ItemView.extend({
 
-  tagName: 'a',
   className: 'client',
   template: template('clients/client'),
 
+  events: {
+    'click': 'select'
+  },
+
   initialize: function () {
-    this.$el.attr('href', '#clients/' + this.model.id);
-    this.listenTo(this.model, 'select', this.select);
     this.listenTo(this.model, 'change', this.render);
   },
 
   select: function () {
-    this.$el.parent().find('.active').removeClass('active');
+    this.trigger('select');
     this.$el.addClass('active');
   }
 

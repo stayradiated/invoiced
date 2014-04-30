@@ -3,20 +3,36 @@
 var template = require('../../utils/template');
 var Client = require('./client');
 
-var Clients = Backbone.Marionette.CompositeView.extend({
+var ClientsList = Marionette.CollectionView.extend({
+  className: 'client-collection',
+  itemView: Client,
+});
+
+module.exports = Clients;
+var Clients = Marionette.BossView.extend({
 
   className: 'clients',
   template: template('clients/clients'),
 
-  itemView: Client,
-  itemViewContainer: '.client-collection',
+  subViews: {
+    list: ClientsList
+  },
+
+  subViewEvents: {
+    'list itemview:select': 'selectClient'
+  },
 
   events: {
     'click .create-client': 'createClient',
   },
 
   createClient: function () {
-    this.collection.create();
+  },
+
+  selectClient: function (view) {
+    this.$el.find('.active').removeClass('active');
+    var client = view.model;
+    this.trigger('select:client', client);
   }
 
 });

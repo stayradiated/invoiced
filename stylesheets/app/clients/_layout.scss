@@ -31,7 +31,9 @@ $padding: 20px;
   }
 }
 
-.invoice-container {
+.details-container {
   flex: 1;
   order: 3;
+
+  margin-left: $padding;
 }

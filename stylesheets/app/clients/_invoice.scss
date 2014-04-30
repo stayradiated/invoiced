@@ -16,6 +16,15 @@ $background: lighten($app_background, 5);
   }
 }
 
+&.active {
+  .meta, .customer {
+    background: $silver;
+  }
+  h3, h5, div, span, .halflings::before {
+    color: darken($app_background, 10);
+  }
+}
+
 .meta {
   display: flex;
   flex-direction: row;

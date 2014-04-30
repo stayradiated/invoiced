@@ -3,13 +3,23 @@
 var template = require('../../utils/template');
 var Invoice = require('./invoice');
 
-var Invoices = Backbone.Marionette.CompositeView.extend({
+var InvoicesList = Marionette.CollectionView.extend({
+  className: 'invoice-collection',
+  itemView: Invoice
+});
+
+var Invoices = Marionette.BossView.extend({
 
   className: 'invoices',
   template: template('clients/invoices'),
 
-  itemView: Invoice,
-  itemViewContainer: '.invoice-collection',
+  subViews: {
+    list: InvoicesList
+  },
+
+  subViewEvents: {
+    'list itemview:select': 'selectInvoice'
+  },
 
   ui: {
     name: 'input.name',
@@ -27,6 +37,11 @@ var Invoices = Backbone.Marionette.CompositeView.extend({
 
   initialize: function () {
     this.listenTo(this.model, 'change', this.render);
+  },
+
+  onRender: function () {
+    var first = this.list.children.first();
+    if (first) first.select();
   },
 
   showEditor: function () {
@@ -53,6 +68,12 @@ var Invoices = Backbone.Marionette.CompositeView.extend({
       date: new Date()
     });
     console.log(invoice);
+  },
+
+  selectInvoice: function (view) {
+    this.$el.find('.active').removeClass('active');
+    var invoice = view.model;
+    this.trigger('select:invoice', invoice);
   }
 
 });
