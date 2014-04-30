@@ -94,6 +94,7 @@ _.extend(Table.prototype, {
 
       query(table).select()
       .where(options)
+      .orderBy(this.orderBy, this.orderByDirection)
       .then(rest(res))
       .catch(rest.catch(res));
     };

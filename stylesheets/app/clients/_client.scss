@@ -2,28 +2,30 @@
 
 $height: 65px;
 $space: 5px;
+$background: lighten($app_background, 5);
 
 & {
   display: flex;
-  background: #3d546c;
+  background: $background;
   margin-bottom: $space;
   text-decoration: none;
+  transition: background 0.15s;
 }
 
 &:hover {
-  background: #182637;
+  background: darken($background, 10);
 }
 
 &.active {
-  background: #dae0e3;
+  background: $silver;
   h3, p span, .invoices-count {
-    color: #1d2934;
+    color: darken($app_background, 20);
   };
 }
 
 &.unpaid {
   .invoices-count {
-    background: #2e3f51;
+    background: $app_background;
   }
 }
 
@@ -43,8 +45,8 @@ $space: 5px;
   }
 
   span {
-    color: rgba(#fff, 0.6);
-    font-size: 12px;
+    color: $silver;
+    font-size: 13px;
     line-height: 18px;
   }
 

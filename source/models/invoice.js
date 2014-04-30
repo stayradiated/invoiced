@@ -9,7 +9,6 @@ var Invoice = Backbone.Model.extend({
   urlRoot: config.root + '/invoices',
 
   defaults: {
-    id: null,
     clientId: null,
 
     customer: '',

@@ -13,6 +13,10 @@ var Invoices = Backbone.Collection.extend({
 
   initialize: function (options) {
     this.client = options.client;
+  },
+
+  comparator: function (a, b) {
+    return b.id - a.id;
   }
 
 });

@@ -19,6 +19,7 @@ var Invoices = Backbone.Marionette.CompositeView.extend({
   },
 
   events: {
+    'click .create-invoice': 'createInvoice',
     'click .edit-client': 'showEditor',
     'click .editor .cancel': 'hideEditor',
     'click .editor .save': 'saveChanges'
@@ -44,6 +45,14 @@ var Invoices = Backbone.Marionette.CompositeView.extend({
       city: this.ui.city.val(),
       postcode: this.ui.postcode.val()
     }, {patch: true});
+  },
+
+  createInvoice: function () {
+    var invoice = this.collection.create({
+      clientId: this.model.id,
+      date: new Date()
+    });
+    console.log(invoice);
   }
 
 });

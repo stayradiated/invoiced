@@ -14,7 +14,11 @@ button {
   }
 
   &:focus {
-    box-shadow: inset 0 0 0 2px rgba(#fff, 0.5);
+    box-shadow: inset 0 0 0 2px rgba($white, 0.5);
+  }
+
+  &:first-of-type {
+    margin-left: 0;
   }
 }
 

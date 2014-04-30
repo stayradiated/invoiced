@@ -19,7 +19,7 @@ $padding: 20px;
 }
 
 .invoices-container {
-  flex: 2;
+  flex: 1;
   order: 2;
 
   display: flex;
@@ -29,4 +29,9 @@ $padding: 20px;
     flex: 1;
     @import "invoices";
   }
+}
+
+.invoice-container {
+  flex: 1;
+  order: 3;
 }

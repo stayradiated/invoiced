@@ -9,7 +9,7 @@ var clients = new Table({
   columns: [
     'address', 'city', 'id', 'name', 'postcode'
   ],
-  orderBy: 'dateUpdated',
+  orderBy: 'date',
   orderByDirection: 'desc',
   timestamps: true
 });

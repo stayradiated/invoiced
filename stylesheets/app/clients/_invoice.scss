@@ -1,22 +1,29 @@
 // .invoices-container > .invoices > .invoice-collection > .invoice
 
-$space: 5px;
 $meta_height: 40px;
 $customer_height: 50px;
 
-$background: #3c546b;
+$background: lighten($app_background, 5);
 
 & {
-  margin-bottom: $space * 5;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+&:hover {
+  .meta, .customer {
+    background: darken($background, 10);
+  }
 }
 
 .meta {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 
-  background: $background;
   line-height: $meta_height;
-  margin-bottom: $space;
+  background: $background;
+  transition: background 0.15s;
 
   div {
     padding: 0 20px;
@@ -24,22 +31,15 @@ $background: #3c546b;
 
   .id {
     order: 1;
-    border-right: $space solid $app_background;
   }
 
   .created {
     order: 2;
-  }
-
-  .updated {
     flex: 1;
-    order: 3;
-    border-left: $space solid $app_background;
   }
 
   .paid-status {
-    order: 4;
-    border-left: $space solid $app_background;
+    order: 3;
     font-weight: 600;
   }
 }
@@ -47,6 +47,7 @@ $background: #3c546b;
 .customer {
   background: $background;
   padding: 10px 20px;
+  transition: background 0.15s;
   
   display: flex;
   flex-direction: row;
