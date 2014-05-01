@@ -66,8 +66,9 @@ gulp.task('libs', function () {
     'source/libs/underscore.js',
     'source/libs/backbone.js',
     'source/libs/backbone.marionette.js',
+    'source/libs/backbone.relational.js',
     'source/libs/marionette.bossview.js',
-    'source/libs/jade.js',
+    // 'source/libs/jade.js',
     'source/libs/moment.js',
     'source/libs/numeral.js',
     'source/libs/fastclick.js'

@@ -27,6 +27,7 @@ var Clients = Marionette.BossView.extend({
   },
 
   createClient: function () {
+    this.trigger('create:client');
   },
 
   selectClient: function (view) {

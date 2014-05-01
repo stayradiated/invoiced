@@ -7,7 +7,11 @@ var Clients = Backbone.Collection.extend({
 
   model: Client,
 
-  url: config.root + '/clients'
+  url: config.root + '/clients',
+
+  comparator: function (a, b) {
+    return b.get('updatedAt') - a.get('updatedAt');
+  }
 
 });
 

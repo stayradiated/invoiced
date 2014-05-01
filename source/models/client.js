@@ -13,7 +13,14 @@ var Client = Backbone.Model.extend({
     address: '',
     city: '',
     postcode: '',
-    invoices: 0
+    createdAt: null,
+    updatedAt: null 
+  },
+
+  parse: function (json) {
+    json.createdAt = new Date(json.createdAt);
+    json.updatedAt = new Date(json.updatedAt);
+    return json;
   }
 
 });

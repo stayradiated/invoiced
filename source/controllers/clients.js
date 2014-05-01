@@ -1,10 +1,15 @@
 var App = require('../app');
+
+// Views
 var ClientsPage = require('../views/pages/clients');
-var ClientsCollection = require('../models/clients');
 var ClientsView = require('../views/clients/clients');
 var InvoicesView = require('../views/clients/invoices');
-var InvoicesCollection = require('../models/invoices');
 var DetailsView = require('../views/clients/details');
+
+// Models
+var Client = require('../models/client');
+var ClientsCollection = require('../models/clients');
+var InvoicesCollection = require('../models/invoices');
 
 var ClientsController = function () {
   this.clients = new ClientsCollection();
@@ -30,6 +35,7 @@ _.extend(ClientsController.prototype, {
       collection: this.clients
     });
     clientsView.on('select:client', this.showInvoices, this);
+    clientsView.on('create:client', this.createClient, this);
     this.view.clients.show(clientsView);
   },
 
@@ -60,6 +66,23 @@ _.extend(ClientsController.prototype, {
       console.log('editiing', invoice);
     });
     this.view.details.show(detailsView);
+  },
+
+  createClient: function () {
+    var client = new Client();
+
+    client.on('sync', function () {
+      this.clients.add(client);
+    }, this);
+
+    var invoicesView = new InvoicesView({
+      model: client,
+      collection: new InvoicesCollection({
+        client: client
+      })
+    });
+
+    this.view.invoices.show(invoicesView);
   }
 
 });
