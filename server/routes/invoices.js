@@ -9,7 +9,7 @@ var invoices = new Route({
   collection: Invoices
 });
 
-// invoices.addRelation('rows');
+invoices.addRelation('rows');
 invoices.addRelation('client');
 
 module.exports = invoices;

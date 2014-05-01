@@ -15,7 +15,7 @@ app.use(express.static(__dirname + '/../dist'));
 app.use(connect.bodyParser());
 
 var routes = [
-  'clients', 'invoices',// 'rows', 'snippets'
+  'clients', 'invoices', 'rows', // 'snippets'
 ];
 
 routes.forEach(function (route) {
