@@ -1,6 +1,7 @@
 var rest = function (res) {
   return function (rows) {
-    res.end(JSON.stringify(rows, null, 2));
+    res.header({'Content-Type': 'application/json'});
+    res.end(JSON.stringify(rows));
   };
 };
 

@@ -1,18 +1,15 @@
 'use strict';
 
-var Table = require('../utils/table');
+var Route = require('../utils/route');
+var Invoice = require('../models/invoice');
+var Invoices = require('../models/invoices');
 
-var invoices = new Table({
-  table: 'invoices',
-  columns: [
-    'id', 'clientId', 'date', 'customer', 'site',
-    'email', 'cost', 'paid', 'labour', 'airmover'
-  ],
-  orderBy: 'dateUpdated',
-  orderByDirection: 'desc',
-  timestamps: true
+var invoices = new Route({
+  model: Invoice,
+  collection: Invoices
 });
 
-invoices.join('rows', 'invoiceid', 'id');
+// invoices.addRelation('rows');
+invoices.addRelation('client');
 
 module.exports = invoices;

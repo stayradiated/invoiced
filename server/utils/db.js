@@ -1,14 +1,15 @@
-var Knex = require('knex');
+var Bookshelf = require('bookshelf');
 
-var knex = Knex.initialize({
+var MySql = Bookshelf.initialize({
   client: 'mysql',
   connection: {
     host: '127.0.0.1',
     user: 'nodejs',
     password: 'nodejs',
-    database: 'invoiced',
-    charset: 'utf8'
+    database: 'invoice_redux',
+    charset: 'utf8',
+    debug: false
   }
 });
 
-module.exports = knex;
+module.exports = MySql;
