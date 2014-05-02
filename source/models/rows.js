@@ -9,9 +9,7 @@ var Rows = Backbone.Collection.extend({
 
   url: config.root + '/rows',
 
-  comparator: function (a, b) {
-    return a.get('order') - b.get('order');
-  }
+  comparator: 'order'
 
 });
 

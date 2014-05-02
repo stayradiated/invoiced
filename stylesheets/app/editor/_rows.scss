@@ -34,24 +34,42 @@ $padding: 10px;
     }
   }
 
+  button {
+    margin-left: 5px;
+    color: $white;
+    padding: 0;
+    width: 40px;
+
+    span {
+      padding-left: 0;
+      width: 10px;
+    }
+  }
+
 }
 
 .row.date {
-  margin-top: 20px;
+  margin-top: 30px;
   border-bottom: 5px solid $clouds;
+  justify-content: space-between;
+
   span {
     background: none;
     color: $peter_river;
     text-transform: uppercase;
     font-weight: 700;
     line-height: 40px;
-    margin-left: 20px;
   }
 
   input {
     flex: none;
     background: none;
     border-color: transparent;
+    padding: 0 0 0 10px;
+  }
+
+  .fill {
+    flex: 1;
   }
 
   input:focus {

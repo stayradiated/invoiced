@@ -24,7 +24,6 @@ var Route = function (options) {
 _.extend(Route.prototype, {
 
   all: function (req, res) {
-    console.log(this.collection);
     rest.end(res, this.collection);
   },
 

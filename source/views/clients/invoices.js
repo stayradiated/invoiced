@@ -46,6 +46,7 @@ var Invoices = Marionette.BossView.extend({
 
   showEditor: function () {
     this.$el.addClass('edit');
+    this.ui.name.focus();
   },
 
   hideEditor: function () {

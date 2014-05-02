@@ -11,29 +11,14 @@ var Client = require('../models/client');
 
 var ClientsController = function (clients) {
   this.clients = clients;
+  this.view = new ClientsPage();
+  this.view.on('render', this.showClients, this);
 };
 
 _.extend(ClientsController.prototype, {
 
-  render: function () {
-    this.view = new ClientsPage();
-    this.view.on('render', this.showClients, this);
-    return this.view;
-  },
 
-  open: function (id) {
-    var client = this.clients.get(id);
-    client.trigger('select', client);
-  },
-
-  showClients: function () {
-    var clientsView = new ClientsView({ collection: this.clients });
-    clientsView.on('select:client', this.showInvoices, this);
-    clientsView.on('create:client', this.createClient, this);
-    this.view.clients.show(clientsView);
-  },
-
-  showInvoices: function (client) {
+  open: function (client) {
     this.view.details.close();
 
     var view = new InvoicesView({
@@ -45,6 +30,19 @@ _.extend(ClientsController.prototype, {
     view.on('create:invoice', this.createInvoice, this);
 
     this.view.invoices.show(view);
+
+    return view;
+  },
+
+  showClients: function () {
+    var clientsView = new ClientsView({ collection: this.clients });
+    clientsView.on('select:client', this.showInvoices, this);
+    clientsView.on('create:client', this.createClient, this);
+    this.view.clients.show(clientsView);
+  },
+
+  showInvoices: function (client) {
+    App.router.navigate('/clients/' + client.id, {trigger: true});
   },
 
   showDetails: function (invoice) {
@@ -63,12 +61,8 @@ _.extend(ClientsController.prototype, {
       this.clients.add(client);
     }, this);
 
-    var invoicesView = new InvoicesView({
-      model: client,
-      collection: client.get('invoices')
-    });
-
-    this.view.invoices.show(invoicesView);
+    var view = this.showInvoices(client);
+    view.showEditor();
   },
 
   createInvoice: function (client) {

@@ -13,15 +13,20 @@ var RowHeading = Backbone.Marionette.ItemView.extend({
 
   events: {
     'change input': 'change',
-    'click .switch-type': 'switchType'
+    'click .switch-type': 'switchType',
+    'click .delete': 'destroy',
   },
 
   change: function () {
-    this.model.set('name', this.ui.input.val());
+    this.model.set('content', this.ui.input.val());
   },
 
   switchType: function () {
-    this.model.set('type', 3);
+    this.model.set('type', 0);
+  },
+
+  destroy: function () {
+    this.model.destroy();
   }
 
 });

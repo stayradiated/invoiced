@@ -9,9 +9,7 @@ var Clients = Backbone.Collection.extend({
 
   url: config.root + '/clients',
 
-  comparator: function (a, b) {
-    return b.get('updatedAt') - a.get('updatedAt');
-  }
+  comparator: 'name'
 
 });
 

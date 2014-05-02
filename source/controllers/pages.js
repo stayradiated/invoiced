@@ -15,8 +15,10 @@ var RowsCollection = require('../models/rows');
 var Router = Backbone.Marionette.AppRouter.extend({
   appRoutes: {
     '':                   'showClientsPage',
+
     'clients':            'showClientsPage',
     'clients/:id':        'openClient',
+
     'editor':             'showEditorPage',
     'editor/:id':         'openInvoiceInEditor',
     'editor/create/:id':  'createInvoice'
@@ -41,6 +43,8 @@ var PagesController = function () {
     clients: new ClientsController(this.models.clients),
     editor: new EditorController(this.models.invoices)
   };
+
+  this.page = null;
 };
 
 _.extend(PagesController.prototype, {
@@ -61,30 +65,50 @@ _.extend(PagesController.prototype, {
     App.header.show(headerView);
   },
 
+  showPage: function (page) {
+    if (this.page !== page) {
+      console.log('Pages: opening page', page);
+      App.trigger('select:page', page);
+      App.page.show(this.pages[page].view);
+      this.page = page;
+    }
+  },
+
+
+  /*
+   * CLIENTS
+   */
+
   showClientsPage: function () {
-    App.trigger('select:page', 'clients');
-    App.page.show(this.pages.clients.render());
-  },
-
-  showEditorPage: function () {
-    App.trigger('select:page', 'editor');
-    App.page.show(this.pages.editor.view());
-  },
-
-  createInvoice: function (clientId) {
-    App.trigger('select:page', 'editor');
-    var client = this.models.clients.get(clientId);
-    App.page.show(this.pages.editor.create(client));
+    this.showPage('clients');
   },
 
   openClient: function (clientId) {
-    this.pages.clients.open(clientId);
+    var client = this.models.clients.get(clientId);
+    this.showPage('clients');
+    this.pages.clients.open(client);
+  },
+
+
+  /*
+   * EDITOR
+   */
+
+  showEditorPage: function () {
+    this.showPage('editor');
   },
 
   openInvoiceInEditor: function (invoiceId) {
     var invoice = this.models.invoices.get(invoiceId);
-    App.page.show(this.pages.editor.render(invoice));
-  }
+    this.pages.editor.open(invoice);
+    this.showPage('editor');
+  },
+
+  createInvoice: function (clientId) {
+    var client = this.models.clients.get(clientId);
+    this.showPage('editor');
+    this.pages.editor.create(client);
+  },
 
 });
 
