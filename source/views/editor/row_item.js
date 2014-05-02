@@ -17,6 +17,15 @@ var RowItem = Backbone.Marionette.ItemView.extend({
     'click .delete': 'destroy'
   },
 
+  initialize: function() {
+    this.listenTo(this.model, 'change:index', this.render);
+  },
+
+  onRender: function () {
+    console.log('rendering');
+    console.log(this.model);
+  },
+
   change: function () {
     this.model.set('content', this.ui.input.val());
   },

@@ -27,9 +27,9 @@ var Router = Backbone.Marionette.AppRouter.extend({
 
 var PagesController = function () {
   this.models = {
-    clients: new ClientsCollection(),
-    invoices: new InvoicesCollection(),
-    rows: new RowsCollection()
+    clients: new ClientsCollection({ master: true }),
+    invoices: new InvoicesCollection({ master: true }),
+    rows: new RowsCollection({ master: true })
   };
 
   this._loaded = 0;
@@ -67,9 +67,8 @@ _.extend(PagesController.prototype, {
 
   showPage: function (page) {
     if (this.page !== page) {
-      console.log('Pages: opening page', page);
       App.trigger('select:page', page);
-      App.page.show(this.pages[page].view);
+      App.page.show(this.pages[page].render());
       this.page = page;
     }
   },
@@ -100,8 +99,8 @@ _.extend(PagesController.prototype, {
 
   openInvoiceInEditor: function (invoiceId) {
     var invoice = this.models.invoices.get(invoiceId);
-    this.pages.editor.open(invoice);
     this.showPage('editor');
+    this.pages.editor.open(invoice);
   },
 
   createInvoice: function (clientId) {

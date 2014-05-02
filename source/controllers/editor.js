@@ -9,11 +9,16 @@ var DetailsView = require('../views/editor/details');
 var RowsView = require('../views/editor/rows');
 
 var EditorController = function () {
-  this.view = new EditorPage();
-  this.view.on('render', this.showInvoice, this);
 };
 
 _.extend(EditorController.prototype, {
+
+  render: function () {
+    console.log('rendering editor');
+    this.view = new EditorPage();
+    this.view.on('render', this.showInvoice, this);
+    return this.view;
+  },
 
   open: function (invoice) {
     console.log('Editor: opening invoice', invoice);
@@ -51,9 +56,7 @@ _.extend(EditorController.prototype, {
 
   save: function () {
     this.invoice.save(undefined, { patch: true });
-    this.invoice.get('rows').each(function (row) {
-      if (row.hasChanged()) row.save(undefined, { patch: true });
-    });
+    this.invoice.get('rows').save();
   },
 
   createRow: function (type) {

@@ -14,6 +14,7 @@ var Row = Backbone.RelationalModel.extend({
   defaults: { 
     invoice: null,
     order: 0,
+    index: -1,
     content: ''
   }
 

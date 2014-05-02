@@ -11,12 +11,15 @@ var Client = require('../models/client');
 
 var ClientsController = function (clients) {
   this.clients = clients;
-  this.view = new ClientsPage();
-  this.view.on('render', this.showClients, this);
 };
 
 _.extend(ClientsController.prototype, {
 
+  render: function () {
+    this.view = new ClientsPage();
+    this.view.on('render', this.showClients, this);
+    return this.view;
+  },
 
   open: function (client) {
     this.view.details.close();
