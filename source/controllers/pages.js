@@ -72,7 +72,6 @@ _.extend(PagesController.prototype, {
   },
 
   createInvoice: function (clientId) {
-    console.log('creating invoice for', clientId);
     App.trigger('select:page', 'editor');
     var client = this.models.clients.get(clientId);
     App.page.show(this.pages.editor.create(client));

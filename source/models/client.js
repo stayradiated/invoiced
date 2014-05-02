@@ -22,7 +22,7 @@ var Client = Backbone.RelationalModel.extend({
     key: 'invoices',
     relatedModel: Invoice,
     collectionType: Invoices,
-    includeInJSON: false,
+    includeInJSON: 'id',
     reverseRelation: {
       key: 'client',
       includeInJSON: 'id'

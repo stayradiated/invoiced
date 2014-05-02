@@ -18,7 +18,6 @@ var Details = Backbone.Marionette.ItemView.extend({
   change: function (e) {
     var input = $(e.target);
     var attr = input.attr('name');
-    console.log(attr, input.val());
     this.model.set(attr, input.val());
   }
 

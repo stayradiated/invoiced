@@ -1,12 +1,11 @@
 'use strict';
 
 var Route = require('../utils/route');
-var Client = require('../models/client');
 var Clients = require('../models/clients');
 
 var clients = new Route({
-  model: Client,
-  collection: Clients
+  collection: Clients,
+  columns: ['name', 'address', 'city', 'postcode']
 });
 
 clients.addRelation('invoices');

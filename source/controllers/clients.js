@@ -6,6 +6,9 @@ var ClientsView = require('../views/clients/clients');
 var InvoicesView = require('../views/clients/invoices');
 var DetailsView = require('../views/clients/details');
 
+// Models
+var Client = require('../models/client');
+
 var ClientsController = function (clients) {
   this.clients = clients;
 };
@@ -56,14 +59,13 @@ _.extend(ClientsController.prototype, {
     var client = new Client();
 
     client.on('sync', function () {
+      console.log('adding client to all clients');
       this.clients.add(client);
     }, this);
 
     var invoicesView = new InvoicesView({
       model: client,
-      collection: new InvoicesCollection({
-        client: client
-      })
+      collection: client.get('invoices')
     });
 
     this.view.invoices.show(invoicesView);

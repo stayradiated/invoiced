@@ -10,7 +10,6 @@ var Rows = Backbone.Marionette.CollectionView.extend({
   className: 'rows',
 
   getItemView: function (row) {
-    console.log(row.toJSON());
     switch (row.get('type')) {
       case row.DATE:     return RowDateView;
       case row.HEADING:  return RowHeadingView;

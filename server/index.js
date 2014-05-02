@@ -1,7 +1,5 @@
 'use strict';
 
-process.stderr.on('data', console.log.bind(console));
-
 var connect = require('connect');
 var express = require('express');
 var cors = require('cors');

@@ -5,8 +5,11 @@ var Invoice = require('../models/invoice');
 var Invoices = require('../models/invoices');
 
 var invoices = new Route({
-  model: Invoice,
-  collection: Invoices
+  collection: Invoices,
+  columns: [
+    'client', 'number', 'date', 'paid', 'customer', 'email', 'site',
+    'cost', 'labour', 'airmover'
+  ]
 });
 
 invoices.addRelation('rows');

@@ -4,9 +4,12 @@ var _ = require('underscore');
 var rest = require('./rest');
 
 var Route = function (options) {
-  this.model = options.model;
   this.collection = options.collection.forge();
-  this.root = '/' + this.model.prototype.tableName;
+  this.columns = options.columns;
+  this.root = '/' + options.collection.prototype.model.prototype.tableName;
+
+  // pull data from sql
+  this.collection.fetch();
 
   this.routes = [
     ['get',   this.root, 'all'],
@@ -21,46 +24,45 @@ var Route = function (options) {
 _.extend(Route.prototype, {
 
   all: function (req, res) {
-    this.collection.fetch()
-    .then(rest(res))
-    .catch(rest.catch(res));
+    console.log(this.collection);
+    rest.end(res, this.collection);
   },
 
   create: function (req, res) {
-    this.model.forge(req.body).save()
+    var json = _.pick(req.body, this.columns);
+
+    this.collection.create(json)
     .then(rest(res))
     .catch(rest.catch(res));
   },
 
   read: function (req, res) {
-    this.model.forge({ id: req.params.id }).fetch()
-    .then(rest(res))
-    .catch(rest.catch(res));
+    var model = this.collection.get(req.params.id);
+    if (! model) rest.fail(res);
+    rest.end(res, model);
   },
 
   update: function (req, res) {
-    this.model.forge({ id: req.params.id }).save(req.body)
+    var model = this.collection.get(req.params.id);
+    if (! model) return rest.fail(res);
+    var json = _.pick(req.body, this.columns);
+
+    model.save(json)
     .then(rest(res))
     .catch(rest.catch(res));
   },
 
   destroy: function (req, res) {
-    this.model.forge({ id: req.params.id }).destroy()
-    .then(function () {
-      res.end();
-    })
+    var model = this.collection.get(req.params.id);
+    if (! model) rest.fail(res);
+    model.destroy()
+    .then(function () { res.end(); })
     .catch(rest.catch(res));
   },
 
   addRelation: function (table) {
-    var opts = { withRelated: [table] };
-    var getTable = function (model) {
-      return model.related(table);
-    };
-
     var fn = function (req, res) {
-      this.model.forge({ id: req.params.id }).fetch(opts)
-      .then(getTable)
+      this.collection.get(req.params.id).related(table).fetch()
       .then(rest(res))
       .catch(rest.catch(res));
     };

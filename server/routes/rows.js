@@ -1,12 +1,11 @@
 'use strict';
 
-var Table = require('../utils/route');
-var Row = require('../models/row');
+var Route = require('../utils/route');
 var Rows = require('../models/rows');
 
-var rows = new Table({
-  model: Row,
-  collection: Rows
+var rows = new Route({
+  collection: Rows,
+  columns: ['invoice', 'type', 'order', 'content']
 });
 
 module.exports = rows;
