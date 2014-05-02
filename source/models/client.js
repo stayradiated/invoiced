@@ -4,7 +4,7 @@ var Invoice = require('./invoice');
 var Invoices = require('./invoices');
 var config = require('../config');
 
-var Client = Backbone.Model.extend({
+var Client = Backbone.RelationalModel.extend({
 
   urlRoot: config.root + '/clients',
 
@@ -17,7 +17,20 @@ var Client = Backbone.Model.extend({
     updatedAt: null 
   },
 
+  relations: [{
+    type: 'HasMany',
+    key: 'invoices',
+    relatedModel: Invoice,
+    collectionType: Invoices,
+    includeInJSON: false,
+    reverseRelation: {
+      key: 'client',
+      includeInJSON: 'id'
+    }
+  }],
+
   parse: function (json) {
+    json.date = new Date(json.date);
     json.createdAt = new Date(json.createdAt);
     json.updatedAt = new Date(json.updatedAt);
     return json;

@@ -59,15 +59,11 @@ var Invoices = Marionette.BossView.extend({
       address: this.ui.address.val(),
       city: this.ui.city.val(),
       postcode: this.ui.postcode.val()
-    }, {patch: true});
+    }, { patch: true });
   },
 
   createInvoice: function () {
-    var invoice = this.collection.create({
-      clientId: this.model.id,
-      date: new Date()
-    });
-    console.log(invoice);
+    this.trigger('create:invoice', this.model);
   },
 
   selectInvoice: function (view) {

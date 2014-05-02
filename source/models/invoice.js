@@ -4,14 +4,15 @@ var Row = require('./row');
 var Rows = require('./rows');
 var config = require('../config');
 
-var Invoice = Backbone.Model.extend({
+var Invoice = Backbone.RelationalModel.extend({
 
   urlRoot: config.root + '/invoices',
 
   defaults: {
     client: null,
     number: null,
-    date: null,
+
+    date: new Date(),
     paid: 0,
 
     customer: '',
@@ -24,7 +25,19 @@ var Invoice = Backbone.Model.extend({
 
     createdAt: '',
     updatedAt: ''
-  }
+  },
+
+  relations: [{
+    type: 'HasMany',
+    key: 'rows',
+    relatedModel: Row,
+    collectionType: Rows,
+    includeInJSON: false,
+    reverseRelation: {
+      key: 'invoice',
+      includeInJSON: 'id'
+    }
+  }]
 
 });
 

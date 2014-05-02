@@ -1,31 +1,59 @@
 var App = require('../app');
 
-var HeaderView = require('../views/header');
+// Controllers
 var ClientsController = require('./clients');
 var EditorController = require('./editor');
 
+// Views
+var HeaderView = require('../views/header');
+
+// Models
+var ClientsCollection = require('../models/clients');
+var InvoicesCollection = require('../models/invoices');
+var RowsCollection = require('../models/rows');
+
 var Router = Backbone.Marionette.AppRouter.extend({
   appRoutes: {
-    'clients':      'showClientsPage',
-    'clients/:id':  'openClient',
-
-    'editor':       'showEditorPage',
-    'editor/:id':   'openInvoiceInEditor'
+    '':                   'showClientsPage',
+    'clients':            'showClientsPage',
+    'clients/:id':        'openClient',
+    'editor':             'showEditorPage',
+    'editor/:id':         'openInvoiceInEditor',
+    'editor/create/:id':  'createInvoice'
   }
 });
 
 var PagesController = function () {
+  this.models = {
+    clients: new ClientsCollection(),
+    invoices: new InvoicesCollection(),
+    rows: new RowsCollection()
+  };
+
+  this._loaded = 0;
+
+  _.each(this.models, function (model) {
+    model.fetch({ reset: true });
+    model.once('reset', this.startHistory, this);
+  }, this);
+
   this.pages = {
-    clients: new ClientsController(),
-    editor: new EditorController()
+    clients: new ClientsController(this.models.clients),
+    editor: new EditorController(this.models.invoices)
   };
 };
 
 _.extend(PagesController.prototype, {
 
+  startHistory: function () {
+    this._loaded += 1;
+    if (this._loaded === _.keys(this.models).length) {
+      Backbone.history.start();
+    }
+  },
+
   start: function () {
     this.showHeader();
-    this.showClientsPage();
   },
 
   showHeader: function () {
@@ -43,20 +71,27 @@ _.extend(PagesController.prototype, {
     App.page.show(this.pages.editor.view());
   },
 
-  openClient: function (id) {
-    this.pages.clients.open(id);
+  createInvoice: function (clientId) {
+    console.log('creating invoice for', clientId);
+    App.trigger('select:page', 'editor');
+    var client = this.models.clients.get(clientId);
+    App.page.show(this.pages.editor.create(client));
   },
 
-  openInvoiceInEditor: function (id) {
-    var invoice = this.pages.editor.open(id);
-    App.page.show(this.pages.editor.view(invoice));
+  openClient: function (clientId) {
+    this.pages.clients.open(clientId);
+  },
+
+  openInvoiceInEditor: function (invoiceId) {
+    var invoice = this.models.invoices.get(invoiceId);
+    App.page.show(this.pages.editor.render(invoice));
   }
 
 });
 
 App.addInitializer(function () {
   var pagesController = new PagesController();
-  var router = new Router({ controller: pagesController });
+  App.router = new Router({ controller: pagesController });
   pagesController.start();
 });
 

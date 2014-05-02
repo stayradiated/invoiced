@@ -2,7 +2,7 @@
 
 var config = require('../config');
 
-var Row = Backbone.Model.extend({
+var Row = Backbone.RelationalModel.extend({
 
   urlRoot: config.root + '/rows',
 
@@ -13,9 +13,9 @@ var Row = Backbone.Model.extend({
 
   defaults: { 
     invoice: null,
-    type: 0,
-    conent: ''
-  },
+    order: 0,
+    content: ''
+  }
 
 });
 

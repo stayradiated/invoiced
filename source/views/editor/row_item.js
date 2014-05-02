@@ -12,13 +12,17 @@ var RowItem = Backbone.Marionette.ItemView.extend({
   },
 
   events: {
-    'change input': 'change'
+    'change input': 'change',
+    'click .switch-type': 'switchType'
   },
 
   change: function () {
     this.model.set('name', this.ui.input.val());
-  }
+  },
 
+  switchType: function () {
+    this.model.set('type', 1);
+  }
 
 });
 

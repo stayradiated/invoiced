@@ -7,12 +7,10 @@ var Rows = Backbone.Collection.extend({
 
   model: Row,
 
-  url: function () {
-    return config.root + '/invoices/' + this.invoice.id + '/rows';
-  },
+  url: config.root + '/rows',
 
-  initialize: function (options) {
-    this.invoice = options.invoice;
+  comparator: function (a, b) {
+    return a.get('order') - b.get('order');
   }
 
 });

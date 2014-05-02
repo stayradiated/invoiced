@@ -18,12 +18,10 @@ var Details = Backbone.Marionette.ItemView.extend({
   },
 
   editInvoice: function () {
-    console.log('editing invoice');
     this.trigger('edit:invoice', this.model);
   },
 
   destroyInvoice: function () {
-    console.log('destroying invoice');
     this.model.destroy();
   }
 

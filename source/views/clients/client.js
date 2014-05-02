@@ -13,6 +13,7 @@ var Client = Backbone.Marionette.ItemView.extend({
 
   initialize: function () {
     this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this.model.get('invoices'), 'add remove', this.render);
   },
 
   select: function () {

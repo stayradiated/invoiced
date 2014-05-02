@@ -6,15 +6,8 @@ var ClientsView = require('../views/clients/clients');
 var InvoicesView = require('../views/clients/invoices');
 var DetailsView = require('../views/clients/details');
 
-// Models
-var Client = require('../models/client');
-var ClientsCollection = require('../models/clients');
-var InvoicesCollection = require('../models/invoices');
-
-var ClientsController = function () {
-  this.clients = new ClientsCollection();
-  this.clients.once('reset', Backbone.history.start, Backbone.history);
-  this.clients.fetch({ reset: true });
+var ClientsController = function (clients) {
+  this.clients = clients;
 };
 
 _.extend(ClientsController.prototype, {
@@ -31,9 +24,7 @@ _.extend(ClientsController.prototype, {
   },
 
   showClients: function () {
-    var clientsView = new ClientsView({
-      collection: this.clients
-    });
+    var clientsView = new ClientsView({ collection: this.clients });
     clientsView.on('select:client', this.showInvoices, this);
     clientsView.on('create:client', this.createClient, this);
     this.view.clients.show(clientsView);
@@ -42,28 +33,21 @@ _.extend(ClientsController.prototype, {
   showInvoices: function (client) {
     this.view.details.close();
 
-    var collection = new InvoicesCollection({
-      client: client
-    });
-
-    var invoicesView = new InvoicesView({
+    var view = new InvoicesView({
       model: client,
-      collection: collection
+      collection: client.get('invoices')
     });
-    invoicesView.on('select:invoice', this.showDetails, this);
 
-    var self = this;
-    collection.fetch({ reset: true }).then(function () {
-      self.view.invoices.show(invoicesView);
-    });
+    view.on('select:invoice', this.showDetails, this);
+    view.on('create:invoice', this.createInvoice, this);
+
+    this.view.invoices.show(view);
   },
 
   showDetails: function (invoice) {
-    var detailsView = new DetailsView({
-      model: invoice
-    });
+    var detailsView = new DetailsView({ model: invoice });
     detailsView.on('edit:invoice', function (invoice) {
-      console.log('editiing', invoice);
+      App.router.navigate('/editor/' + invoice.id, {trigger: true});
     });
     this.view.details.show(detailsView);
   },
@@ -83,6 +67,10 @@ _.extend(ClientsController.prototype, {
     });
 
     this.view.invoices.show(invoicesView);
+  },
+
+  createInvoice: function (client) {
+    App.router.navigate('/editor/create/' + client.id, {trigger: true});
   }
 
 });
