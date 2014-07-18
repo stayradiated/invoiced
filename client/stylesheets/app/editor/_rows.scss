@@ -1,0 +1,108 @@
+// .page-editor > .rows-container > .rows
+
+$padding: 10px;
+
+.row {
+  display: flex;
+  flex-direction: row;
+
+  margin-bottom: 5px;
+  line-height: 20px;
+
+   span.bullet {
+    background: $clouds;
+    padding: 10px 10px;
+    box-sizing: border-box;
+    width: 40px;
+    text-align: center;
+    font-weight: 700;
+    border-right: 5px solid $app_background;
+  }
+
+  input {
+    flex: 1;
+    border: 0;
+    outline: 0;
+    padding: $padding - 2px;
+    border: 2px solid $clouds;
+    font-size: 14px;
+    background: $clouds;
+
+    &:focus {
+      background: $white;
+      border-color: $peter_river;
+    }
+  }
+
+  button {
+    margin-left: 5px;
+    padding: 0;
+    width: 40px;
+    background: $white;
+    box-shadow: inset 0 0 0 2px $clouds;
+
+    span {
+      padding-left: 0;
+      width: 10px;
+    }
+
+    span:before {
+      color: $wisteria;
+    }
+
+    &:hover {
+      background: $clouds;
+    }
+  }
+
+  button.primary {
+    span:before {
+      color: $pomegranate;
+    }
+  }
+
+}
+
+.row.date {
+  margin-top: 30px;
+  border-bottom: 5px solid $clouds;
+  justify-content: space-between;
+
+  span {
+    background: none;
+    color: $peter_river;
+    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 40px;
+  }
+
+  input {
+    flex: none;
+    background: none;
+    border-color: transparent;
+    padding: 0 0 0 10px;
+  }
+
+  .fill {
+    flex: 1;
+  }
+
+  input:focus {
+    border-color: $peter_river;
+  }
+
+}
+
+.row.heading {
+  input {
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
+
+.row.bullet {
+  span.bullet {
+    background: none;
+    font-size: 20px;
+  }
+}

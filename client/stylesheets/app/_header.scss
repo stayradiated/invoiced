@@ -1,0 +1,51 @@
+& {
+  height: $header_height;
+  line-height: $header_height;
+  background: darken($app_background, 10);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+h1 {
+  order: 1;
+  padding: 0;
+  margin: 0 0 0 20px;
+
+  .glyphicons {
+    margin-left: 14px;
+  }
+}
+
+nav {
+  flex: 1;
+  order: 2;
+  max-width: 600px;
+
+  display: flex;
+  flex-direction: row;
+}
+
+a {
+  flex: 1;
+
+  text-decoration: none;
+  cursor: pointer;
+
+  padding: 0 25px;
+  text-align: center;
+
+  span {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  &:hover {
+    background: darken($app_background, 5);
+  }
+
+  &.active {
+    background: darken($app_background, 5);
+    box-shadow: inset 0 -5px 0 $peter_river;
+  }
+}

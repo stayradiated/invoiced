@@ -53,7 +53,8 @@ _.extend(Route.prototype, {
 
   destroy: function (req, res) {
     var model = this.collection.get(req.params.id);
-    if (! model) rest.fail(res);
+    if (! model) return rest.fail(res);
+    this.collection.remove(model);
     model.destroy()
     .then(function () { res.end(); })
     .catch(rest.catch(res));

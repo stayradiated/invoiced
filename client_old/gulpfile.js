@@ -12,7 +12,7 @@ var jadeify = require('jadeify');
 var source = require('vinyl-source-stream');
 var browserify = require('browserify');
 
-gulp.task('default', ['sass', 'templates', 'libs', 'scripts']);
+gulp.task('default', ['sass', 'libs', 'scripts']);
 
 gulp.task('watch', ['default'], function () {
   gulp.watch('stylesheets/**/*.scss', ['sass']);

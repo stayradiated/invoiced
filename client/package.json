@@ -1,0 +1,50 @@
+{
+  "name": "invoiced",
+  "version": "0.1.1",
+  "description": "Invoice editor and manager",
+  "private": true,
+  "main": "dist/app.html",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/stayradiated/invoiced"
+  },
+  "author": "George Czabania",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stayradiated/invoiced/issues"
+  },
+  "homepage": "https://github.com/stayradiated/invoiced",
+  "dependencies": {
+    "backbone": "^1.1.2",
+    "backbone-relational": "^0.8.8",
+    "bluebird": "^2.2.2",
+    "fastclick": "^1.0.2",
+    "jquery": "^2.1.1",
+    "lodash": "^2.4.1",
+    "moment": "^2.7.0",
+    "numeral": "^1.5.3",
+    "react": "^0.11.0",
+    "signals": "git://github.com/stayradiated/signals"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.6",
+    "gulp-autoprefixer": "^0.0.8",
+    "gulp-brfs": "^0.0.5",
+    "gulp-connect": "^2.0.6",
+    "gulp-react": "^0.4.0",
+    "gulp-sass": "^0.7.2",
+    "gulp-streamify": "^0.0.5",
+    "gulp-uglify": "^0.3.0",
+    "reactify": "^0.14.0",
+    "vinyl-source-stream": "^0.1.1",
+    "watchify": "^0.10.2"
+  },
+  "window": {
+    "toolbar": true,
+    "height": 860,
+    "width": 1235
+  },
+  "config": {
+    "root": "http://localhost:8080"
+  }
+}

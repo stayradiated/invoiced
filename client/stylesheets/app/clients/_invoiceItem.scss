@@ -1,0 +1,92 @@
+// .invoice-list .invoices .invoice-item
+
+$meta_height: 40px;
+$customer_height: 50px;
+
+$background: lighten($app_background, 5);
+
+& {
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+&:hover {
+  .meta, .customer {
+    background: darken($background, 10);
+  }
+}
+
+&.active {
+  .meta, .customer {
+    background: $silver;
+  }
+  h3, h5, div, span, .halflings::before {
+    color: darken($app_background, 10);
+  }
+}
+
+.meta {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  line-height: $meta_height;
+  background: $background;
+  transition: background 0.15s;
+
+  div {
+    padding: 0 20px;
+  }
+
+  .id {
+    order: 1;
+  }
+
+  .created {
+    order: 2;
+    flex: 1;
+  }
+
+  .paid-status {
+    order: 3;
+    font-weight: 600;
+  }
+}
+
+.customer {
+  background: $background;
+  padding: 10px 20px;
+  transition: background 0.15s;
+  
+  display: flex;
+  flex-direction: row;
+
+  .primary {
+    order: 1;
+    flex: 1;
+
+      h3 {
+        margin: 0;
+      }
+
+      h5 {
+        margin: 0;
+      }
+  }
+
+  .secondary {
+    order: 2;
+    flex: 1;
+
+    .email {
+    }
+
+    .date {
+    }
+  }
+
+  .price {
+    order: 3;
+    line-height: $customer_height;
+  }
+}

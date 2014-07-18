@@ -1,0 +1,34 @@
+// .client-list
+
+& {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  order: 1;
+  margin-bottom: 20px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  h2 {
+    margin: 0;
+  }
+
+  button {
+    margin-right: 10px;
+  }
+
+}
+
+.client-list {
+  order: 2;
+  flex: 1;
+  @extend #scroll;
+}
+
+.client-item {
+  @import 'clientItem';
+}

@@ -1,8 +1,8 @@
-template
+/template
 /*.app
 
 node_modules
 .sass-cache
 
-dist/js/*
-dist/css/*
+/client/dist/js/*
+/client/dist/css/*

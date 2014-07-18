@@ -1,6 +1,6 @@
 'use strict';
 
-var connect = require('connect');
+var bodyParser = require('body-parser');
 var express = require('express');
 var cors = require('cors');
 
@@ -10,7 +10,8 @@ app.use(cors({
   methods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
 }));
 app.use(express.static(__dirname + '/../dist'));
-app.use(connect.bodyParser());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 var routes = [
   'clients', 'invoices', 'rows', // 'snippets'

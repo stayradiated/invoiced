@@ -1,0 +1,107 @@
+// .invoice-list
+
+$height: 70px;
+$edit_height: $height + 140px;
+
+& {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  order: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  margin-bottom: 20px;
+
+  .details {
+    margin-bottom: 10px;
+
+    h2 {
+      margin: 0 0 5px;
+      line-height: 25px;
+    }
+
+    p {
+      margin: 0;
+
+      span {
+        color: $silver;
+        font-size: 14px;
+        line-height: 21px;
+      }
+
+      span:not(:last-child):after {
+        content: '•';
+        margin: 0 8px;
+      }
+    }
+  }
+
+}
+
+.editor {
+  order: 2;
+  background: darken($app_background, 10);
+  padding: 10px 0;
+  margin-bottom: 20px;
+
+  .row {
+    display: flex;
+    margin-bottom: 10px;
+    padding-right: 10px;
+  }
+
+  label {
+    display: block;
+    width: 80px;
+    text-align: right;
+    margin-right: 10px;
+    font-weight: 700;
+    line-height: 40px;
+  }
+
+  input {
+    flex: 1;
+    display: block;
+    border: 0;
+    line-height: 20px;
+    padding: 10px 10px;
+    color: $black;
+    background: $clouds;
+
+    &:focus {
+      background: $white;
+      outline: 2px solid $peter_river;
+    }
+  }
+
+  .buttons {
+    margin-left: 90px;
+  }
+
+  button.destroy {
+    float: right;
+    margin-right: 10px;
+
+    span, span:before {
+      color: $pomegranate;
+    }
+    &:hover {
+      background: $clouds
+    }
+  }
+}
+
+.invoice-list {
+  flex: 1;
+  order: 3;
+  @extend #scroll;
+
+  .invoice-item {
+    @import 'invoiceItem';
+  }
+}

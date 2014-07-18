@@ -1,0 +1,28 @@
+// .page-clients
+
+$padding: 20px;
+
+& {
+  display: flex;
+  padding: $padding;
+  flex-direction: row;
+}
+
+section.client {
+  flex: 1;
+  order: 1;
+  @import 'clientList';
+}
+
+section.invoice {
+  flex: 1;
+  order: 2;
+  margin-left: $padding;
+  @import 'invoiceList';
+}
+
+.invoice-details {
+  flex: 1;
+  order: 3;
+  margin-left: $padding;
+}

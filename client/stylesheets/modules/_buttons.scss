@@ -1,0 +1,52 @@
+button {
+  border: 0;
+  padding: 0 20px;
+  line-height: 40px;
+  margin-left: 5px;
+  font-weight: 700;
+  outline: 0;
+  transition: background 0.15s;
+
+  background: lighten($app_background, 5);
+
+  &:hover {
+    background: lighten($app_background, 10);
+  }
+
+  &:focus {
+    box-shadow: inset 0 0 0 2px rgba($white, 0.2);
+  }
+
+  &:first-of-type {
+    margin-left: 0;
+  }
+}
+
+button.primary {
+  background: $pomegranate;
+  &:hover {
+    background: $alizarin;
+  }
+}
+
+button.secondary {
+  background: darken($nephritis, 2);
+  &:hover {
+    background: darken($emerald, 2);
+  }
+}
+
+button.warn {
+  background: darken($amethyst, 2);
+  &:hover {
+    background: darken($wisteria, 2);
+  }
+}
+
+button.text {
+  background: transparent;
+
+  &:hover {
+    background: lighten($app_background, 5);
+  }
+}
