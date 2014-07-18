@@ -43,11 +43,7 @@ var Header = React.createClass({
 
   save: function () {
     this.props.invoice.save();
-    this.props.invoice.get('rows').forEach(function (row) {
-      if (row.hasChanged() || row.isNew()) {
-        row.save(undefined, {patch: true});
-      }
-    });
+    this.props.invoice.get('rows').save();
   },
 
   createRow: function (type) {
