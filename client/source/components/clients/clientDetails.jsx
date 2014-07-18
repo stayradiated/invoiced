@@ -3,6 +3,9 @@
 var _ = require('lodash');
 var React = require('react');
 
+var AppActions = require('../../actions/app');
+var ClientModel = require('../../models/client');
+
 var ClientDetails = React.createClass({
 
   componentDidMount: function () {
@@ -13,12 +16,8 @@ var ClientDetails = React.createClass({
     this.props.client.off('change', this._onChange, this);
   },
 
-  getDefaultProps: function () {
-    return {
-      client: null,
-      onCreate: _.noop,
-      onEdit: _.noop
-    };
+  propTypes: {
+    client: React.PropTypes.instanceOf(ClientModel)
   },
 
   render: function () {
@@ -34,11 +33,11 @@ var ClientDetails = React.createClass({
           </p>
         </div>
         <div className='buttons'>
-          <button className='edit-client' type='button' onClick={this.props.onEdit}>
+          <button className='edit-client' type='button' onClick={this.editClient}>
             <span className='halflings pencil' />
             Edit Client Details
           </button>
-          <button className='create-invoice primary' type='button' onClick={this.props.onCreate}>
+          <button className='create-invoice primary' type='button' onClick={this.createInvoice}>
             <span className='halflings plus-sign' />
             New Invoice
           </button>
@@ -46,6 +45,14 @@ var ClientDetails = React.createClass({
       </header>
       /* jshint ignore: end */
     );
+  },
+
+  editClient: function () {
+    AppActions.editClient(this.props.client);
+  },
+
+  createInvoice: function () {
+    AppActions.createInvoice(this.props.client);
   },
 
   _onChange: function () {

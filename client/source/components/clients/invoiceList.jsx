@@ -4,6 +4,14 @@ var _ = require('lodash');
 var React = require('react');
 
 var InvoiceItem = require('./invoiceItem');
+var AppStore = require('../../stores/app');
+var InvoiceCollection = require('../../models/invoices');
+
+var getState = function () {
+  return {
+    active: AppStore.getActiveInvoice
+  };
+};
 
 var InvoiceList = React.createClass({
 
@@ -15,12 +23,10 @@ var InvoiceList = React.createClass({
     this.props.invoices.off('add remove', this._onChange, this);
   },
 
-  getDefaultProps: function () {
-    return {
-      invoices: null,
-      active: false,
-      onSelect: _.noop
-    };
+  getInitialState: getState,
+
+  propTypes: {
+    invoices: React.PropTypes.instanceOf(InvoiceCollection)
   },
 
   render: function () {
@@ -32,8 +38,7 @@ var InvoiceList = React.createClass({
             return <InvoiceItem
               key={invoice.cid}
               invoice={invoice}
-              active={invoice === this.props.active}
-              onClick={this.props.onSelect.bind(null, invoice)}
+              active={invoice === this.state.active}
             />
           }, this)
         }
@@ -43,7 +48,7 @@ var InvoiceList = React.createClass({
   },
 
   _onChange: function () {
-    this.forceUpdate();
+    this.setState(getState());
   }
 
 });

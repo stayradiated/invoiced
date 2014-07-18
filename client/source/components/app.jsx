@@ -7,6 +7,8 @@ var ClientsPage = require('./pages/clients');
 var EditorPage = require('./pages/editor');
 var AppStore = require('../stores/app');
 var AppConstants = require('../constants/app');
+var ClientStore = require('../stores/client');
+var InvoiceStore = require('../stores/invoice');
 
 var getAppState = function () {
   return {
@@ -17,11 +19,15 @@ var getAppState = function () {
 var App = React.createClass({
 
   componentDidMount: function () {
-    AppStore.on('change', this._onChange, this);
+    AppStore.on('change:activePage', this._onChange, this);
+    ClientStore.on('reset', this._onChange, this);
+    InvoiceStore.on('reset', this._onChange, this);
   },
 
   componentWillUnmount: function () {
-    AppStore.off('change', this._onChange, this);
+    AppStore.off('change:activePage', this._onChange, this);
+    ClientStore.off('reset', this._onChange, this);
+    InvoiceStore.off('reset', this._onChange, this);
   },
 
   getInitialState: function () {

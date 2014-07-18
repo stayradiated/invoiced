@@ -2,32 +2,46 @@ var _ = require('lodash');
 var React = require('react');
 
 var App = require('../app');
+var AppStore = require('../stores/app');
+var AppActions = require('../actions/app');
+var AppConstants = require('../constants/app');
 
 var pages = {
-  settings: {
+  SETTINGS: {
     name: 'Settings',
     icon: 'settings'
   },
-  editor: {
+  EDITOR_PAGE: {
     name: 'Editor',
     icon: 'pen'
   },
-  clients: {
+  CLIENT_PAGE: {
     name: 'Clients',
     icon: 'group'
   },
-  invoices: {
+  INVOICES: {
     name: 'Invoices',
     icon: 'notes'
   }
 };
 
+var getHeaderState = function () {
+  return {
+    activePage: AppStore.getActivePage()
+  }
+};
+
 var Header = React.createClass({
 
-  // setActive: function (page) {
-  //   this.$('.active').removeClass('active');
-  //   this.$('a.' + page).addClass('active');
-  // },
+  componentDidMount: function () {
+    AppStore.on('change:activePage', this._onChange, this);
+  },
+
+  componentWillUnmount: function () {
+    AppStore.off('change:activePage', this._onChange, this);
+  },
+
+  getInitialState: getHeaderState,
 
   render: function () {
     return (
@@ -39,17 +53,32 @@ var Header = React.createClass({
         </h1>
         <nav>{
           _.map(pages, function (page, id) {
+
+            var classes = id;
+
+            if (this.state.activePage === id) {
+              classes += ' active';
+            }
+
             return (
-              <a key={id} className={id} href={'#'+id}>
+              <div key={id} className={classes} onClick={this.openPage.bind(this, id)}>
                 <span className={'glyphicons ' + page.icon} />
                 {page.name}
-              </a>
+              </div>
             );
-          })
+          }, this)
         }</nav>
       </header>
       /* jshint ignore: end */
     );
+  },
+
+  openPage: function (page) {
+    AppActions.openPage(page);
+  },
+
+  _onChange: function () {
+    this.setState(getHeaderState());
   }
 
 });

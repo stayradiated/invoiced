@@ -4,22 +4,27 @@ var _ = require('lodash');
 var React = require('react');
 
 var ClientItem = require('./clientItem');
+var ClientStore = require('../../stores/client').getCollection();
+var AppStore = require('../../stores/app');
+var AppActions = require('../../actions/app');
 
 var ClientList = React.createClass({
 
   componentDidMount: function () {
-    this.props.clients.on('add remove', this._onChange, this);
+    AppStore.on('change:activeClient', this._onChange, this);
+    ClientStore.on('add remove', this._onChange, this);
+    ClientStore.on('add', this.openClient, this);
   },
 
   componentWillUnmount: function () {
-    this.props.clients.off('add remove', this._onChange, this);
+    AppStore.off('change:activeClient', this._onChange, this);
+    ClientStore.off('add remove', this._onChange, this);
+    ClientStore.off('add', this.openClient, this);
   },
 
-  getDefaultProps: function () {
+  getInitialState: function () {
     return {
-      clients: null,
-      active: false,
-      onSelect: _.noop
+      active: AppStore.getActiveClient()
     };
   },
 
@@ -28,12 +33,11 @@ var ClientList = React.createClass({
       /* jshint ignore: start */
       <div className='client-list'>
         {
-          this.props.clients.map(function (client) {
+          ClientStore.map(function (client) {
             return <ClientItem
               key={client.cid}
               client={client}
-              active={client === this.props.active}
-              onClick={this.props.onSelect.bind(null, client)}
+              active={client === this.state.active}
             />
           }, this)
         }
@@ -42,7 +46,12 @@ var ClientList = React.createClass({
     );
   },
 
+  openClient: function (client) {
+    AppActions.openClient(client);
+  },
+
   _onChange: function () {
+    console.log('updating client list');
     this.forceUpdate();
   }
 

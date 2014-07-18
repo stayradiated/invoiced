@@ -3,18 +3,11 @@
 var _ = require('lodash');
 var React = require('react');
 
+var ClientCollection = require('../../models/clients');
+var AppActions = require('../../actions/app');
 var ClientList = require('./clientList');
 
 var ClientSection = React.createClass({
-
-  getDefaultProps: function () {
-    return {
-      clients: null,
-      active: false,
-      onCreate: _.noop,
-      onSelect: _.noop
-    };
-  },
 
   render: function () {
     return (
@@ -26,20 +19,20 @@ var ClientSection = React.createClass({
           </div>
           <div className='buttons'>
             <button className='create-client'
-              type='button' onClick={this.props.onCreate}>
+              type='button' onClick={this.create}>
               <span className='halflings plus-sign' />
               New Client
             </button>
           </div>
         </header>
-        <ClientList
-          clients={this.props.clients}
-          active={this.props.active} 
-          onSelect={this.props.onSelect}
-        />
+        <ClientList />
       </section>
       /* jshint ignore: end */
     );
+  },
+
+  create: function () {
+    AppActions.createClient();
   }
 
 });

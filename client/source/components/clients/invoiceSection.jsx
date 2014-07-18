@@ -6,59 +6,46 @@ var React = require('react');
 var ClientDetails = require('./clientDetails');
 var InvoiceList = require('./invoiceList');
 var ClientEditor = require('./clientEditor');
+var AppStore = require('../../stores/app');
+var ClientStore = require('../../stores/client');
 
 var InvoiceSection = React.createClass({
 
   componentDidMount: function () {
-    this._bindEvents(this.props.client);
+    AppStore.on('change:activeClient', this._handleNewClient, this);
+    this._bindEvents(this.state.client);
   },
 
   componentWillUnmount: function () {
-    this._unbindEvents(this.props.client);
-  },
-
-  componentWillReceiveProps: function (newProps) {
-    this._unbindEvents(this.props.client);
-    this._bindEvents(newProps.client);
-    this.hideEditor();
-  },
-
-  getDefaultProps: function () {
-    return {
-      client: null,
-      active: false,
-      onCreate: _.noop,
-      onSelect: _.noop
-    };
+    AppStore.off('change:activeClient', this._handleNewClient, this);
+    this._unbindEvents(this.state.client);
   },
 
   getInitialState: function () {
     return {
+      client: AppStore.getActiveClient(),
       editMode: false
     };
   },
 
   render: function () {
+    if (! this.state.client) return null;
+
     return (
       /* jshint ignore: start */
       <section className='invoice'>
         <ClientDetails
-          client={this.props.client}
-          onCreate={this.props.onCreate}
+          client={this.state.client}
           onEdit={this.showEditor}
         />
         {
-          ! (this.state.editMode || this.props.client.isNew()) ? '' :
+          ! (this.state.editMode || this.state.client.isNew()) ? '' :
             <ClientEditor
               client={this.props.client}
               onFinish={this.hideEditor}
             />
         }
-        <InvoiceList
-          invoices={this.props.client.get('invoices')}
-          active={this.props.active}
-          onSelect={this.props.onSelect}
-        />
+        <InvoiceList invoices={this.state.client.get('invoices')} />
       </section>
       /* jshint ignore: end */
     );
@@ -76,12 +63,25 @@ var InvoiceSection = React.createClass({
     });
   },
 
+  _handleNewClient: function () {
+    var newClient = AppStore.getActiveClient();
+    this._unbindEvents(this.state.client);
+    this._bindEvents(newClient);
+    this.setState({
+      client: newClient,
+      editMode: false
+    });
+  },
+
   _bindEvents: function (client) {
+    if (! client) return;
     client.once('sync', this._onSync, this);
     client.get('invoices').on('add remove', this._onChange, this);
   },
 
   _unbindEvents: function (client) {
+    if (! client) return;
+    client.once('sync', this._onSync, this);
     client.off('sync', this._onSync, this);
     client.get('invoices').off('add remove', this._onChange, this);
   },

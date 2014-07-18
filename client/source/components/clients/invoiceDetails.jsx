@@ -4,39 +4,54 @@ var React = require('react');
 var moment = require('moment');
 var numeral = require('numeral');
 
+var AppStore = require('../../stores/app');
 var AppActions = require('../../actions/app');
+
+var getState = function () {
+  return {
+    invoice: AppStore.getActiveInvoice()
+  };
+};
 
 var InvoiceDetails = React.createClass({
 
   componentDidMount: function () {
-    this.props.invoice.on('change', this._onChange, this);
+    if (this.state.invoice) {
+      this.state.invoice.on('change', this._onChange, this);
+    }
   },
 
   componentWillUnmount: function () {
-    this.props.invoice.off('change', this._onChange, this);
+    if (this.state.invoice) {
+      this.state.invoice.off('change', this._onChange, this);
+    }
   },
 
+  getInitialState: getState,
+
   render: function () {
+    if (! this.state.invoice) return null;
+
     return (
       /* jshint ignore: start */
       <div className='invoice-details'>
         <header>
-          <h2>{this.props.invoice.get('number')}</h2>
+          <h2>{this.state.invoice.get('number')}</h2>
           <div className='created'>
             <span className='halflings calendar' />
-            {moment(this.props.invoice.get('date')).format('ddd Do MMMM YYYY')}
+            {moment(this.state.invoice.get('date')).format('ddd Do MMMM YYYY')}
           </div>
           <div className='date-created'>
             <span className='halflings calendar' />
-            {moment(this.props.invoice.get('dateCreated')).format('ddd Do MMMM YYYY hh:mm a')}
+            {moment(this.state.invoice.get('dateCreated')).format('ddd Do MMMM YYYY hh:mm a')}
           </div>
           <div className='date-updated'>
             <span className='halflings calendar' />
-            {moment(this.props.invoice.get('dateUpdated')).format('ddd Do MMMM YYYY hh:mm a')}
+            {moment(this.state.invoice.get('dateUpdated')).format('ddd Do MMMM YYYY hh:mm a')}
           </div>
           <div className='paid-status'>
             {
-              this.props.invoice.get('paid') ? (
+              this.state.invoice.get('paid') ? (
                 <span className='halflings ok'>Paid</span>
               ) : (
                 <span className='halflings remove'>Not Paid</span>
@@ -45,7 +60,7 @@ var InvoiceDetails = React.createClass({
           </div>
           <button className='mark-paid' type='button' onClick={this.togglePaid}>
             {
-              this.props.invoice.get('paid') ? (
+              this.state.invoice.get('paid') ? (
                 <span className='halflings ok'>Mark as Not Paid</span>
               ) : (
                 <span className='halflings ok'>Mark as Paid</span>
@@ -63,14 +78,14 @@ var InvoiceDetails = React.createClass({
         </header>
         <div className='customer'>
           <div className='primary'>
-            <h3>{this.props.invoice.get('customer')}</h3>
-            <h5>{this.props.invoice.get('site')}</h5>
-            <div className='email'>{this.props.invoice.get('email')}</div>
-            <div className='labour'>Labour: {this.props.invoice.get('labour')}</div>
-            <div className='airmover'>Air Mover: {this.props.invoice.get('airmover')}</div>
+            <h3>{this.state.invoice.get('customer')}</h3>
+            <h5>{this.state.invoice.get('site')}</h5>
+            <div className='email'>{this.state.invoice.get('email')}</div>
+            <div className='labour'>Labour: {this.state.invoice.get('labour')}</div>
+            <div className='airmover'>Air Mover: {this.state.invoice.get('airmover')}</div>
           </div>
           <div className='price number'>
-            {numeral(this.props.invoice.get('cost')).format('$0,0.00')}
+            {numeral(this.state.invoice.get('cost')).format('$0,0.00')}
           </div>
         </div>
       </div>
@@ -79,20 +94,20 @@ var InvoiceDetails = React.createClass({
   },
 
   togglePaid: function () {
-    console.log(this.props.invoice.get('paid'));
-    this.props.invoice.save({
-      paid: !this.props.invoice.get('paid')
+    console.log(this.state.invoice.get('paid'));
+    this.state.invoice.save({
+      paid: !this.state.invoice.get('paid')
     });
   },
 
   destroy: function () {
     if (window.confirm('Are you sure?')) {
-      this.props.invoice.destroy();
+      this.state.invoice.destroy();
     } 
   },
 
   edit: function () {
-    AppActions.EditInvoice(this.props.invoice);
+    AppActions.editInvoice(this.state.invoice);
   },
 
   _onChange: function () {

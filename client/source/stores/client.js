@@ -24,7 +24,13 @@ AppDispatcher.register(function (payload) {
 
   switch (action.actionType) {
 
-    case AppConstants.SOME_CONSTANT:
+    case AppConstants.CREATE_CLIENT:
+      console.log('creating client');
+      clientCollection.create({
+      });
+      break;
+
+    case AppConstants.EDIT_CLIENT:
       break;
 
   }

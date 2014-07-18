@@ -3,6 +3,9 @@
 var React = require('react');
 var classSet = require('react/addons').addons.classSet;
 
+var AppActions = require('../../actions/app');
+var ClientModel = require('../../models/client');
+
 var ClientItem = React.createClass({
 
   componentDidMount: function () {
@@ -15,6 +18,10 @@ var ClientItem = React.createClass({
     this.props.client.get('invoices').off('add remove', this._onChange, this);
   },
 
+  propTypes: {
+    client: React.PropTypes.instanceOf(ClientModel)
+  },
+
   render: function () {
 
     var classes = classSet({
@@ -24,7 +31,7 @@ var ClientItem = React.createClass({
 
     return (
       /* jshint ignore: start */
-      <div className={classes} onClick={this.props.onClick} >
+      <div className={classes} onClick={this.open} >
         <div className='details'>
           <h3>
             {this.props.client.get('name')}
@@ -47,6 +54,10 @@ var ClientItem = React.createClass({
       </div>
       /* jshint ignore: end */
     );
+  },
+
+  open: function () {
+    AppActions.openClient(this.props.client);
   },
 
   _onChange: function () {

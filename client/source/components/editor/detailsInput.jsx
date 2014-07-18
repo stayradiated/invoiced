@@ -24,9 +24,6 @@ var DetailsInput = React.createClass({
   },
 
   render: function () {
-
-    console.log(this.props);
-
     var value = this.props.invoice.get(this.props.key);
     var type = this.props.type;
 
@@ -39,7 +36,6 @@ var DetailsInput = React.createClass({
         value = numeral(value).format('0.00');
         break;
     }
-
 
     return (
       /* jshint ignore: start */

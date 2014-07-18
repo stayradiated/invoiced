@@ -3,6 +3,7 @@
 var Backbone = require('backbone');
 
 var Row = require('./row');
+var ROW = require('../constants/row');
 var config = require('../../package').config;
 
 var Rows = Backbone.Collection.extend({
@@ -21,11 +22,9 @@ var Rows = Backbone.Collection.extend({
   },
 
   setRowIndex: function () {
-    console.log('setting row index', this);
     var i = 1;
     this.each(function (model) {
-      console.log('setting', model);
-      if (model.get('type') === model.ITEM) {
+      if (model.get('type') === ROW.ITEM) {
         model.set('index', i++);
       }
     });

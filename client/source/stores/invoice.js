@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var Signals = require('Signals');
+var Signals = require('signals');
 var AppDispatcher = require('../dispatchers/app');
 var AppConstants = require('../constants/app');
 
