@@ -3,6 +3,12 @@ var AppConstants = require('../constants/app');
 
 var AppActions = {
 
+  createClient: function () {
+    return AppDispatcher.handleViewAction({
+      actionType: AppConstants.CREATE_CLIENT
+    });
+  },
+
   createInvoice: function (client) {
     return AppDispatcher.handleViewAction({
       actionType: AppConstants.CREATE_INVOICE,
@@ -10,9 +16,11 @@ var AppActions = {
     });
   },
 
-  createClient: function () {
+  createRow: function (invoice, type) {
     return AppDispatcher.handleViewAction({
-      actionType: AppConstants.CREATE_CLIENT
+      actionType: AppConstants.CREATE_ROW,
+      invoice: invoice,
+      type: type
     });
   },
 

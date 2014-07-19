@@ -10,11 +10,13 @@ module.exports = constants({
 
   CREATE_CLIENT:   null,
   CREATE_INVOICE:  null,
+  CREATE_ROW:      null,
 
   EDIT_CLIENT:     null,
   EDIT_INVOICE:    null,
 
   DESTROY_CLIENT:  null,
-  DESTROY_INVOICE: null
+  DESTROY_INVOICE: null,
+  DESTROY_ROW:     null
 
 });

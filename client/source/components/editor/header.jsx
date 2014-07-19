@@ -5,6 +5,7 @@ var React = require('react');
 var Row = require('../../models/row');
 var ROW = require('../../constants/row');
 var InvoiceModel = require('../../models/invoice');
+var AppActions = require('../../actions/app');
 
 var Header = React.createClass({
 
@@ -48,8 +49,7 @@ var Header = React.createClass({
   },
 
   createRow: function (type) {
-    var row = new Row({ type: type });
-    this.props.model.get('rows').add(row);
+    AppActions.createRow(this.props.model, type);
   }
 
 });

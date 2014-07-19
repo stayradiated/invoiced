@@ -51,7 +51,7 @@ var DetailsInput = React.createClass({
           ref='input'
           type={type}
           onChange={this.handleChange}
-          value={value}
+          defaultValue={value}
         />
       </div>
       /* jshint ignore: end */

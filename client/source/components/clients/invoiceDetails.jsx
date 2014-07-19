@@ -71,13 +71,19 @@ var InvoiceDetails = React.createClass({
           <div className='primary'>
             <h3>{this.props.model.get('customer')}</h3>
             <h5>{this.props.model.get('site')}</h5>
-            <div className='email'>{this.props.model.get('email')}</div>
-            <div className='labour'>Labour: {this.props.model.get('labour')}</div>
-            <div className='airmover'>Air Mover: {this.props.model.get('airmover')}</div>
+            <div className='email'>Email: {
+              this.props.model.get('email')
+            }</div>
+            <div className='labour'>Labour: {
+              numeral(this.props.model.get('labour')).format('$0,0.00')
+            }</div>
+          <div className='airmover'>Air Mover: {
+            numeral(this.props.model.get('airmover')).format('$0,0.00')
+          }</div>
           </div>
-          <div className='price number'>
-            {numeral(this.props.model.get('cost')).format('$0,0.00')}
-          </div>
+          <div className='price number'>{
+            numeral(this.props.model.get('cost')).format('$0,0.00')
+          }</div>
         </div>
       </section>
       /* jshint ignore: end */
