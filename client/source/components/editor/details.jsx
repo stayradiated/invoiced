@@ -3,13 +3,12 @@
 var React = require('react');
 
 var DetailsInput = require('./detailsInput');
+var InvoiceModel = require('../../models/invoice');
 
 var Details = React.createClass({
 
-  getDefaultProps: function () {
-    return {
-      invoice: null
-    };
+  propTypes: {
+    model: React.PropTypes.instanceOf(InvoiceModel).isRequired
   },
 
   render: function () {
@@ -20,14 +19,14 @@ var Details = React.createClass({
         <h3>Invoice</h3>
 
         <DetailsInput
-          invoice={this.props.invoice}
+          model={this.props.model}
           label='Invoice ID'
           key='number'
           type='number'
         />
 
         <DetailsInput
-          invoice={this.props.invoice}
+          model={this.props.model}
           label='Created At'
           key='date'
           type='date'
@@ -36,19 +35,19 @@ var Details = React.createClass({
         <h3>Customer</h3>
 
         <DetailsInput
-          invoice={this.props.invoice}
+          model={this.props.model}
           label='Customer Name'
           key='customer'
         />
 
         <DetailsInput
-          invoice={this.props.invoice}
+          model={this.props.model}
           label='Site'
           key='site'
         />
 
         <DetailsInput
-          invoice={this.props.invoice}
+          model={this.props.model}
           label='Email'
           key='email'
           type='email'
@@ -57,21 +56,21 @@ var Details = React.createClass({
         <h3>Cost</h3>
 
         <DetailsInput
-          invoice={this.props.invoice}
+          model={this.props.model}
           label='Airmover Hire'
           key='airmover'
           type='currency'
         />
 
         <DetailsInput
-          invoice={this.props.invoice}
+          model={this.props.model}
           label='Labour'
           key='labour'
           type='currency'
         />
 
         <DetailsInput
-          invoice={this.props.invoice}
+          model={this.props.model}
           label='Total Cost'
           key='cost'
           type='currency'

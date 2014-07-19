@@ -4,16 +4,17 @@ var React = require('react');
 
 var Row = require('../../models/row');
 var ROW = require('../../constants/row');
+var InvoiceModel = require('../../models/invoice');
 
 var Header = React.createClass({
 
-  getDefaultProps: function () {
-    return {
-      invoice: null
-    };
+  propTypes: {
+    model: React.PropTypes.instanceOf(InvoiceModel).isRequired
   },
 
   render: function () {
+    console.log(this.props.model.hasChanged());
+
     return (
       /* jshint ignore: start */
       <header>
@@ -42,13 +43,13 @@ var Header = React.createClass({
   },
 
   save: function () {
-    this.props.invoice.save();
-    this.props.invoice.get('rows').save();
+    this.props.model.save();
+    this.props.model.get('rows').save();
   },
 
   createRow: function (type) {
     var row = new Row({ type: type });
-    this.props.invoice.get('rows').add(row);
+    this.props.model.get('rows').add(row);
   }
 
 });

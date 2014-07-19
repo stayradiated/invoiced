@@ -11,7 +11,8 @@ var InvoiceStore = Backbone.Model.extend({
 
   defaults: {
     collection: null,
-    active: null
+    active: null,
+    editing: null
   },
 
   initialize: function () {
@@ -56,6 +57,10 @@ AppDispatcher.register(function (payload) {
 
     case AppConstants.OPEN_INVOICE:
       invoiceStore.set('active', action.invoice);
+      break;
+
+    case AppConstants.EDIT_INVOICE:
+      invoiceStore.set('editing', action.invoice);
       break;
 
   }

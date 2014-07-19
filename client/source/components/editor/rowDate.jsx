@@ -5,13 +5,12 @@ var React = require('react');
 var ROW = require('../../constants/row');
 var RowInput = require('./rowInput');
 var RowDestroyBtn = require('./rowDestroyBtn');
+var RowModel = require('../../models/row');
 
 var RowDate = React.createClass({
 
-  getDefaultProps: function () {
-    return {
-      row: null
-    };
+  propTypes: {
+    model: React.PropTypes.instanceOf(RowModel)
   },
 
   render: function () {
@@ -19,9 +18,9 @@ var RowDate = React.createClass({
       /* jshint ignore: start */
       <div className='row date'>
         <span>Job Date:</span>
-        <RowInput row={this.props.row} type='date' />
+        <RowInput row={this.props.model} type='date' />
         <div className='fill'></div>
-        <RowDestroyBtn row={this.props.row} />
+        <RowDestroyBtn row={this.props.model} />
       </div>
       /* jshint ignore: end */
     );

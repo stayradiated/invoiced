@@ -4,27 +4,33 @@ var React = require('react');
 var moment = require('moment');
 var numeral = require('numeral');
 
+var InvoiceModel = require('../../models/invoice');
+
 var DetailsInput = React.createClass({
 
   componentDidMount: function () {
-    this.props.invoice.on('change:' + this.props.key, this._onChange, this);
+    this.props.model.on('change:' + this.props.key, this._onChange, this);
   },
 
   componentWillUnmount: function () {
-    this.props.invoice.off('change:' + this.props.key, this._onChange, this);
+    this.props.model.off('change:' + this.props.key, this._onChange, this);
+  },
+
+  propTypes: {
+    model: React.PropTypes.instanceOf(InvoiceModel),
+    label: React.PropTypes.string,
+    key: React.PropTypes.string,
+    type: React.PropTypes.string
   },
 
   getDefaultProps: function () {
     return {
-      invoice: null,
-      label: '',
-      key: '',
       type: 'text'
     };
   },
 
   render: function () {
-    var value = this.props.invoice.get(this.props.key);
+    var value = this.props.model.get(this.props.key);
     var type = this.props.type;
 
     switch (type) {
@@ -54,7 +60,7 @@ var DetailsInput = React.createClass({
 
   handleChange: function () {
     var val = this.refs.input.getDOMNode().value;
-    this.props.invoice.set(this.props.key, val);
+    this.props.model.set(this.props.key, val);
   },
 
   _onChange: function () {

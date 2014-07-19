@@ -1,7 +1,6 @@
 var _ = require('lodash');
 var Backbone = require('backbone');
 
-var AppActions = require('../actions/app');
 var AppDispatcher = require('../dispatchers/app');
 var AppConstants = require('../constants/app');
 
@@ -22,7 +21,6 @@ AppDispatcher.register(function (payload) {
 
     case AppConstants.EDIT_INVOICE:
       appStore.set('activePage', AppConstants.EDITOR_PAGE);
-      AppActions.openInvoice(action.invoice);
       break;
 
     case AppConstants.OPEN_PAGE:

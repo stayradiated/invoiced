@@ -2,38 +2,37 @@
 
 var React = require('react');
 
-var appStore = require('../../stores/app');
-
 var Header = require('../editor/header');
 var Details = require('../editor/details');
 var Rows = require('../editor/rows');
+var InvoiceStore = require('../../stores/invoice');
 
-var getEditorState = function () {
+var getState = function () {
   return {
-    invoice: appStore.getActiveInvoice()
+    model: InvoiceStore.get('editing')
   };
 };
 
 var EditorPage = React.createClass({
 
-  getInitialState: getEditorState,
+  getInitialState: getState,
 
   componentDidMount: function () {
-    appStore.on('change:activeInvoice', this._onChange, this);
+    InvoiceStore.on('change:editing', this._onChange, this);
   },
 
   componentWillUnmount: function () {
-    appStore.off('change:activeInvoice', this._onChange, this);
+    InvoiceStore.off('change:editing', this._onChange, this);
   },
 
   render: function () {
     return (
       /* jshint ignore: start */
       <div className='page-editor'>
-        <Details invoice={this.state.invoice} />
+        <Details model={this.state.model} />
         <div className='editor'>
-          <Header invoice={this.state.invoice} />
-          <Rows rows={this.state.invoice.get('rows')} />
+          <Header model={this.state.model} />
+          <Rows collection={this.state.model.get('rows')} />
         </div>
       </div>
       /* jshint ignore: end */
@@ -41,7 +40,7 @@ var EditorPage = React.createClass({
   },
 
   _onChange: function () {
-    this.setState(getEditorState());
+    this.setState(getState());
   }
 
 });
