@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 var routes = [
-  'clients', 'invoices', 'rows', // 'snippets'
+  'clients', 'invoices', 'rows', 'snippets'
 ];
 
 routes.forEach(function (route) {

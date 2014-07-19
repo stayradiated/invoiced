@@ -1,28 +1,11 @@
-var query = require('../utils/db');
-var rest = require('../utils/rest');
+'use strict';
 
-var snippets = {
+var Route = require('../utils/route');
+var Snippets = require('../models/snippets');
 
-  all: function (req, res) {
-    query('snippets')
-    .select()
-    .then(rest(res))
-    .catch(rest.catch(res));
-  },
-
-  get: function (req, res) {
-    query('snippets')
-    .select()
-    .where({ id: req.params.id })
-    .then(rest(res))
-    .catch(rest.catch(res));
-  },
-
-  listen: function (app) {
-    app.get('/snippets', snippets.all);
-    app.get('/snippets/:id', snippets.get);
-  }
-
-};
+var snippets = new Route({
+  collection: Snippets,
+  columns: ['shortcut', 'content']
+});
 
 module.exports = snippets;
