@@ -5,6 +5,7 @@ var React = require('react');
 var Header = require('./header');
 var ClientsPage = require('./pages/clients');
 var EditorPage = require('./pages/editor');
+var SettingsPage = require('./pages/settings');
 var AppStore = require('../stores/app');
 var AppConstants = require('../constants/app');
 var ClientStore = require('../stores/client');
@@ -37,6 +38,9 @@ var App = React.createClass({
         break;
       case AppConstants.EDITOR_PAGE:
         page = new EditorPage();
+        break;
+      case AppConstants.SETTINGS_PAGE:
+        page = new SettingsPage();
         break;
     }
 

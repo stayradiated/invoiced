@@ -1,0 +1,12 @@
+
+$app_background: $wet_asphalt;
+
+& {
+  padding: 20px;
+}
+
+.snippet-manager {
+  max-width: 50%;
+}
+
+@import 'snippets';

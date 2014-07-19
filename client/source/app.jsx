@@ -23,3 +23,4 @@ require('./stores/app');
 require('./stores/client');
 require('./stores/invoice');
 require('./stores/row');
+require('./stores/snippet');

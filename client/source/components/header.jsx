@@ -9,7 +9,7 @@ var AppActions = require('../actions/app');
 var AppConstants = require('../constants/app');
 
 var pages = {
-  SETTINGS: {
+  SETTINGS_PAGE: {
     name: 'Settings',
     icon: 'settings'
   },

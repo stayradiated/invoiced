@@ -26,6 +26,10 @@ var EditorPage = React.createClass({
   },
 
   render: function () {
+    if (! this.state.model) {
+      return <p>No invoice selected</p>;
+    }
+
     return (
       /* jshint ignore: start */
       <div className='page-editor'>

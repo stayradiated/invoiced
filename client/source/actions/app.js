@@ -3,6 +3,8 @@ var AppConstants = require('../constants/app');
 
 var AppActions = {
 
+  /* CREATE */
+
   createClient: function () {
     return AppDispatcher.handleViewAction({
       actionType: AppConstants.CREATE_CLIENT
@@ -24,6 +26,14 @@ var AppActions = {
     });
   },
 
+  createSnippet: function () {
+    return AppDispatcher.handleViewAction({
+      actionType: AppConstants.CREATE_SNIPPET
+    });
+  },
+
+  /* EDIT */
+
   editInvoice: function (invoice) {
     return AppDispatcher.handleViewAction({
       actionType: AppConstants.EDIT_INVOICE,
@@ -37,6 +47,15 @@ var AppActions = {
       client: client
     });
   },
+
+  editSnippet: function (snippet) {
+    return AppDispatcher.handleViewAction({
+      actionType: AppConstants.EDIT_SNIPPET,
+      snippet: snippet
+    });
+  },
+
+  /* OPEN */
 
   openPage: function (page) {
     return AppDispatcher.handleViewAction({
@@ -59,6 +78,8 @@ var AppActions = {
     });
   },
 
+  /* DESTROY */
+
   destroyClient: function (client) {
     return AppDispatcher.handleViewAction({
       actionType: AppConstants.DESTROY_CLIENT,
@@ -70,6 +91,13 @@ var AppActions = {
     return AppDispatcher.handleViewAction({
       actionType: AppConstants.DESTROY_INVOICE,
       invoice: invoice
+    });
+  },
+
+  destroySnippet: function (snippet) {
+    return AppDispatcher.handleViewAction({
+      actionType: AppConstants.DESTROY_SNIPPET,
+      snippet: snippet
     });
   }
 

@@ -1,0 +1,80 @@
+$background: lighten($app_background, 5);
+
+.snippet-manager {
+  display: flex;
+  flex-direction: column;
+
+  header {
+    flex: 1;
+    order: 1;
+
+    h1 {
+      float: left;
+    }
+
+    button {
+      float: right;
+    }
+
+  }
+
+  .snippet-list {
+    flex: 1;
+    order: 2;
+  }
+
+  .snippet-item {
+    display: flex;
+    margin-bottom: 5px;
+
+    div {
+      line-height: 40px;
+      padding: 0 20px;
+      display: flex;
+    }
+
+    .shortcut {
+      order: 1;
+      width: 100px;
+      background: $background;
+      margin-right: 5px;
+    }
+
+    .content {
+      flex: 1;
+      order: 2;
+      background: $background;
+      margin-right: 5px;
+    }
+
+    button {
+      order: 3;
+      width: 40px;
+      padding: 0;
+
+      span {
+        padding-left: 0;
+        width: 10px;
+      }
+    }
+
+    &.edit {
+      button, div {
+        background: $midnight_blue;
+      }
+      button {
+        width: 85px;
+      }
+    }
+
+    input {
+      flex: 1;
+      background: transparent;
+      border: 0;
+      padding: 0;
+      outline: 0;
+    }
+
+  }
+
+}

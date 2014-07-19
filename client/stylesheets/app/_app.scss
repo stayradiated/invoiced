@@ -39,3 +39,7 @@ body {
   @import 'editor/layout';
 }
 
+.page-settings {
+  flex: 1;
+  @import 'settings/layout';
+}
