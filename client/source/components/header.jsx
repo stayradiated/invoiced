@@ -1,3 +1,5 @@
+'use strict';
+
 var _ = require('lodash');
 var React = require('react');
 
@@ -25,10 +27,10 @@ var pages = {
   }
 };
 
-var getHeaderState = function () {
+var getState = function () {
   return {
-    activePage: AppStore.getActivePage()
-  }
+    activePage: AppStore.get('activePage')
+  };
 };
 
 var Header = React.createClass({
@@ -41,7 +43,7 @@ var Header = React.createClass({
     AppStore.off('change:activePage', this._onChange, this);
   },
 
-  getInitialState: getHeaderState,
+  getInitialState: getState,
 
   render: function () {
     return (
@@ -61,7 +63,11 @@ var Header = React.createClass({
             }
 
             return (
-              <div key={id} className={classes} onClick={this.openPage.bind(this, id)}>
+              <div
+                key={id}
+                className={classes}
+                onClick={this.openPage.bind(this, id)}
+              >
                 <span className={'glyphicons ' + page.icon} />
                 {page.name}
               </div>
@@ -78,7 +84,7 @@ var Header = React.createClass({
   },
 
   _onChange: function () {
-    this.setState(getHeaderState());
+    this.setState(getState());
   }
 
 });

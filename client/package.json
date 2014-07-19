@@ -23,8 +23,7 @@
     "lodash": "^2.4.1",
     "moment": "^2.7.0",
     "numeral": "^1.5.3",
-    "react": "^0.11.0",
-    "signals": "git://github.com/stayradiated/signals"
+    "react": "^0.11.0"
   },
   "devDependencies": {
     "gulp": "^3.8.6",

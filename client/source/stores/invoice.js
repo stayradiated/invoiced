@@ -1,37 +1,66 @@
+'use strict';
+
 var _ = require('lodash');
-var Signals = require('signals');
+var Backbone = require('backbone');
+
 var AppDispatcher = require('../dispatchers/app');
 var AppConstants = require('../constants/app');
-
 var InvoiceCollection = require('../models/invoices');
-var invoiceCollection = new InvoiceCollection();
 
-var InvoiceStore = Signals.convert({
+var InvoiceStore = Backbone.Model.extend({
 
-  init: function () {
-    invoiceCollection.fetch({ reset: true });
+  defaults: {
+    collection: null,
+    active: null
   },
 
-  getCollection: function () {
-    return invoiceCollection;
+  initialize: function () {
+    var collection = new InvoiceCollection();
+    collection.fetch({ reset: true });
+    collection.on('remove', this._onRemove, this);
+    this.set('collection', collection);
+  },
+
+  _onRemove: function (invoice) {
+    console.log('invoice was removed', invoice);
+    if (invoice === this.get('active')) {
+      this.set('active', null);
+    }
   }
 
 });
+
+var invoiceStore = new InvoiceStore();
 
 AppDispatcher.register(function (payload) {
   var action = payload.action;
 
   switch (action.actionType) {
 
-    case AppConstants.SOME_CONSTANT:
+    case AppConstants.OPEN_CLIENT:
+    case AppConstants.EDIT_CLIENT:
+      invoiceStore.set('active', null);
+      break;
+
+    case AppConstants.DESTROY_INVOICE:
+      action.invoice.destroy();
+      break;
+
+    case AppConstants.CREATE_INVOICE:
+      invoiceStore.get('collection').create({
+        client: action.client,
+        customer: action.client.get('name'),
+        site: action.client.get('address')
+      });
+      break;
+
+    case AppConstants.OPEN_INVOICE:
+      invoiceStore.set('active', action.invoice);
       break;
 
   }
 
   return true;
-
 });
 
-InvoiceStore.init();
-
-module.exports = InvoiceStore;
+module.exports = invoiceStore;

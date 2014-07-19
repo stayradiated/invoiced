@@ -4,44 +4,44 @@ var _ = require('lodash');
 var React = require('react');
 
 var ClientItem = require('./clientItem');
-var ClientStore = require('../../stores/client').getCollection();
-var AppStore = require('../../stores/app');
+var ClientStore = require('../../stores/client');
 var AppActions = require('../../actions/app');
+var ClientCollection = require('../../models/clients');
+
+var getState = function () {
+  return {
+    active: ClientStore.get('active')
+  };
+};
 
 var ClientList = React.createClass({
 
   componentDidMount: function () {
-    AppStore.on('change:activeClient', this._onChange, this);
-    ClientStore.on('add remove', this._onChange, this);
-    ClientStore.on('add', this.openClient, this);
+    ClientStore.on('change:active', this._onChange, this);
+    this.props.collection.on('add remove', this._onChange, this);
+    this.props.collection.on('add', this.openClient, this);
   },
 
   componentWillUnmount: function () {
-    AppStore.off('change:activeClient', this._onChange, this);
-    ClientStore.off('add remove', this._onChange, this);
-    ClientStore.off('add', this.openClient, this);
+    ClientStore.off('change:active', this._onChange, this);
+    this.props.collection.off('add remove', this._onChange, this);
+    this.props.collection.off('add', this.openClient, this);
   },
 
-  getInitialState: function () {
-    return {
-      active: AppStore.getActiveClient()
-    };
+  propTypes: {
+    collection: React.PropTypes.instanceOf(ClientCollection).isRequired
   },
+
+  getInitialState: getState,
 
   render: function () {
     return (
       /* jshint ignore: start */
-      <div className='client-list'>
-        {
-          ClientStore.map(function (client) {
-            return <ClientItem
-              key={client.cid}
-              client={client}
-              active={client === this.state.active}
-            />
-          }, this)
-        }
-      </div>
+      <div className='client-list'>{
+        this.props.collection.map(function (client) {
+          return <ClientItem key={client.cid} model={client} />
+        }, this)
+      }</div>
       /* jshint ignore: end */
     );
   },
@@ -51,8 +51,7 @@ var ClientList = React.createClass({
   },
 
   _onChange: function () {
-    console.log('updating client list');
-    this.forceUpdate();
+    this.setState(getState());
   }
 
 });

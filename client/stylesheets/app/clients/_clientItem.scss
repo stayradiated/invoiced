@@ -9,7 +9,6 @@ $background: lighten($app_background, 5);
   background: $background;
   margin-bottom: $space;
   text-decoration: none;
-  transition: background 0.15s;
 }
 
 &:hover {

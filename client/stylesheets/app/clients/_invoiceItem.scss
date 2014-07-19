@@ -32,7 +32,6 @@ $background: lighten($app_background, 5);
 
   line-height: $meta_height;
   background: $background;
-  transition: background 0.15s;
 
   div {
     padding: 0 20px;
@@ -56,7 +55,6 @@ $background: lighten($app_background, 5);
 .customer {
   background: $background;
   padding: 10px 20px;
-  transition: background 0.15s;
   
   display: flex;
   flex-direction: row;

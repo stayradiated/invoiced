@@ -8,6 +8,7 @@ var BackboneRelational = require('backbone-relational');
 
 Backbone.$ = $;
 window.React = React; // trigger React Dev Tools
+require('bluebird'); // fixes EMFILE error on OSX
 
 var App = require('./components/app');
 
@@ -15,6 +16,7 @@ $(function() {
   fastClick(document.body);
   React.renderComponent(new App(), document.body);
 });
+
 
 // fetch info
 require('./stores/app');

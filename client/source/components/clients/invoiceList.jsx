@@ -4,45 +4,39 @@ var _ = require('lodash');
 var React = require('react');
 
 var InvoiceItem = require('./invoiceItem');
-var AppStore = require('../../stores/app');
+var InvoiceStore = require('../../stores/invoice');
 var InvoiceCollection = require('../../models/invoices');
 
 var getState = function () {
   return {
-    active: AppStore.getActiveInvoice
+    active: InvoiceStore.get('active')
   };
 };
 
 var InvoiceList = React.createClass({
 
   componentDidMount: function () {
-    this.props.invoices.on('add remove', this._onChange, this);
+    this.props.collection.on('add remove', this._onChange, this);
   },
 
   componentWillUnmount: function () {
-    this.props.invoices.off('add remove', this._onChange, this);
+    this.props.collection.off('add remove', this._onChange, this);
   },
 
   getInitialState: getState,
 
   propTypes: {
-    invoices: React.PropTypes.instanceOf(InvoiceCollection)
+    collection: React.PropTypes.instanceOf(InvoiceCollection).isRequired
   },
 
   render: function () {
     return (
       /* jshint ignore: start */
-      <div className='invoice-list'>
-        {
-          this.props.invoices.map(function (invoice) {
-            return <InvoiceItem
-              key={invoice.cid}
-              invoice={invoice}
-              active={invoice === this.state.active}
-            />
-          }, this)
-        }
-      </div>
+      <div className='invoice-list'>{
+        this.props.collection.map(function (invoice) {
+          return <InvoiceItem key={invoice.cid} model={invoice} />
+        }, this)
+      }</div>
       /* jshint ignore: end */
     );
   },

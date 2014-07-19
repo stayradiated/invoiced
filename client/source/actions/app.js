@@ -49,6 +49,20 @@ var AppActions = {
       actionType: AppConstants.OPEN_INVOICE,
       invoice: invoice
     });
+  },
+
+  destroyClient: function (client) {
+    return AppDispatcher.handleViewAction({
+      actionType: AppConstants.DESTROY_CLIENT,
+      client: client
+    });
+  },
+
+  destroyInvoice: function (invoice) {
+    return AppDispatcher.handleViewAction({
+      actionType: AppConstants.DESTROY_INVOICE,
+      invoice: invoice
+    });
   }
 
 };

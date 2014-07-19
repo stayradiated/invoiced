@@ -12,6 +12,9 @@ module.exports = constants({
   CREATE_INVOICE:  null,
 
   EDIT_CLIENT:     null,
-  EDIT_INVOICE:    null
+  EDIT_INVOICE:    null,
+
+  DESTROY_CLIENT:  null,
+  DESTROY_INVOICE: null
 
 });

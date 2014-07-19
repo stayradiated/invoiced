@@ -3,9 +3,9 @@
 var _ = require('lodash');
 var React = require('react');
 
-var ClientCollection = require('../../models/clients');
-var AppActions = require('../../actions/app');
 var ClientList = require('./clientList');
+var AppActions = require('../../actions/app');
+var ClientStore = require('../../stores/client');
 
 var ClientSection = React.createClass({
 
@@ -14,18 +14,15 @@ var ClientSection = React.createClass({
       /* jshint ignore: start */
       <section className='client'>
         <header>
-          <div className='details'>
-            <h2>Clients</h2>
-          </div>
+          <h2>Clients</h2>
           <div className='buttons'>
-            <button className='create-client'
-              type='button' onClick={this.create}>
+            <button type='button' onClick={this.create}>
               <span className='halflings plus-sign' />
               New Client
             </button>
           </div>
         </header>
-        <ClientList />
+        <ClientList collection={ClientStore.get('collection')} />
       </section>
       /* jshint ignore: end */
     );

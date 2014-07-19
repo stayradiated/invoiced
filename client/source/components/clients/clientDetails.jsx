@@ -9,15 +9,15 @@ var ClientModel = require('../../models/client');
 var ClientDetails = React.createClass({
 
   componentDidMount: function () {
-    this.props.client.on('change', this._onChange, this);
+    this.props.model.on('change', this._onChange, this);
   },
 
   componentWillUnmount: function () {
-    this.props.client.off('change', this._onChange, this);
+    this.props.model.off('change', this._onChange, this);
   },
 
   propTypes: {
-    client: React.PropTypes.instanceOf(ClientModel)
+    model: React.PropTypes.instanceOf(ClientModel).isRequired
   },
 
   render: function () {
@@ -25,19 +25,28 @@ var ClientDetails = React.createClass({
       /* jshint ignore: start */
       <header>
         <div className='details'>
-          <h2>{this.props.client.get('name')}</h2>
+          <h2>{
+            this.props.model.get('name')
+          }</h2>
           <p>
-            <span className='address'>{this.props.client.get('address')}</span>
-            <span className='city'>{this.props.client.get('city')}</span>
-            <span className='postcode'>{this.props.client.get('postcode')}</span>
+            <span>{
+              this.props.model.get('address')
+            }</span>
+            <span>{
+              this.props.model.get('city')
+            }</span>
+            <span>{
+              this.props.model.get('postcode')
+            }</span>
           </p>
         </div>
         <div className='buttons'>
-          <button className='edit-client' type='button' onClick={this.editClient}>
+          <button type='button' onClick={this.editClient}>
             <span className='halflings pencil' />
             Edit Client Details
           </button>
-          <button className='create-invoice primary' type='button' onClick={this.createInvoice}>
+          <button className='primary' type='button'
+            onClick={this.createInvoice}>
             <span className='halflings plus-sign' />
             New Invoice
           </button>
@@ -48,11 +57,11 @@ var ClientDetails = React.createClass({
   },
 
   editClient: function () {
-    AppActions.editClient(this.props.client);
+    AppActions.editClient(this.props.model);
   },
 
   createInvoice: function () {
-    AppActions.createInvoice(this.props.client);
+    AppActions.createInvoice(this.props.model);
   },
 
   _onChange: function () {

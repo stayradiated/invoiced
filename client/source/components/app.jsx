@@ -10,9 +10,9 @@ var AppConstants = require('../constants/app');
 var ClientStore = require('../stores/client');
 var InvoiceStore = require('../stores/invoice');
 
-var getAppState = function () {
+var getState = function () {
   return {
-    activePage: AppStore.getActivePage()
+    activePage: AppStore.get('activePage')
   };
 };
 
@@ -20,18 +20,12 @@ var App = React.createClass({
 
   componentDidMount: function () {
     AppStore.on('change:activePage', this._onChange, this);
-    ClientStore.on('reset', this._onChange, this);
-    InvoiceStore.on('reset', this._onChange, this);
-  },
-
-  componentWillUnmount: function () {
-    AppStore.off('change:activePage', this._onChange, this);
-    ClientStore.off('reset', this._onChange, this);
-    InvoiceStore.off('reset', this._onChange, this);
+    ClientStore.get('collection').once('reset', this._onChange, this);
+    InvoiceStore.get('collection').once('reset', this._onChange, this);
   },
 
   getInitialState: function () {
-    return getAppState();
+    return getState();
   },
 
   render: function () {
@@ -59,7 +53,7 @@ var App = React.createClass({
   },
 
   _onChange: function () {
-    this.setState(getAppState());
+    this.setState(getState());
   }
 
 });

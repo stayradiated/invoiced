@@ -19,7 +19,7 @@ var RowItem = React.createClass({
     return (
       /* jshint ignore: start */
       <div className='row item'>
-        <span className='bullet'>{this.props.row.get('order')}</span>
+        <span className='bullet'>{this.props.row.get('index')}</span>
         <RowInput row={this.props.row} />
         <RowSwitchBtn row={this.props.row} next={ROW.BULLET} />
         <RowDestroyBtn row={this.props.row} />
