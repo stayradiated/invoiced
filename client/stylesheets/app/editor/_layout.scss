@@ -25,6 +25,7 @@ div, span {
 
   @extend #scroll;
   padding: 20px;
+  max-width: 300px;
 
   @import 'details';
 }

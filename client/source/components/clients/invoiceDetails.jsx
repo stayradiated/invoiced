@@ -25,7 +25,7 @@ var InvoiceDetails = React.createClass({
   render: function () {
     return (
       /* jshint ignore: start */
-      <div className='invoice-details'>
+      <section className='invoice-details'>
         <header>
           <h2>{this.props.model.get('number')}</h2>
           <div className='created'>
@@ -79,7 +79,7 @@ var InvoiceDetails = React.createClass({
             {numeral(this.props.model.get('cost')).format('$0,0.00')}
           </div>
         </div>
-      </div>
+      </section>
       /* jshint ignore: end */
     );
   },

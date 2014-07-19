@@ -6,6 +6,11 @@ $padding: 20px;
   display: flex;
   padding: $padding;
   flex-direction: row;
+
+  & > section {
+    max-width: 33.33%;
+    box-sizing: border-box;
+  }
 }
 
 section.client {
@@ -17,12 +22,12 @@ section.client {
 section.invoice {
   flex: 1;
   order: 2;
-  margin-left: $padding;
+  padding-left: $padding;
   @import 'invoiceList';
 }
 
-.invoice-details {
+section.invoice-details {
   flex: 1;
   order: 3;
-  margin-left: $padding;
+  padding-left: $padding;
 }
