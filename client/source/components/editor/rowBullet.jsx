@@ -11,7 +11,7 @@ var RowModel = require('../../models/row');
 var RowBullet = React.createClass({
 
   propTypes: {
-    model: React.PropTypes.instanceOf(RowModel)
+    model: React.PropTypes.instanceOf(RowModel).isRequired
   },
 
   render: function () {
@@ -19,9 +19,9 @@ var RowBullet = React.createClass({
       /* jshint ignore: start */
       <div className='row bullet'>
         <span className='bullet'>•</span>
-        <RowInput row={this.props.model} />
-        <RowSwitchBtn row={this.props.model} next={ROW.HEADING} />
-        <RowDestroyBtn row={this.props.model} />
+        <RowInput model={this.props.model} />
+        <RowSwitchBtn model={this.props.model} next={ROW.HEADING} />
+        <RowDestroyBtn model={this.props.model} />
       </div>
       /* jshint ignore: end */
     );

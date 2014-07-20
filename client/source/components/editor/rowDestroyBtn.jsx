@@ -2,12 +2,13 @@
 
 var React = require('react');
 
+var AppActions = require('../../actions/app');
+var RowModel = require('../../models/row');
+
 var RowDestroyBtn = React.createClass({
 
-  getDefaultProps: function () {
-    return {
-      row: null
-    };
+  propTypes: {
+    model: React.PropTypes.instanceOf(RowModel).isRequired
   },
 
   render: function () {
@@ -21,7 +22,7 @@ var RowDestroyBtn = React.createClass({
   },
 
   destroy: function () {
-    this.props.row.destroy();
+    AppActions.destroyRow(this.props.model);
   }
 
 });

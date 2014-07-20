@@ -10,7 +10,7 @@ var RowModel = require('../../models/row');
 var RowDate = React.createClass({
 
   propTypes: {
-    model: React.PropTypes.instanceOf(RowModel)
+    model: React.PropTypes.instanceOf(RowModel).isRequired
   },
 
   render: function () {
@@ -18,9 +18,9 @@ var RowDate = React.createClass({
       /* jshint ignore: start */
       <div className='row date'>
         <span>Job Date:</span>
-        <RowInput row={this.props.model} type='date' />
+        <RowInput model={this.props.model} type='date' />
         <div className='fill'></div>
-        <RowDestroyBtn row={this.props.model} />
+        <RowDestroyBtn model={this.props.model} />
       </div>
       /* jshint ignore: end */
     );

@@ -17,7 +17,7 @@ var Rows = React.createClass({
   },
 
   componentWillUnmount: function () {
-    this.props.collection.on('add remove change:type', this._onChange, this);
+    this.props.collection.off('add remove change:type', this._onChange, this);
   },
 
   propTypes: {

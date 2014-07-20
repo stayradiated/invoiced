@@ -41,6 +41,10 @@ AppDispatcher.register(function (payload) {
       action.invoice.get('rows').add(row);
       break;
 
+    case AppConstants.DESTROY_ROW:
+      action.row.trigger('destroy', action.row);
+      break;
+
   }
 
   return true;

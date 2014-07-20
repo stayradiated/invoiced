@@ -22,6 +22,12 @@ var SnippetStore = Backbone.Model.extend({
     this.set('collection', collection);
   },
 
+  expand: function (shortcut) {
+    return this.get('collection').findWhere({
+      shortcut: shortcut
+    });
+  },
+
   _onSync: function () {
     this.set('edit', null);
   }

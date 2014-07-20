@@ -11,16 +11,16 @@ var RowModel = require('../../models/row');
 var RowHeading = React.createClass({
 
   propTypes: {
-    model: React.PropTypes.instanceOf(RowModel)
+    model: React.PropTypes.instanceOf(RowModel).isRequired
   },
 
   render: function () {
     return (
       /* jshint ignore: start */
       <div className='row heading'>
-        <RowInput row={this.props.model} />
-        <RowSwitchBtn row={this.props.model} next={ROW.ITEM} />
-        <RowDestroyBtn row={this.props.model} />
+        <RowInput model={this.props.model} />
+        <RowSwitchBtn model={this.props.model} next={ROW.ITEM} />
+        <RowDestroyBtn model={this.props.model} />
       </div>
       /* jshint ignore: end */
     );

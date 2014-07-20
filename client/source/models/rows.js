@@ -16,7 +16,9 @@ var Rows = Backbone.Collection.extend({
 
   save: function(){
     this.each(function (model) {
-      if (model.hasChanged() || model.isNew()) model.save();
+      if (model.hasChanged() || model.isNew()) {
+        model.save(undefined, {patch: true});
+      }
     });
   }
 

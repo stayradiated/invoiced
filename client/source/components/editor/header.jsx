@@ -44,7 +44,7 @@ var Header = React.createClass({
   },
 
   save: function () {
-    this.props.model.save();
+    this.props.model.save(undefined, {patch: true});
     this.props.model.get('rows').save();
   },
 

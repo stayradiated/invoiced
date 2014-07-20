@@ -2,13 +2,13 @@
 
 var React = require('react');
 
+var RowModel = require('../../models/row');
+
 var RowSwitchBtn = React.createClass({
 
-  getDefaultProps: function () {
-    return {
-      row: null,
-      next: null
-    };
+  propTypes: {
+    model: React.PropTypes.instanceOf(RowModel).isRequired,
+    next: React.PropTypes.number
   },
 
   render: function () {
@@ -22,7 +22,7 @@ var RowSwitchBtn = React.createClass({
   },
 
   switchType: function () {
-    this.props.row.set('type', this.props.next);
+    this.props.model.set('type', this.props.next);
   }
 
 });

@@ -94,6 +94,13 @@ var AppActions = {
     });
   },
 
+  destroyRow: function (row) {
+    return AppDispatcher.handleViewAction({
+      actionType: AppConstants.DESTROY_ROW,
+      row: row
+    });
+  },
+
   destroySnippet: function (snippet) {
     return AppDispatcher.handleViewAction({
       actionType: AppConstants.DESTROY_SNIPPET,
