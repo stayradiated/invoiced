@@ -33,10 +33,26 @@ var InvoiceDetails = React.createClass({
         <header>
 
           <section>
-            <h2>#{this.props.model.get('number')}</h2>
+            <h3>#{this.props.model.get('number')}</h3>
             <div className='date'>
               <span className='halflings calendar'>{
-                moment(this.props.model.get('date')).format('ddd Do MMMM YYYY')
+                moment(this.props.model.get('date')).format('dddd, Do MMMM YYYY')
+              }</span>
+            </div>
+            <button className='secondary' type='button' onClick={this.edit}>
+              <span className='halflings pencil'>Edit Invoice</span>
+            </button>
+          </section>
+
+          <section>
+            <div className='date'>
+              <span className='halflings calendar'>Created: {
+                moment(this.props.model.get('createdAt')).calendar()
+              }</span>
+            </div>
+            <div className='date'>
+              <span className='halflings calendar'>Updated: {
+                moment(this.props.model.get('updatedAt')).calendar()
               }</span>
             </div>
             <button type='button' onClick={this.togglePaid}>{
@@ -48,25 +64,10 @@ var InvoiceDetails = React.createClass({
             }</button>
           </section>
 
-          <section>
-            <div>
-              <span className='halflings calendar'>Created: {
-                moment(this.props.model.get('createdAt')).calendar()
-              }</span>
-            </div>
-            <div>
-              <span className='halflings calendar'>Updated: {
-                moment(this.props.model.get('updatedAt')).calendar()
-              }</span>
-            </div>
-          </section>
-
-          <h3>{this.props.model.get('customer')}</h3>
-          <h5>{this.props.model.get('site')}</h5>
-
-          <button className='secondary' type='button' onClick={this.edit}>
-            <span className='halflings pencil'>Edit Invoice</span>
-          </button>
+          <div className='customer'>
+            <h2>{this.props.model.get('customer')}</h2>
+            <h3>{this.props.model.get('site')}</h3>
+          </div>
 
           <div className='email'>Email: {
             this.props.model.get('email')

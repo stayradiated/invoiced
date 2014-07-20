@@ -30,4 +30,5 @@ section.invoice-details {
   flex: 1;
   order: 3;
   padding-left: $padding;
+  @import 'invoiceDetails';
 }

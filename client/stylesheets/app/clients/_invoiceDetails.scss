@@ -1,0 +1,34 @@
+header {
+
+  section {
+    display: flex;
+
+    h3 {
+      width: 50px;
+    }
+
+    .date {
+      flex: 1;
+    }
+
+    h3, div, button {
+      background: lighten($app_background, 10);
+      line-height: 40px;
+      margin: 0 0 5px 5px;
+      padding: 0 20px;
+    }
+
+    button {
+      background: $nephritis;
+      &:hover {
+        background: $emerald;
+      }
+    }
+
+    .customer {
+      flex: 1;
+    }
+
+  }
+
+}
