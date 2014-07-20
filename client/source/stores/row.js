@@ -1,4 +1,5 @@
-var _ = require('lodash');
+'use strict';
+
 var Backbone = require('backbone');
 
 var AppDispatcher = require('../dispatchers/app');
@@ -42,7 +43,7 @@ AppDispatcher.register(function (payload) {
       break;
 
     case AppConstants.DESTROY_ROW:
-      action.row.trigger('destroy', action.row);
+      action.row.destroy();
       break;
 
   }

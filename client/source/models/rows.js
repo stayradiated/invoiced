@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var Backbone = require('backbone');
 
 var Row = require('./row');
@@ -14,11 +15,15 @@ var Rows = Backbone.Collection.extend({
 
   comparator: 'order',
 
+  initialize: function () {
+    var memento = new Backbone.Memento(this);
+    _.extend(this, memento);
+    this.store();
+  },
+
   save: function(){
     this.each(function (model) {
-      if (model.hasChanged() || model.isNew()) {
-        model.save(undefined, {patch: true});
-      }
+      model.save();
     });
   }
 

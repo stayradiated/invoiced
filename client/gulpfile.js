@@ -10,6 +10,7 @@ var streamify = require('gulp-streamify');
 var watchify = require('watchify');
 var uglify = require('gulp-uglify');
 
+
 gulp.task('default', ['app', 'stylesheets'], function () {
   gulp.watch('./stylesheets/**/*.scss', ['stylesheets']);
 

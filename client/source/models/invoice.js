@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var Backbone = require('backbone');
 
 var Row = require('./row');
@@ -39,7 +40,13 @@ var Invoice = Backbone.RelationalModel.extend({
       key: 'invoice',
       includeInJSON: 'id'
     }
-  }]
+  }],
+
+  initialize: function () {
+    var memento = new Backbone.Memento(this);
+    _.extend(this, memento);
+    this.store();
+  }
 
 });
 

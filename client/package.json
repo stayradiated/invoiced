@@ -17,6 +17,7 @@
   "dependencies": {
     "backbone": "^1.1.2",
     "backbone-relational": "^0.8.8",
+    "backbone.memento": "git://github.com/stayradiated/backbone.memento",
     "bluebird": "^2.2.2",
     "fastclick": "^1.0.2",
     "jquery": "^2.1.1",

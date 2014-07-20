@@ -5,6 +5,7 @@ var React = require('react');
 var fastClick = require('fastclick');
 var Backbone = require('backbone');
 var BackboneRelational = require('backbone-relational');
+var BackboneMemento = require('backbone.memento');
 
 Backbone.$ = $;
 window.React = React; // trigger React Dev Tools

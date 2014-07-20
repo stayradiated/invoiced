@@ -1,6 +1,5 @@
 'use strict';
 
-var _ = require('lodash');
 var Backbone = require('backbone');
 
 var AppDispatcher = require('../dispatchers/app');

@@ -1,6 +1,5 @@
 'use strict';
 
-var _ = require('lodash');
 var Backbone = require('backbone');
 
 var AppDispatcher = require('../dispatchers/app');
@@ -60,6 +59,9 @@ AppDispatcher.register(function (payload) {
       break;
 
     case AppConstants.EDIT_INVOICE:
+      console.log('backing up rows');
+      action.invoice.store();
+      action.invoice.get('rows').store();
       invoiceStore.set('editing', action.invoice);
       break;
 

@@ -1,5 +1,4 @@
-dist/libs
-stylesheets/vendor
-_old
-dist/fonts
-source/libs
+_old/*
+client_old/*
+client/dist/fonts/*
+client/stylesheets/vendor/*

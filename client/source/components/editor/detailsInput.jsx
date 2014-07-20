@@ -29,8 +29,14 @@ var DetailsInput = React.createClass({
     };
   },
 
+  getInitialState: function () {
+    return {
+      value: this.props.model.get(this.props.key)
+    };
+  },
+
   render: function () {
-    var value = this.props.model.get(this.props.key);
+    var value = this.state.value;
     var type = this.props.type;
 
     switch (type) {
@@ -50,21 +56,30 @@ var DetailsInput = React.createClass({
         <input
           ref='input'
           type={type}
+          value={value}
+          onBlur={this.save}
           onChange={this.handleChange}
-          defaultValue={value}
         />
       </div>
       /* jshint ignore: end */
     );
   },
 
-  handleChange: function () {
-    var val = this.refs.input.getDOMNode().value;
-    this.props.model.set(this.props.key, val);
+  save: function () {
+    this.props.model.set(this.props.key, this.state.value);
+    this.props.model.save();
+  },
+
+  handleChange: function (event) {
+    this.setState({
+      value: event.target.value
+    });
   },
 
   _onChange: function () {
-    this.forceUpdate();
+    this.setState({
+      value: this.props.model.get(this.props.key)
+    });
   }
 
 });

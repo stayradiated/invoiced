@@ -14,37 +14,43 @@ var Header = React.createClass({
   },
 
   render: function () {
-    console.log(this.props.model.hasChanged());
+    window.invoice = this.props.model;
 
     return (
       /* jshint ignore: start */
       <header>
         <ul className='rows'>
-          <li className='item'
-            onClick={this.createRow.bind(this, ROW.ITEM)}
-          >Item</li>
-          <li className='bullet'
-            onClick={this.createRow.bind(this, ROW.BULLET)}
-          >Bullet</li>
-          <li className='heading'
-            onClick={this.createRow.bind(this, ROW.HEADING)}
-          >Heading</li>
-          <li className='date'
-            onClick={this.createRow.bind(this, ROW.DATE)}
-          >Date</li>
+          <li onClick={this.createRow.bind(this, ROW.ITEM)}>Item</li>
+          <li onClick={this.createRow.bind(this, ROW.BULLET)}>Bullet</li>
+          <li onClick={this.createRow.bind(this, ROW.HEADING)}>Heading</li>
+          <li onClick={this.createRow.bind(this, ROW.DATE)}>Date</li>
         </ul>
         <ul className='invoice'>
-          <li className='templates'>Templates</li>
-          <li className='save' onClick={this.save}>Save</li>
-          <li className='generate'>Generate</li>
+          <li onClick={this.revert}>
+            <span className='halflings repeat' />
+            Revert
+          </li>
+          <li onClick={this.save}>
+            <span className='halflings floppy_disk' />
+            Save
+          </li>
+          <li>Templates</li>
+          <li>Generate</li>
         </ul>
       </header>
       /* jshint ignore: end */
     );
   },
 
+  revert: function () {
+    console.log('Reverting rows');
+    this.props.model.restore();
+    this.props.model.store();
+    this.props.model.get('rows').restore();
+    this.props.model.get('rows').store();
+  },
+
   save: function () {
-    this.props.model.save(undefined, {patch: true});
     this.props.model.get('rows').save();
   },
 

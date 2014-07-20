@@ -20,6 +20,10 @@ li {
   padding: 0 20px;
   cursor: pointer;
 
+  span, span:before {
+    color: $white;
+  }
+
   &:hover {
     background: $wet_asphalt;
     box-shadow: inset 0 -5px 0 $green_sea;

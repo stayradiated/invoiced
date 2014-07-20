@@ -13,11 +13,11 @@ var ROW = require('../../constants/row');
 var Rows = React.createClass({
 
   componentDidMount: function () {
-    this.props.collection.on('add remove change:type', this._onChange, this);
+    this.props.collection.on('reset add remove change:type', this._onChange, this);
   },
 
   componentWillUnmount: function () {
-    this.props.collection.off('add remove change:type', this._onChange, this);
+    this.props.collection.off('reset add remove change:type', this._onChange, this);
   },
 
   propTypes: {

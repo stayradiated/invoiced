@@ -43,9 +43,9 @@ _.extend(Route.prototype, {
 
   update: function (req, res) {
     var model = this.collection.get(req.params.id);
-    if (! model) return rest.fail(res);
-    var json = _.pick(req.body, this.columns);
+    if (! model) return this.create(req, res);
 
+    var json = _.pick(req.body, this.columns);
     model.save(json)
     .then(rest(res))
     .catch(rest.catch(res));
