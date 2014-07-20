@@ -16,11 +16,11 @@ var getState = function () {
 var InvoiceList = React.createClass({
 
   componentDidMount: function () {
-    this.props.collection.on('add remove', this._onChange, this);
+    this.props.collection.on('add remove change:paid', this._onChange, this);
   },
 
   componentWillUnmount: function () {
-    this.props.collection.off('add remove', this._onChange, this);
+    this.props.collection.off('add remove change:paid', this._onChange, this);
   },
 
   getInitialState: getState,
@@ -30,13 +30,49 @@ var InvoiceList = React.createClass({
   },
 
   render: function () {
+
+    var content = [];
+    var paid = [];
+    var unpaid = [];
+
+    this.props.collection.forEach(function (invoice) {
+      var item = (
+        /* jshint ignore: start */
+        <InvoiceItem key={invoice.cid} model={invoice} />
+        /* jshint ignore: end */
+      );
+      if (invoice.get('paid')) {
+        paid.push(item);
+      } else {
+        unpaid.push(item);
+      }
+    });
+
+    if (unpaid.length) {
+      content.push(
+        /* jshint ignore: start */
+        <section key='unpaid'>
+          <h3>Unpaid</h3>
+          {unpaid}
+        </section>
+        /* jshint ignore: end */
+      );
+    }
+
+    if (paid.length) {
+      content.push(
+        /* jshint ignore: start */
+        <section key='paid'>
+          <h3>Paid</h3>
+          {paid}
+        </section>
+        /* jshint ignore: end */
+      );
+    }
+
     return (
       /* jshint ignore: start */
-      <div className='invoice-list'>{
-        this.props.collection.map(function (invoice) {
-          return <InvoiceItem key={invoice.cid} model={invoice} />
-        }, this)
-      }</div>
+      <div className='invoice-list'>{content}</div>
       /* jshint ignore: end */
     );
   },

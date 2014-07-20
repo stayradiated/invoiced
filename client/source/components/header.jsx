@@ -68,8 +68,7 @@ var Header = React.createClass({
                 className={classes}
                 onClick={this.openPage.bind(this, id)}
               >
-                <span className={'glyphicons ' + page.icon} />
-                {page.name}
+                <span className={'glyphicons ' + page.icon}>{page.name}</span>
               </div>
             );
           }, this)

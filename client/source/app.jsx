@@ -6,10 +6,12 @@ var fastClick = require('fastclick');
 var Backbone = require('backbone');
 var BackboneRelational = require('backbone-relational');
 var BackboneMemento = require('backbone.memento');
+var moment = require('moment');
 
 Backbone.$ = $;
 window.React = React; // trigger React Dev Tools
 require('bluebird'); // fixes EMFILE error on OSX
+moment.lang('en-NZ'); // set language for moment
 
 var App = require('./components/app');
 

@@ -101,6 +101,11 @@ header {
   order: 3;
   @extend #scroll;
 
+  section > h3 {
+    padding-bottom: 10px;
+    border-bottom: 5px solid lighten($app_background, 5);
+  }
+
   .invoice-item {
     @import 'invoiceItem';
   }

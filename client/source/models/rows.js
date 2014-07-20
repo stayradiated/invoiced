@@ -22,9 +22,8 @@ var Rows = Backbone.Collection.extend({
   },
 
   save: function(){
-    this.each(function (model) {
-      model.save();
-    });
+    this.store();
+    this.each(function (model) { model.save(); });
   }
 
 });

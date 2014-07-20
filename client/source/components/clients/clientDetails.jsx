@@ -42,13 +42,11 @@ var ClientDetails = React.createClass({
         </div>
         <div className='buttons'>
           <button type='button' onClick={this.editClient}>
-            <span className='halflings pencil' />
-            Edit Client Details
+            <span className='halflings pencil'>Edit Client Details</span>
           </button>
           <button className='primary' type='button'
             onClick={this.createInvoice}>
-            <span className='halflings plus-sign' />
-            New Invoice
+            <span className='halflings plus-sign'>New Invoice</span>
           </button>
         </div>
       </header>

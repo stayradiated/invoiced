@@ -43,10 +43,6 @@ var DetailsInput = React.createClass({
       case 'date':
         value = moment(value).format('YYYY-MM-DD');
         break;
-      case 'currency':
-        type = 'number';
-        value = numeral(value).format('0.00');
-        break;
     }
 
     return (

@@ -35,11 +35,10 @@ AppDispatcher.register(function (payload) {
   switch (action.actionType) {
 
     case AppConstants.CREATE_ROW:
-      var row = new RowModel({
+      action.invoice.get('rows').create({
         type: action.type,
         order: rowStore._index++
       });
-      action.invoice.get('rows').add(row);
       break;
 
     case AppConstants.DESTROY_ROW:

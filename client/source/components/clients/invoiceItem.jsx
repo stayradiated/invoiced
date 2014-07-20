@@ -41,14 +41,13 @@ var InvoiceItem = React.createClass({
       /* jshint ignore: start */
       <div className={classes} onClick={this.openInvoice}>
         <div className='meta'>
-          <div className='id number'>{
+          <h3 className='id number'>#{
             this.props.model.get('number')
-          }</div>
+          }</h3>
           <div className='created'>
-            <span className='halflings calendar' />
-            {
+            <span className='halflings calendar'>{
               moment(this.props.model.get('date')).format('Do MMMM YYYY')
-            }
+            }</span>
           </div>
           <div className='paid-status'>{
             this.props.model.get('paid') ? (

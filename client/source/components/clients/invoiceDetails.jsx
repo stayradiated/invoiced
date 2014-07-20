@@ -3,10 +3,12 @@
 var React = require('react');
 var moment = require('moment');
 var numeral = require('numeral');
+window.moment = moment;
 
 var AppActions = require('../../actions/app');
 var InvoiceStore = require('../../stores/invoice');
 var InvoiceModel = require('../../models/invoice');
+var InvoiceRows = require('./invoiceRows');
 
 var InvoiceDetails = React.createClass({
 
@@ -23,57 +25,59 @@ var InvoiceDetails = React.createClass({
   },
 
   render: function () {
+    window.test = this.props.model;
+
     return (
       /* jshint ignore: start */
       <section className='invoice-details'>
         <header>
-          <h2>{this.props.model.get('number')}</h2>
-          <div className='created'>
-            <span className='halflings calendar' />
-            {moment(this.props.model.get('date')).format('ddd Do MMMM YYYY')}
-          </div>
-          <div className='date-created'>
-            <span className='halflings calendar' />
-            {moment(this.props.model.get('dateCreated')).format('ddd Do MMMM YYYY hh:mm a')}
-          </div>
-          <div className='date-updated'>
-            <span className='halflings calendar' />
-            {moment(this.props.model.get('dateUpdated')).format('ddd Do MMMM YYYY hh:mm a')}
-          </div>
-          <div className='paid-status'>
-            {
+
+          <section>
+            <h2>#{this.props.model.get('number')}</h2>
+            <div className='date'>
+              <span className='halflings calendar'>{
+                moment(this.props.model.get('date')).format('ddd Do MMMM YYYY')
+              }</span>
+            </div>
+            <button type='button' onClick={this.togglePaid}>{
               this.props.model.get('paid') ? (
+                <span className='halflings ok'>Unpaid</span>
+              ) : (
                 <span className='halflings ok'>Paid</span>
-              ) : (
-                <span className='halflings remove'>Not Paid</span>
               )
-            }
-          </div>
-          <button className='mark-paid' type='button' onClick={this.togglePaid}>
-            {
-              this.props.model.get('paid') ? (
-                <span className='halflings ok'>Mark as Not Paid</span>
-              ) : (
-                <span className='halflings ok'>Mark as Paid</span>
-              )
-            }
+            }</button>
+          </section>
+
+          <section>
+            <div>
+              <span className='halflings calendar'>Created: {
+                moment(this.props.model.get('createdAt')).calendar()
+              }</span>
+            </div>
+            <div>
+              <span className='halflings calendar'>Updated: {
+                moment(this.props.model.get('updatedAt')).calendar()
+              }</span>
+            </div>
+          </section>
+
+          <h3>{this.props.model.get('customer')}</h3>
+          <h5>{this.props.model.get('site')}</h5>
+
+          <button className='secondary' type='button' onClick={this.edit}>
+            <span className='halflings pencil'>Edit Invoice</span>
           </button>
-          <button className='delete' type='button' onClick={this.destroy}>
-            <span className='halflings remove'></span>
-            Delete Invoice
-          </button>
-          <button className='edit secondary' type='button' onClick={this.edit}>
-            <span className='halflings pencil'></span>
-            Edit Invoice
-          </button>
+
+          <div className='email'>Email: {
+            this.props.model.get('email')
+          }</div>
+
         </header>
+
+        <InvoiceRows collection={this.props.model.get('rows')} />
+
         <div className='customer'>
           <div className='primary'>
-            <h3>{this.props.model.get('customer')}</h3>
-            <h5>{this.props.model.get('site')}</h5>
-            <div className='email'>Email: {
-              this.props.model.get('email')
-            }</div>
             <div className='labour'>Labour: {
               numeral(this.props.model.get('labour')).format('$0,0.00')
             }</div>
@@ -85,6 +89,11 @@ var InvoiceDetails = React.createClass({
             numeral(this.props.model.get('cost')).format('$0,0.00')
           }</div>
         </div>
+
+        <button className='text' type='button' onClick={this.destroy}>
+          <span className='halflings remove'>Delete Invoice</span>
+        </button>
+
       </section>
       /* jshint ignore: end */
     );
@@ -92,7 +101,7 @@ var InvoiceDetails = React.createClass({
 
   togglePaid: function () {
     this.props.model.save({
-      paid: !this.props.model.get('paid')
+      paid: this.props.model.get('paid') ? 0 : 1
     });
   },
 

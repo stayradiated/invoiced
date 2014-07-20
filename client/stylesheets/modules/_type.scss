@@ -11,24 +11,24 @@ h1, h2, h3, h4, h5 {
   color: $white;
 }
 
-h1 span {
+h1, h1 > span {
   font-size: 30px;
 }
 
-h2 {
+h2, h2 > span {
   font-size: 25px;
 }
 
-h3 {
+h3, h3 > span {
   font-size: 16px;
 }
 
-h4 {
+h4, h4 > span {
   font-size: 13px;
   text-transform: uppercase;
 }
 
-h5 {
+h5, h5 > span {
   font-size: 14px;
   font-weight: 600;
 }

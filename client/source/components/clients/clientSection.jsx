@@ -17,8 +17,7 @@ var ClientSection = React.createClass({
           <h2>Clients</h2>
           <div className='buttons'>
             <button type='button' onClick={this.create}>
-              <span className='halflings plus-sign' />
-              New Client
+              <span className='halflings plus-sign'>New Client</span>
             </button>
           </div>
         </header>

@@ -45,12 +45,12 @@ var Header = React.createClass({
   revert: function () {
     console.log('Reverting rows');
     this.props.model.restore();
-    this.props.model.store();
     this.props.model.get('rows').restore();
-    this.props.model.get('rows').store();
+    this.save();
   },
 
   save: function () {
+    this.props.model.store();
     this.props.model.get('rows').save();
   },
 
