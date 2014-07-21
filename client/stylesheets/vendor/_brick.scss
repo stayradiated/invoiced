@@ -1,18 +1,24 @@
 @font-face {
-  font-family: 'open sans';
+  font-family: 'brick.im';
   font-style: normal;
   font-weight: 400;
-  src: url(../fonts/opensans-400.woff) format('woff');
+  src: url(../fonts/400.woff) format('woff');
 }
 @font-face {
-  font-family: 'open sans';
-  font-style: normal;
-  font-weight: 600;
-  src: url(../fonts/opensans-600.woff) format('woff');
+  font-family: 'brick.im';
+  font-style: italic;
+  font-weight: 400;
+  src: url(../fonts/400i.woff) format('woff');
 }
 @font-face {
-  font-family: 'open sans';
+  font-family: 'brick.im';
   font-style: normal;
   font-weight: 700;
-  src: url(../fonts/opensans-700.woff) format('woff');
+  src: url(../fonts/700.woff) format('woff');
+}
+@font-face {
+  font-family: 'brick.im';
+  font-style: italic;
+  font-weight: 700;
+  src: url(../fonts/700i.woff) format('woff');
 }

@@ -3,8 +3,6 @@
 $meta_height: 40px;
 $customer_height: 50px;
 
-$background: lighten($app_background, 5);
-
 & {
   margin-bottom: 5px;
   cursor: pointer;
@@ -12,16 +10,19 @@ $background: lighten($app_background, 5);
 
 &:hover {
   .meta, .customer {
-    background: darken($background, 10);
+    background: $subtle_light;
   }
 }
 
 &.active {
-  .meta, .customer {
-    background: $silver;
+  .meta {
+    background: $selected_light;
+  }
+  .customer {
+    background: $selected;
   }
   h3, h5, div, span, .halflings::before {
-    color: darken($app_background, 10);
+    color: readable($selected, $foreground, $background) !important;
   }
 }
 
@@ -31,7 +32,11 @@ $background: lighten($app_background, 5);
   justify-content: space-between;
 
   line-height: $meta_height;
-  background: $background;
+  background: $subtle_light;
+
+  span {
+    color: $foreground;
+  }
 
   div {
     padding: 0 15px;
@@ -55,7 +60,7 @@ $background: lighten($app_background, 5);
 }
 
 .customer {
-  background: $background;
+  background: $subtle;
   padding: 10px 20px;
   
   display: flex;
@@ -67,22 +72,19 @@ $background: lighten($app_background, 5);
 
       h3 {
         margin: 0;
+        line-height: 26px;
+        color: $primary;
       }
 
       h5 {
         margin: 0;
+        color: $secondary_dark;
       }
   }
 
   .secondary {
     order: 2;
     flex: 1;
-
-    .email {
-    }
-
-    .date {
-    }
   }
 
   .price {

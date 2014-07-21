@@ -60,13 +60,13 @@ var ClientEditor = React.createClass({
             <span className='halflings remove' />
             Cancel
           </button>
-          <button onClick={this.save}>
+          <button className='primary' onClick={this.save}>
             <span className='halflings ok' />
-            Save Changes
+            Save
           </button>
           <button className='text' onClick={this.destroy}>
             <span className='halflings trash' />
-            Delete Client
+            Destroy
           </button>
         </div>
       </div>

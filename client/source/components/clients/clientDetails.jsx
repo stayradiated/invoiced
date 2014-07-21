@@ -41,8 +41,8 @@ var ClientDetails = React.createClass({
           </p>
         </div>
         <div className='buttons'>
-          <button type='button' onClick={this.editClient}>
-            <span className='halflings pencil'>Edit Client Details</span>
+          <button className='secondary' type='button' onClick={this.editClient}>
+            <span className='halflings pencil'>Edit Details</span>
           </button>
           <button className='primary' type='button'
             onClick={this.createInvoice}>

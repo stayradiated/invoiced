@@ -4,11 +4,11 @@ html {
 }
 
 body {
-  font-family: 'open sans', sans-serif;
+  font-family: 'brick.im', sans-serif;
 }
 
 h1, h2, h3, h4, h5 {
-  color: $white;
+  color: $foreground;
 }
 
 h1, h1 > span {
@@ -36,11 +36,10 @@ h5, h5 > span {
 .number {
   font-weight: 700;
   font-size: 20px;
-  color: $white;
+  color: $foreground;
   letter-spacing: 1px;
 }
 
 div, span {
-  color: $white;
   font-size: 13px;
 }

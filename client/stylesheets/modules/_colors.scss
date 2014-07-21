@@ -1,32 +1,39 @@
 $white: #FFFFFF;
 $black: #000000;
 
-$turquoise: #1ABC9C;
-$green_sea: #16A085;
+// scheme
+// http://pltts.me/palettes/723615
 
-$emerald: #2ECC71;
-$nephritis: #27AE60;
+$scheme: (
+#413E4A,
+#73626E,
+#B38184,
+#F0B49E,
+#F7E4BE
+);
 
-$peter_river: #3498D8;
-$belize_hole: #2980B9;
+$background: nth($scheme, 1);
+$foreground: $white;
 
-$amethyst: #9B59B6;
-$wisteria: #8E44AD;
+$primary: nth($scheme, 5);
+$secondary: nth($scheme, 4);
+$subtle: mix(nth($scheme, 1), nth($scheme, 2), 70);
+$selected: nth($scheme, 3);
 
-$wet_asphalt: #34495E;
-$midnight_blue: #2C3E50;
+$background_dark: darken($background, 5);
+$background_light: lighten($background, 5);
 
-$sun_flower: #F1C40F;
-$orange: #F39C12;
+$foreground_dark: darken($foreground, 30);
+$foreground_light: lighten($foreground, 5);
 
-$carrot: #E67E22;
-$pumpkin: #D35400;
+$primary_dark: darken($primary, 5);
+$primary_light: lighten($primary, 5);
 
-$alizarin: #E74C3C;
-$pomegranate: #C0392B;
+$secondary_dark: darken($secondary, 5);
+$secondary_light: lighten($secondary, 5);
 
-$clouds: #ECF0F1;
-$silver: #BDC3C7;
+$subtle_dark: mix(nth($scheme, 1), nth($scheme, 2), 80);
+$subtle_light: mix(nth($scheme, 1), nth($scheme, 2), 50);
 
-$concrete: #95A5A6;
-$asbestos: #7F8C8D;
+$selected_dark: darken($selected, 5);
+$selected_light: lighten($selected, 5);

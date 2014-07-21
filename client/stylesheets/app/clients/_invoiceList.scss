@@ -15,7 +15,8 @@ header {
   flex-direction: column;
   justify-content: space-between;
 
-  margin-bottom: 20px;
+  margin-bottom: 5px;
+  margin-right: 10px;
 
   .details {
     margin-bottom: 10px;
@@ -29,7 +30,7 @@ header {
       margin: 0;
 
       span {
-        color: $silver;
+        color: $foreground_light;
         font-size: 14px;
         line-height: 21px;
       }
@@ -41,18 +42,27 @@ header {
     }
   }
 
+  .buttons {
+    display: flex;
+
+    button {
+      flex: 1;
+    }
+  }
+
 }
 
 .editor {
   order: 2;
-  background: darken($app_background, 10);
-  padding: 10px 0;
-  margin-bottom: 20px;
+  background: $subtle_dark;
+  padding: 5px 0;
+  margin-bottom: 5px;
+  margin-right: 10px;
 
   .row {
     display: flex;
-    margin-bottom: 10px;
-    padding-right: 10px;
+    margin-bottom: 5px;
+    padding-right: 5px;
   }
 
   label {
@@ -62,6 +72,7 @@ header {
     margin-right: 10px;
     font-weight: 700;
     line-height: 40px;
+    color: $foreground;
   }
 
   input {
@@ -71,28 +82,25 @@ header {
     line-height: 20px;
     padding: 10px 10px;
     color: $black;
-    background: $clouds;
+    background: $subtle;
+    color: $foreground;
+    outline: none;
 
     &:focus {
       background: $white;
-      outline: 2px solid $peter_river;
+      color: $background;
     }
   }
 
   .buttons {
+    padding-right: 5px;
     margin-left: 90px;
-  }
+    display: flex;
 
-  button.destroy {
-    float: right;
-    margin-right: 10px;
+    button {
+      flex: 1;
+    }
 
-    span, span:before {
-      color: $pomegranate;
-    }
-    &:hover {
-      background: $clouds
-    }
   }
 }
 
@@ -101,9 +109,19 @@ header {
   order: 3;
   @extend #scroll;
 
-  section > h3 {
-    padding-bottom: 10px;
-    border-bottom: 5px solid lighten($app_background, 5);
+  section > h5 {
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    line-height: 30px;
+    padding: 0;
+    color: $foreground;
+    background: $subtle;
+  }
+
+  section:first-child > h5 {
+    margin-top: 0;
   }
 
   .invoice-item {

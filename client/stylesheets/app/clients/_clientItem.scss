@@ -2,29 +2,28 @@
 
 $height: 65px;
 $space: 5px;
-$background: lighten($app_background, 5);
 
 & {
   display: flex;
-  background: $background;
+  background: $subtle;
   margin-bottom: $space;
   text-decoration: none;
 }
 
 &:hover {
-  background: darken($background, 10);
+  background: $subtle_light;
 }
 
 &.active {
-  background: $silver;
+  background: $selected;
   h3, p span, .invoices-count {
-    color: darken($app_background, 20);
+    color: readable($selected, $foreground, $background_dark);
   };
 }
 
 &.unpaid {
   .invoices-count {
-    background: $app_background;
+    background: $background;
   }
 }
 
@@ -44,7 +43,7 @@ $background: lighten($app_background, 5);
   }
 
   span {
-    color: $silver;
+    color: $foreground_dark;
     font-size: 13px;
     line-height: 18px;
   }
@@ -60,6 +59,6 @@ $background: lighten($app_background, 5);
   width: $height;
   line-height: $height;
   text-align: center;
-  border-left: $space solid $app_background;
+  border-left: $space solid $background;
 }
 

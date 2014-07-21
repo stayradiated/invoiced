@@ -42,17 +42,17 @@ var InvoiceList = React.createClass({
         /* jshint ignore: end */
       );
       if (invoice.get('paid')) {
-        paid.push(item);
+        paid.unshift(item);
       } else {
-        unpaid.push(item);
+        unpaid.unshift(item);
       }
     });
 
     if (unpaid.length) {
       content.push(
         /* jshint ignore: start */
-        <section key='unpaid'>
-          <h3>Unpaid</h3>
+        <section className='unpaid' key='unpaid'>
+          <h5>Unpaid</h5>
           {unpaid}
         </section>
         /* jshint ignore: end */
@@ -62,8 +62,8 @@ var InvoiceList = React.createClass({
     if (paid.length) {
       content.push(
         /* jshint ignore: start */
-        <section key='paid'>
-          <h3>Paid</h3>
+        <section className='paid' key='paid'>
+          <h5>Paid</h5>
           {paid}
         </section>
         /* jshint ignore: end */

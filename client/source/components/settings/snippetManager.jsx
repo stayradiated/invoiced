@@ -14,7 +14,7 @@ var SnippetManager = React.createClass({
       <div className='snippet-manager'>
         <header>
           <h1>Snippets</h1>
-          <button type='button' onClick={this.create}>
+          <button className='primary' type='button' onClick={this.create}>
             <span className='halflings plus-sign'>New Snippet</span>
           </button>
         </header>

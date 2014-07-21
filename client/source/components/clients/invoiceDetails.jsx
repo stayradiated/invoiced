@@ -39,22 +39,21 @@ var InvoiceDetails = React.createClass({
                 moment(this.props.model.get('date')).format('dddd, Do MMMM YYYY')
               }</span>
             </div>
-            <button className='secondary' type='button' onClick={this.edit}>
-              <span className='halflings pencil'>Edit Invoice</span>
-            </button>
           </section>
 
           <section>
             <div className='date'>
-              <span className='halflings calendar'>Created: {
-                moment(this.props.model.get('createdAt')).calendar()
-              }</span>
-            </div>
-            <div className='date'>
-              <span className='halflings calendar'>Updated: {
+              <label>Last Updated:</label>
+              <span className='halflings pencil'>{
                 moment(this.props.model.get('updatedAt')).calendar()
               }</span>
             </div>
+          </section>
+
+          <section>
+            <button className='secondary' type='button' onClick={this.edit}>
+              <span className='halflings pencil'>Edit Invoice</span>
+            </button>
             <button type='button' onClick={this.togglePaid}>{
               this.props.model.get('paid') ? (
                 <span className='halflings ok'>Unpaid</span>

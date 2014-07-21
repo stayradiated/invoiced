@@ -2,20 +2,18 @@
 
 $details_width: 300px;
 $header_height: 40px;
-$app_background: $white;
 
 & {
   display: flex;
   flex-direction: row;
-  background: $app_background;
 }
 
 h3 {
-  color: $wet_asphalt;
+  color: $primary;
 }
 
 div, span {
-  color: $wet_asphalt;
+  color: $secondary;
 }
 
 

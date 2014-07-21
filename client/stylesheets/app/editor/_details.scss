@@ -1,5 +1,9 @@
 // .page-editor > .details-container > .details
 
+& {
+  border-top: 40px solid $subtle_dark;
+}
+
 h3 {
   margin-top: 30px;
   margin-bottom: 0;
@@ -15,22 +19,22 @@ h3 {
 
 label {
   display: block;
-  color: $peter_river;
+  color: $secondary;
   font-weight: 600;
   line-height: 25px;
 }
 
 input {
   border: 0;
-  background: $clouds;
-  color: $wet_asphalt;
+  background: $subtle;
+  color: $white;
   width: 100%;
   padding: 10px 10px;
   outline: 0;
   box-sizing: border-box;
 
   &:focus {
-    background: $white;
-    outline: 2px solid $peter_river;
+    background: $primary;
+    color: $background;
   }
 }

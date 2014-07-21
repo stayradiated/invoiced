@@ -9,14 +9,6 @@ var AppActions = require('../actions/app');
 var AppConstants = require('../constants/app');
 
 var pages = {
-  SETTINGS_PAGE: {
-    name: 'Settings',
-    icon: 'settings'
-  },
-  EDITOR_PAGE: {
-    name: 'Editor',
-    icon: 'pen'
-  },
   CLIENT_PAGE: {
     name: 'Clients',
     icon: 'group'
@@ -24,6 +16,14 @@ var pages = {
   INVOICES: {
     name: 'Invoices',
     icon: 'notes'
+  },
+  EDITOR_PAGE: {
+    name: 'Editor',
+    icon: 'pen'
+  },
+  SETTINGS_PAGE: {
+    name: 'Settings',
+    icon: 'settings'
   }
 };
 

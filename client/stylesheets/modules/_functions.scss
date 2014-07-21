@@ -1,0 +1,7 @@
+@function readable ($bg, $fg_light, $fg_dark) {
+  @if (lightness($bg) < 50) {
+    @return $fg_light;
+  } @else {
+    @return $fg_dark;
+  }
+}

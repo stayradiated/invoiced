@@ -1,5 +1,11 @@
 header {
 
+  label {
+    display: block;
+    font-weight: bold;
+    line-height: 15px;
+  }
+
   section {
     display: flex;
 
@@ -12,17 +18,9 @@ header {
     }
 
     h3, div, button {
-      background: lighten($app_background, 10);
       line-height: 40px;
       margin: 0 0 5px 5px;
       padding: 0 20px;
-    }
-
-    button {
-      background: $nephritis;
-      &:hover {
-        background: $emerald;
-      }
     }
 
     .customer {

@@ -6,10 +6,11 @@ button {
   font-weight: 700;
   outline: 0;
 
-  background: lighten($app_background, 5);
+  background: $background_dark;
+  color: $foreground;
 
   &:hover {
-    background: lighten($app_background, 10);
+    background: $background;
   }
 
   &:focus {
@@ -21,31 +22,29 @@ button {
   }
 }
 
-button.primary {
-  background: $pomegranate;
-  &:hover {
-    background: $alizarin;
+@mixin button ($bg, $bg_hover) {
+  &, .halflings:before {
+    color: readable($bg, $foreground, $background);
   }
+  background: $bg;
+  &:hover {
+    background: $bg_hover;
+  }
+}
+
+button.primary {
+  @include button($primary, $primary_dark);
 }
 
 button.secondary {
-  background: darken($nephritis, 2);
-  &:hover {
-    background: darken($emerald, 2);
-  }
-}
-
-button.warn {
-  background: darken($amethyst, 2);
-  &:hover {
-    background: darken($wisteria, 2);
-  }
+  @include button($secondary, $secondary_dark);
 }
 
 button.text {
+  color: $foreground;
   background: transparent;
 
   &:hover {
-    background: lighten($app_background, 5);
+    background: $background_light;
   }
 }
