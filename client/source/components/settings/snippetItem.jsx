@@ -26,9 +26,6 @@ var SnippetItem = React.createClass({
       <div className='snippet-item'>
         <div className='shortcut'>{this.props.model.get('shortcut')}</div>
         <div className='content'>{this.props.model.get('content')}</div>
-        <button type='button' onClick={this.edit}>
-          <span className='halflings pencil' />
-        </button>
         <button type='button' onClick={this.destroy}>
           <span className='halflings remove '/>
         </button>

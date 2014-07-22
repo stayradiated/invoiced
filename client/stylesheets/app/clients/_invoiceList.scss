@@ -113,15 +113,12 @@ header {
     text-align: center;
     text-transform: uppercase;
     margin-bottom: 5px;
-    margin-top: 5px;
+    margin-top: 20px;
     line-height: 30px;
     padding: 0;
     color: $foreground;
-    background: $subtle;
-  }
-
-  section:first-child > h5 {
-    margin-top: 0;
+    background: $subtle_dark;
+    color: $secondary;
   }
 
   .invoice-item {

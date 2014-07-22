@@ -40,6 +40,10 @@ button.secondary {
   @include button($secondary, $secondary_dark);
 }
 
+button.subtle {
+  @include button($subtle, $subtle_dark);
+}
+
 button.text {
   color: $foreground;
   background: transparent;

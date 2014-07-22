@@ -3,6 +3,8 @@
 var React = require('react');
 var classSet = require('react/addons').addons.classSet;
 
+var Input = require('../utils/input');
+var AppActions = require('../../actions/app');
 var SnippetModel = require('../../models/snippet');
 
 var SnippetEditItem = React.createClass({
@@ -16,32 +18,29 @@ var SnippetEditItem = React.createClass({
       /* jshint ignore: start */
       <div className='snippet-item edit'>
         <div className='shortcut'>
-          <input
-            ref='shortcut'
-            defaultValue={this.props.model.get('shortcut')}
+          <Input
+            model={this.props.model}
+            key='shortcut'
           />
         </div>
         <div className='content'>
-          <input
-            ref='content'
-            defaultValue={this.props.model.get('content')}
+          <Input
+            model={this.props.model}
+            key='content'
           />
         </div>
-        <button type='button' onClick={this.save}>
-          Save
+        <button type='button' onClick={this.destroy}>
+          <span className='halflings remove '/>
         </button>
       </div>
       /* jshint ignore: end */
     );
   },
 
-  save: function () {
-    this.props.model.save({
-      shortcut: this.refs.shortcut.getDOMNode().value,
-      content: this.refs.content.getDOMNode().value
-    });
+  destroy: function () {
+    AppActions.destroySnippet(this.props.model);
   }
-
+ 
 });
 
 module.exports = SnippetEditItem;

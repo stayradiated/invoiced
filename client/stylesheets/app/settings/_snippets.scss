@@ -27,14 +27,13 @@
 
     div {
       line-height: 40px;
-      padding: 0 20px;
       display: flex;
       color: $white;
     }
 
     .shortcut {
       order: 1;
-      width: 100px;
+      width: 120px;
       background: $background_dark;
       margin-right: 5px;
       font-weight: bold;
@@ -58,18 +57,17 @@
       }
     }
 
-    &.edit {
-      button {
-        width: 85px;
-      }
-    }
-
     input {
       flex: 1;
       background: transparent;
       border: 0;
-      padding: 0;
       outline: 0;
+      padding: 0 20px;
+
+      &:focus {
+        color: $background;
+        background: $primary;
+      }
     }
 
   }

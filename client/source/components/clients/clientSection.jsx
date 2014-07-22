@@ -14,7 +14,10 @@ var ClientSection = React.createClass({
       /* jshint ignore: start */
       <section className='client'>
         <header>
-          <h2>Clients</h2>
+          <h2>
+            <span className='glyphicons search' />
+            Clients
+          </h2>
           <div className='buttons'>
             <button className='primary' type='button' onClick={this.create}>
               <span className='halflings plus-sign'>New Client</span>

@@ -6,27 +6,37 @@ header {
     line-height: 15px;
   }
 
-  section {
-    display: flex;
+}
 
-    h3 {
-      width: 50px;
+section {
+  display: flex;
+
+  h3, div {
+    background: $subtle;
+    color: $foreground;
+  }
+
+  h3 {
+    width: 50px;
+  }
+
+  .date {
+    flex: 1;
+  }
+
+  h3, div, button {
+    line-height: 40px;
+    margin: 0 0 5px 5px;
+    padding: 0 20px;
+
+    &:first-child {
+      margin-left: 0;
     }
+  }
 
-    .date {
-      flex: 1;
-    }
-
-    h3, div, button {
-      line-height: 40px;
-      margin: 0 0 5px 5px;
-      padding: 0 20px;
-    }
-
-    .customer {
-      flex: 1;
-    }
-
+  .customer {
+    flex: 1;
   }
 
 }
+

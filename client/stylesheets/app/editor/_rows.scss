@@ -10,8 +10,8 @@ $padding: 10px;
   line-height: 20px;
 
    span.bullet {
-    background: $primary;
-    color: $background;
+    background: $subtle;
+    color: $primary;
     padding: 10px 10px;
     box-sizing: border-box;
     width: 40px;
@@ -25,14 +25,13 @@ $padding: 10px;
     border: 0;
     outline: 0;
     padding: $padding - 2px;
-    border: 2px solid $primary;
+    border: 2px solid $subtle;
     font-size: 14px;
-    background: $primary;
-    color: $background;
+    background: $subtle;
+    color: $foreground;
 
     &:focus {
-      background: $secondary;
-      border-color: $secondary;
+      border-color: $selected;
     }
   }
 
@@ -66,7 +65,6 @@ $padding: 10px;
 .row.date {
   margin-top: 30px;
   padding-bottom: 2px;
-  border-bottom: 4px solid $primary;
   justify-content: space-between;
 
   span {
@@ -80,6 +78,7 @@ $padding: 10px;
   input {
     flex: none;
     background: none;
+    color: $foreground;
     border-color: transparent;
     padding: 0 0 0 10px;
   }

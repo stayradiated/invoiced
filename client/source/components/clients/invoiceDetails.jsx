@@ -9,6 +9,7 @@ var AppActions = require('../../actions/app');
 var InvoiceStore = require('../../stores/invoice');
 var InvoiceModel = require('../../models/invoice');
 var InvoiceRows = require('./invoiceRows');
+var TogglePaidBtn = require('./togglePaidBtn');
 
 var InvoiceDetails = React.createClass({
 
@@ -36,31 +37,16 @@ var InvoiceDetails = React.createClass({
             <h3>#{this.props.model.get('number')}</h3>
             <div className='date'>
               <span className='halflings calendar'>{
-                moment(this.props.model.get('date')).format('dddd, Do MMMM YYYY')
+                moment(this.props.model.get('date')).format('Do MMMM YYYY')
               }</span>
             </div>
-          </section>
-
-          <section>
-            <div className='date'>
-              <label>Last Updated:</label>
-              <span className='halflings pencil'>{
-                moment(this.props.model.get('updatedAt')).calendar()
-              }</span>
-            </div>
+            <TogglePaidBtn model={this.props.model} />
           </section>
 
           <section>
             <button className='secondary' type='button' onClick={this.edit}>
               <span className='halflings pencil'>Edit Invoice</span>
             </button>
-            <button type='button' onClick={this.togglePaid}>{
-              this.props.model.get('paid') ? (
-                <span className='halflings ok'>Unpaid</span>
-              ) : (
-                <span className='halflings ok'>Paid</span>
-              )
-            }</button>
           </section>
 
           <div className='customer'>
@@ -90,6 +76,18 @@ var InvoiceDetails = React.createClass({
           }</div>
         </div>
 
+        <section>
+          <div className='date'>
+            <label>Created:</label>
+            {moment(this.props.model.get('createdAt')).calendar()}
+          </div>
+          <div className='date'>
+            <label>Last Updated:</label>
+            {moment(this.props.model.get('updatedAt')).calendar()}
+          </div>
+        </section>
+
+
         <button className='text' type='button' onClick={this.destroy}>
           <span className='halflings remove'>Delete Invoice</span>
         </button>
@@ -97,12 +95,6 @@ var InvoiceDetails = React.createClass({
       </section>
       /* jshint ignore: end */
     );
-  },
-
-  togglePaid: function () {
-    this.props.model.save({
-      paid: this.props.model.get('paid') ? 0 : 1
-    });
   },
 
   destroy: function () {
