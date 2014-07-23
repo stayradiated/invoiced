@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('underscore');
+var _ = require('lodash');
 var rest = require('./rest');
 
 var Route = function (options) {
@@ -68,6 +68,10 @@ _.extend(Route.prototype, {
     };
 
     this.routes.push(['get', this.root + '/:id/' + table, fn]);
+  },
+
+  addRoute: function (method, path, fn) {
+    this.routes.push([method, path, fn]);
   },
 
   listen: function (app) {

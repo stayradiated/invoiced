@@ -1,4 +1,4 @@
-var _ = require('underscore');
+var _ = require('lodash');
 
 var rest = function (res) {
   return _.partial(rest.end, res);
