@@ -63,6 +63,7 @@ var docx = function (invoice) {
 
   var jobDate = '';
   var rowDate = '';
+  var itemIndex = 0;
 
   return Promise.all([
     invoice.related('rows').fetch(),
@@ -79,14 +80,15 @@ var docx = function (invoice) {
       console.log(JSON.stringify(json, null, 2));
 
       switch (json.type) {
-        case 1: // HEADING
-          template = templates.heading;
+        case 1: // ITEM
+          template = templates.item;
+          itemIndex++;
           break;
         case 2: // BULLET
           template = templates.bullet;
           break;
         case 3: // ITEM
-          template = templates.item;
+          template = templates.heading;
           break;
         case 4: // DATE
           // The first job date becomes the job date
@@ -98,7 +100,7 @@ var docx = function (invoice) {
 
       if (template) {
         var output = utils.template(template, {
-          number: '0',
+          number: itemIndex.toString(),
           jobDate: rowDate,
           name: json.content,
           cost: '0'
