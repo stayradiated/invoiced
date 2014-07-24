@@ -3,6 +3,7 @@
 var React = require('react');
 
 var Header = require('./header');
+var Modal = require('./modal');
 var ClientsPage = require('./pages/clients');
 var EditorPage = require('./pages/editor');
 var SettingsPage = require('./pages/settings');
@@ -48,6 +49,7 @@ var App = React.createClass({
       /* jshint ignore: start */
       <div className='app'>
         <Header />
+        <Modal />
         <div className='page-container'>
           {page}
         </div>

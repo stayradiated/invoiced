@@ -35,11 +35,18 @@ var Header = React.createClass({
             Save
           </li>
           <li>Templates</li>
-          <li>Generate</li>
+          <li onClick={this.export}>
+            <span className='halflings print' />
+            Export
+          </li>
         </ul>
       </header>
       /* jshint ignore: end */
     );
+  },
+
+  export: function () {
+    AppActions.exportInvoice(this.props.model);
   },
 
   revert: function () {

@@ -7,12 +7,7 @@ var ClientItem = require('./clientItem');
 var ClientStore = require('../../stores/client');
 var AppActions = require('../../actions/app');
 var ClientCollection = require('../../models/clients');
-
-var getState = function () {
-  return {
-    active: ClientStore.get('active')
-  };
-};
+var SearchBox = require('../utils/searchBox');
 
 var ClientList = React.createClass({
 
@@ -32,18 +27,42 @@ var ClientList = React.createClass({
     collection: React.PropTypes.instanceOf(ClientCollection).isRequired
   },
 
-  getInitialState: getState,
+  getInitialState: function () {
+    return {
+      active: ClientStore.get('active'),
+      filter: ''
+    };
+  },
 
   render: function () {
+
+    var clients = this.props.collection.map(function (client) {
+      if (client.matchFilter(this.state.filter)) {
+        /* jshint ignore: start */
+        return <ClientItem key={client.cid} model={client} />;
+        /* jshint ignore: end */
+      }
+    }, this);
+
+    clients = _.reject(clients, _.isUndefined);
+
     return (
       /* jshint ignore: start */
-      <div className='client-list'>{
-        this.props.collection.map(function (client) {
-          return <ClientItem key={client.cid} model={client} />
-        }, this)
-      }</div>
+      <div className='client-list'>
+        <SearchBox 
+          collection={ClientStore.get('collection')}
+          onChange={this.filterBy}
+        />
+        <div className='clients'>{clients}</div>
+      </div>
       /* jshint ignore: end */
     );
+  },
+
+  filterBy: function (filter) {
+    this.setState({
+      filter: filter
+    });
   },
 
   openClient: function (client) {
@@ -51,7 +70,9 @@ var ClientList = React.createClass({
   },
 
   _onChange: function () {
-    this.setState(getState());
+    this.setState({
+      active: ClientStore.get('collection')
+    });
   }
 
 });

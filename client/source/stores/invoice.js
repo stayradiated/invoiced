@@ -1,10 +1,13 @@
 'use strict';
 
+var $ = require('jquery');
 var Backbone = require('backbone');
 
+var AppActions = require('../actions/app');
 var AppDispatcher = require('../dispatchers/app');
 var AppConstants = require('../constants/app');
 var InvoiceCollection = require('../models/invoices');
+var config = require('../../package').config;
 
 var InvoiceStore = Backbone.Model.extend({
 
@@ -43,7 +46,9 @@ AppDispatcher.register(function (payload) {
       break;
 
     case AppConstants.DESTROY_INVOICE:
-      action.invoice.destroy();
+      AppActions.showModal('Are you sure you want to destroy that invoice?',
+        action.invoice.destroy.bind(action.invoice)
+      );
       break;
 
     case AppConstants.CREATE_INVOICE:
@@ -59,10 +64,14 @@ AppDispatcher.register(function (payload) {
       break;
 
     case AppConstants.EDIT_INVOICE:
-      console.log('backing up rows');
       action.invoice.store();
       action.invoice.get('rows').store();
       invoiceStore.set('editing', action.invoice);
+      break;
+
+    case AppConstants.EXPORT_INVOICE:
+      console.log('doing stuff');
+      $.get(config.root + '/docx/' + action.invoice.get('id'));
       break;
 
   }

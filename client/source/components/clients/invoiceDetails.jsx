@@ -47,6 +47,9 @@ var InvoiceDetails = React.createClass({
             <button className='secondary' type='button' onClick={this.edit}>
               <span className='halflings pencil'>Edit Invoice</span>
             </button>
+            <button className='secondary' type='button' onClick={this.export}>
+              <span className='halflings print'>Open in Word</span>
+            </button>
           </section>
 
           <div className='customer'>
@@ -88,13 +91,17 @@ var InvoiceDetails = React.createClass({
         </section>
 
 
-        <button className='text' type='button' onClick={this.destroy}>
+        <button className='subtle' type='button' onClick={this.destroy}>
           <span className='halflings remove'>Delete Invoice</span>
         </button>
 
       </section>
       /* jshint ignore: end */
     );
+  },
+
+  export: function () {
+    AppActions.exportInvoice(this.props.model);
   },
 
   destroy: function () {

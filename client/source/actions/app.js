@@ -106,6 +106,24 @@ var AppActions = {
       actionType: AppConstants.DESTROY_SNIPPET,
       snippet: snippet
     });
+  },
+
+  /* MISC */
+
+  showModal: function (message, onSuccess, onFail) {
+    return AppDispatcher.handleViewAction({
+      actionType: AppConstants.SHOW_MODAL,
+      message: message,
+      onSuccess: onSuccess,
+      onFail: onFail
+    });
+  },
+
+  exportInvoice: function (invoice) {
+    return AppDispatcher.handleViewAction({
+      actionType: AppConstants.EXPORT_INVOICE,
+      invoice: invoice
+    });
   }
 
 };

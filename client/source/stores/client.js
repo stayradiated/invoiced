@@ -2,6 +2,7 @@
 
 var Backbone = require('backbone');
 
+var AppActions = require('../actions/app');
 var AppDispatcher = require('../dispatchers/app');
 var AppConstants = require('../constants/app');
 var ClientCollection = require('../models/clients');
@@ -50,7 +51,9 @@ AppDispatcher.register(function (payload) {
       break;
 
     case AppConstants.DESTROY_CLIENT:
-      action.client.destroy();
+      AppActions.showModal('Are you sure you want to destroy that client?',
+        action.client.destroy.bind(action.client)
+      );
       break;
 
   }

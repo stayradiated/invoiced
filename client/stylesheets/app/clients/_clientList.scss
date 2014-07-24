@@ -27,9 +27,40 @@ header {
 .client-list {
   order: 2;
   flex: 1;
-  @extend #scroll;
+
+  display: flex;
+  flex-direction: column;
+
+  .clients {
+    flex: 1;
+    @extend #scroll;
+  }
 }
 
 .client-item {
   @import 'clientItem';
+}
+
+.search-box {
+  height: 40px;
+  background: $subtle;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  display: flex;
+
+  .halflings:before {
+    padding: 11px 14px;
+  }
+
+  input {
+    flex: 1;
+    margin-left: 20px;
+    background: none;
+    outline: 0;
+    border: 0;
+    line-height: 20px;
+    padding: 10px 0;
+    color: $foreground;
+  }
+
 }

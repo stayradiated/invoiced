@@ -36,6 +36,10 @@ var Client = Backbone.RelationalModel.extend({
     json.createdAt = new Date(json.createdAt);
     json.updatedAt = new Date(json.updatedAt);
     return json;
+  },
+
+  matchFilter: function (filter) {
+    return this.get('name').toLowerCase().indexOf(filter.toLowerCase()) >= 0;
   }
 
 });

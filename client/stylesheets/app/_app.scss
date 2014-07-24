@@ -21,6 +21,10 @@ body {
   & > header {
     @import 'header';
   }
+
+  & > .modal {
+    @import 'modal';
+  }
 }
 
 .page-container {

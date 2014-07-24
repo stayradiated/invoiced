@@ -21,6 +21,9 @@ module.exports = constants({
   DESTROY_CLIENT:  null,
   DESTROY_INVOICE: null,
   DESTROY_ROW:     null,
-  DESTROY_SNIPPET: null
+  DESTROY_SNIPPET: null,
+
+  SHOW_MODAL:      null,
+  EXPORT_INVOICE:  null
 
 });

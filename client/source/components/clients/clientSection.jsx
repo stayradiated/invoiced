@@ -15,16 +15,17 @@ var ClientSection = React.createClass({
       <section className='client'>
         <header>
           <h2>
-            <span className='glyphicons search' />
             Clients
           </h2>
           <div className='buttons'>
-            <button className='primary' type='button' onClick={this.create}>
+            <button type='button' onClick={this.create}>
               <span className='halflings plus-sign'>New Client</span>
             </button>
           </div>
         </header>
-        <ClientList collection={ClientStore.get('collection')} />
+        <ClientList
+          collection={ClientStore.get('collection')}
+        />
       </section>
       /* jshint ignore: end */
     );
