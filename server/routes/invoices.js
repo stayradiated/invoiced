@@ -22,8 +22,8 @@ invoices.addRoute('get', '/docx/:id', function (req, res) {
   if (! invoice) return rest.fail(res);
 
   docx(invoice)
-  .then(function () {
-    res.end();
+  .then(function (data) {
+    rest.end(res, data);
   })
   .catch(function (err) {
     rest.fail(res, err);

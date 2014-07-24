@@ -9,7 +9,8 @@ rest.catch = function (res) {
 };
 
 rest.end = function (res, data) {
-  var json = data.toJSON({ shallow: true });
+  var json = data.hasOwnProperty('toJSON') ?
+    data.toJSON({ shallow: true }) : data;
   res.header({'Content-Type': 'application/json'});
   res.end(JSON.stringify(json));
 };

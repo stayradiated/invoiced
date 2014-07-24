@@ -68,6 +68,18 @@ var docx = function (invoice) {
   var rowDate = '';
   var itemIndex = 0;
 
+  var filename = sanitize([
+    '#',
+    invoice.get('id'),
+    ' - ',
+    invoice.get('customer'),
+    ' - ',
+    invoice.get('site'),
+    '.docx'
+  ].join(''));
+
+  var destPath = __dirname + '/../' + config.export + '/' + filename;
+
   return Promise.all([
     invoice.related('rows').fetch(),
     invoice.related('client').fetch()
@@ -79,8 +91,6 @@ var docx = function (invoice) {
     rows = rows.map(function (row) {
       var template;
       var json = row.toJSON();
-
-      console.log(JSON.stringify(json, null, 2));
 
       switch (json.type) {
         case 1: // ITEM
@@ -95,7 +105,7 @@ var docx = function (invoice) {
           break;
         case 4: // DATE
           // The first job date becomes the job date
-          rowDate = moment(json.content).format('DD/MM/YY');
+          rowDate = moment(json.content).format('DD/MM/YYYY');
           if (! jobDate.length) jobDate = rowDate;
           break;
       }
@@ -144,26 +154,18 @@ var docx = function (invoice) {
     return fs.writeFileAsync(docxFile, output);
   })
   .then(function () {
-    var filename = sanitize([
-      '#',
-      invoice.get('id'),
-      ' - ',
-      invoice.get('customer'),
-      ' - ',
-      invoice.get('site'),
-      '.docx'
-    ].join(''));
-
-    var path = __dirname + '/../' + config.export + '/' + filename;
-
     var zipStream = zipFolder(docxDir);
-    var fsStream = fs.createWriteStream(path);
+    var fsStream = fs.createWriteStream(destPath);
 
-    return zipStream.pipe(fsStream);
-  })
-  .then(function () {
-    console.log('finished');
-    exec('open .');
+    zipStream.on('end', function () {
+      exec('open "' + destPath + '"');
+    });
+
+    zipStream.pipe(fsStream);
+
+    return {
+      path: destPath
+    };
   });
 
 };
