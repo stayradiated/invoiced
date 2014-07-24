@@ -5,15 +5,15 @@ $black: #000000;
 // http://pltts.me/palettes/723615
 
 $scheme: (
-#413E4A,
-#73626E,
-#B38184,
-#F0B49E,
-#F7E4BE
+#F5F4D7,
+#E0DFB1,
+#A5A36C,
+#535233,
+#951F2B
 );
 
 $background: nth($scheme, 1);
-$foreground: $white;
+$foreground: readable($background, $white, $black);
 
 $primary: nth($scheme, 5);
 $secondary: nth($scheme, 4);

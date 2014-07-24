@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  color: $white;
+  color: $foreground;
   background: $subtle_dark;
 }
 
@@ -23,7 +23,7 @@ li {
   height: 40px;
 
   span, span:before {
-    color: $white;
+    color: $foreground;
   }
 
   &:hover {

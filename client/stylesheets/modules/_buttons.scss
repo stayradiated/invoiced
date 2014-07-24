@@ -7,7 +7,7 @@ button {
   outline: 0;
 
   background: $background_dark;
-  color: $foreground;
+  color: readable($background_dark, $foreground, $background);
 
   &:hover {
     background: $background;

@@ -133,7 +133,7 @@ var docx = function (invoice) {
 
       invoiceId: invoice.get('id').toString().toUpperCase(),
       email: invoice.get('email'),
-      invoiceDate: moment(invoice.get('date')).format('DD MMMM YYYY').toUpperCase(),
+      invoiceDate: moment(invoice.get('date')).format('DD MMMM YYYY'),
       invoiceDue: moment(invoice.get('date')).add('days', 7).format('DD MMMM YYYY').toUpperCase(),
 
       rows: rows.join(''),

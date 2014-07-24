@@ -1,7 +1,16 @@
-@function readable ($bg, $fg_light, $fg_dark) {
-  @if (lightness($bg) < 50) {
-    @return $fg_light;
+@function readable ($bg, $fg_a, $fg_b) {
+
+  @if(lightness($fg_a) < lightness($fg_b)) {
+    $dark: $fg_a;
+    $light: $fg_b;
   } @else {
-    @return $fg_dark;
+    $dark: $fg_b;
+    $light: $fg_a;
+  }
+
+  @if (lightness($bg) < 50) {
+    @return $light;
+  } @else {
+    @return $dark;
   }
 }
