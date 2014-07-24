@@ -20,12 +20,13 @@ invoices.addRelation('client');
 invoices.addRoute('get', '/docx/:id', function (req, res) {
   var invoice = invoices.collection.get(req.params.id);
   if (! invoice) return rest.fail(res);
+
   docx(invoice)
-  .then(function (data) {
-    data.pipe(res);
+  .then(function () {
+    res.end();
   })
   .catch(function (err) {
-    console.log('error',  err);
+    rest.fail(res, err);
   });
 });
 

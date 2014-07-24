@@ -3,6 +3,9 @@ var Promise = require('bluebird');
 var fs = Promise.promisifyAll(require('fs'));
 var zipFolder = require('./zip');
 var moment = require('moment');
+var config = require('../package').config;
+var exec = require('child_process').exec;
+var sanitize = require('sanitize-filename');
 
 // Where template files are stored
 var templateDir = __dirname + '/../../template/';
@@ -141,7 +144,26 @@ var docx = function (invoice) {
     return fs.writeFileAsync(docxFile, output);
   })
   .then(function () {
-    return zipFolder(docxDir);
+    var filename = sanitize([
+      '#',
+      invoice.get('id'),
+      ' - ',
+      invoice.get('customer'),
+      ' - ',
+      invoice.get('site'),
+      '.docx'
+    ].join(''));
+
+    var path = __dirname + '/../' + config.export + '/' + filename;
+
+    var zipStream = zipFolder(docxDir);
+    var fsStream = fs.createWriteStream(path);
+
+    return zipStream.pipe(fsStream);
+  })
+  .then(function () {
+    console.log('finished');
+    exec('open .');
   });
 
 };
