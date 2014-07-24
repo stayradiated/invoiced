@@ -69,8 +69,7 @@ var docx = function (invoice) {
   var itemIndex = 0;
 
   var filename = sanitize([
-    '#',
-    invoice.get('id'),
+    invoice.get('number'),
     ' - ',
     invoice.get('customer'),
     ' - ',
@@ -131,7 +130,7 @@ var docx = function (invoice) {
       clientCity: client.get('city').toUpperCase(),
       clientPostcode: client.get('postcode').toUpperCase(),
 
-      invoiceId: invoice.get('id').toString().toUpperCase(),
+      invoiceId: invoice.get('number').toString().toUpperCase(),
       email: invoice.get('email'),
       invoiceDate: moment(invoice.get('date')).format('DD MMMM YYYY'),
       invoiceDue: moment(invoice.get('date')).add('days', 7).format('DD MMMM YYYY').toUpperCase(),

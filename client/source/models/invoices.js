@@ -11,7 +11,7 @@ var Invoices = Backbone.Collection.extend({
 
   url: config.root + '/invoices',
 
-  comparator: 'id'
+  comparator: 'number'
 
 });
 
