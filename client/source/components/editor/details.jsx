@@ -22,7 +22,7 @@ var Details = React.createClass({
           model={this.props.model}
           label='Invoice ID'
           key='number'
-          type='number'
+          type='text'
         />
 
         <DetailsInput
@@ -59,21 +59,21 @@ var Details = React.createClass({
           model={this.props.model}
           label='Airmover Hire'
           key='airmover'
-          type='number'
+          type='text'
         />
 
         <DetailsInput
           model={this.props.model}
           label='Labour'
           key='labour'
-          type='number'
+          type='text'
         />
 
         <DetailsInput
           model={this.props.model}
           label='Total Cost'
           key='cost'
-          type='number'
+          type='text'
         />
 
       </div>
