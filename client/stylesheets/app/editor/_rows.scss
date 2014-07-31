@@ -11,7 +11,7 @@ $padding: 10px;
 
    span.bullet {
     background: $subtle;
-    color: $primary;
+    color: $foreground;
     padding: 10px 10px;
     box-sizing: border-box;
     width: 40px;
@@ -103,7 +103,7 @@ $padding: 10px;
 .row.bullet {
   span.bullet {
     background: none;
-    color: $primary;
+    color: $foreground;
     font-size: 20px;
   }
 }

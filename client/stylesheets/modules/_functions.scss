@@ -8,7 +8,7 @@
     $light: $fg_a;
   }
 
-  @if (lightness($bg) < 50) {
+  @if (lightness($bg) < 60) {
     @return $light;
   } @else {
     @return $dark;

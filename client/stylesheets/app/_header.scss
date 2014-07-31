@@ -1,16 +1,23 @@
+$color: readable($primary, $foreground, $background);
+
 & {
   height: $header_height;
   line-height: $header_height;
-  background: $background_dark;
+  background: $primary;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.glyphicons:before {
+  color: $color;
 }
 
 h1 {
   order: 1;
   padding: 0;
   margin: 0 0 0 20px;
+  color: $color;
 
   .glyphicons {
     margin-left: 14px;
@@ -35,18 +42,18 @@ nav {
     text-align: center;
 
     span {
-      color: $foreground;
+      color: $color;
       font-size: 16px;
       font-weight: 700;
     }
 
     &:hover {
-      background: $background;
+      background: $primary_dark;
     }
 
     &.active {
-      background: $background;
-      border-bottom: 5px solid $selected;
+      background: $primary_light;
+      border-bottom: 5px solid $background;
     }
   }
 

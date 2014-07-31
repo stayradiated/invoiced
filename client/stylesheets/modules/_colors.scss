@@ -5,11 +5,11 @@ $black: #000000;
 // http://pltts.me/palettes/723615
 
 $scheme: (
-#F5F4D7,
-#E0DFB1,
-#A5A36C,
-#535233,
-#951F2B
+#F4FAED,
+#def5d5,
+#9CECB7,
+#40C0CB,
+#00A8C6,
 );
 
 $background: nth($scheme, 1);
@@ -17,7 +17,7 @@ $foreground: readable($background, $white, $black);
 
 $primary: nth($scheme, 5);
 $secondary: nth($scheme, 4);
-$subtle: mix(nth($scheme, 1), nth($scheme, 2), 70);
+$subtle: nth($scheme, 2);
 $selected: nth($scheme, 3);
 
 $background_dark: darken($background, 5);
