@@ -99,8 +99,9 @@ var docx = function (invoice) {
         case 2: // BULLET
           template = templates.bullet;
           break;
-        case 3: // ITEM
+        case 3: // HEADING
           template = templates.heading;
+          json.content = json.content.toUpperCase();
           break;
         case 4: // DATE
           // The first job date becomes the job date
