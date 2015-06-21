@@ -36,7 +36,9 @@ div, span {
   flex-direction: column;
 
   & > header {
+    flex: 0 0 auto;
     order: 1;
+
     height: $header_height;
     line-height: $header_height;
 

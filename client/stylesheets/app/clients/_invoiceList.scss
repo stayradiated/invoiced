@@ -10,6 +10,7 @@ $edit_height: $height + 140px;
 
 header {
   order: 1;
+  flex: 0 0 auto;
 
   display: flex;
   flex-direction: column;
