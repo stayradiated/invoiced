@@ -23,7 +23,7 @@ var SnippetStore = Backbone.Model.extend({
 
   expand: function (shortcut) {
     return this.get('collection').findWhere({
-      shortcut: shortcut
+      shortcut: shortcut.toLowerCase(),
     });
   },
 
