@@ -12,6 +12,7 @@ header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex: 0 0 auto;
 
   h2 {
     margin: 0;
@@ -47,6 +48,7 @@ header {
   margin-right: 10px;
   margin-bottom: 5px;
   display: flex;
+  flex: 0 0 auto;
 
   .halflings:before {
     padding: 11px 14px;

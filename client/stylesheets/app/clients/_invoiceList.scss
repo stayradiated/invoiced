@@ -87,7 +87,7 @@ header {
     outline: none;
 
     &:focus {
-      background: $foreground;
+      background: $secondary;
       color: $background;
     }
   }

@@ -11,7 +11,7 @@ var moment = require('moment');
 Backbone.$ = $;
 window.React = React; // trigger React Dev Tools
 require('bluebird'); // fixes EMFILE error on OSX
-moment.lang('en-NZ'); // set language for moment
+moment.locale('en-NZ'); // set language for moment
 
 var App = require('./components/app');
 

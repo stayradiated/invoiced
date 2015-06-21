@@ -7,6 +7,10 @@ $color: readable($primary, $foreground, $background);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  
+  // fix issue with chrome v43
+  // http://stackoverflow.com/a/22919910
+  flex: 0 0 auto;
 }
 
 .glyphicons:before {
