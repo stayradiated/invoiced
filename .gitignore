@@ -1,5 +1,6 @@
 /template
 /*.app
+.DS_Store
 
 node_modules
 .sass-cache
@@ -8,3 +9,5 @@ node_modules
 /client/dist/css/*
 
 /server/docs/*.docx
+/server/docs/*.doc
+/server/docs/*.pdf

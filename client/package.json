@@ -4,6 +4,9 @@
   "description": "Invoice editor and manager",
   "private": true,
   "main": "dist/app.html",
+  "scripts": {
+    "gulp": "gulp app"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/stayradiated/invoiced"
@@ -45,6 +48,6 @@
     "width": 1235
   },
   "config": {
-    "root": "http://192.168.1.100:8080"
+    "root": "http://localhost:8080"
   }
 }

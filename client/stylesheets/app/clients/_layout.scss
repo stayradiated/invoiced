@@ -3,6 +3,7 @@
 $padding: 20px;
 
 & {
+  min-height: 0;
   display: flex;
   padding: $padding;
   flex-direction: row;
@@ -14,12 +15,14 @@ $padding: 20px;
 }
 
 section.client {
+  min-height: 0;
   flex: 1;
   order: 1;
   @import 'clientList';
 }
 
 section.invoice {
+  min-height: 0;
   flex: 1;
   order: 2;
   padding-left: $padding;
@@ -27,6 +30,7 @@ section.invoice {
 }
 
 section.invoice-details {
+  min-height: 0;
   flex: 1;
   order: 3;
   padding-left: $padding;

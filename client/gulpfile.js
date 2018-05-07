@@ -3,7 +3,7 @@ var brfs = require('gulp-brfs');
 var source = require('vinyl-source-stream');
 var connect = require('gulp-connect');
 var react = require('gulp-react');
-var sass = require('gulp-sass');
+// var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var reactify = require('reactify');
 var streamify = require('gulp-streamify');
@@ -19,7 +19,15 @@ gulp.task('default', ['app', 'stylesheets'], function () {
     port: 8000,
     livereload: true
   });
-}); 
+});
+
+gulp.task('server', function () {
+  return connect.server({
+    root: ['dist'],
+    port: 8000,
+    livereload: true
+  });
+})
 
 gulp.task('app', function () {
   var bundler = watchify({ extensions: '.jsx' });

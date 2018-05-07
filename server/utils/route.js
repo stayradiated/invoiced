@@ -30,6 +30,10 @@ _.extend(Route.prototype, {
   create: function (req, res) {
     var json = _.pick(req.body, this.columns);
 
+    if (json.hasOwnProperty('date')) {
+      json.date = new Date(json.date).toISOString().split('T')[0]
+    }
+
     this.collection.create(json)
     .then(rest(res))
     .catch(rest.catch(res));
