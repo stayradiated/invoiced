@@ -1,8 +1,0 @@
-<li class="{{ type }}">
-  {% if type == 'section' %}<label>Job Date</label>{% endif %}
-  {% if type == 'number' %}<label>{{ number }}</label>{% endif %}
-  <input type="{% if type == 'section' %}date{% else %}text{% endif %}" value="{{ name }}" />
-  <div class="delete"></div>
-  <div class="handle"></div>
-  <div class="style"></div>
-</li>

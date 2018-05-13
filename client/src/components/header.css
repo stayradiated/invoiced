@@ -1,0 +1,64 @@
+/* $color: readable($primary, $foreground, $background); */
+
+.header {
+  height: var(--header-height);
+  line-height: var(--header-height);
+  background: var(--primary);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  
+  /* fix issue with chrome v43 */
+  /* http://stackoverflow.com/a/22919910 */
+  flex: 0 0 auto;
+}
+
+.glyphicons:before {
+  color: var(--color);
+}
+
+.header h1 {
+  order: 1;
+  padding: 0;
+  margin: 0 0 0 20px;
+  color: var(--color);
+
+  .glyphicons {
+    margin-left: 14px;
+  }
+}
+
+.header nav {
+  flex: 1;
+  order: 2;
+  max-width: 600px;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.header-item {
+  flex: 1;
+
+  text-decoration: none;
+  cursor: pointer;
+
+  padding: 0 25px;
+  text-align: center;
+}
+
+.header-item:hover {
+  background: var(--primary-dark);
+}
+
+.header-item.active {
+  background: var(--primary-light);
+  border-bottom: 5px solid var(--background);
+}
+
+.header-item .label {
+  color: var(--color);
+  font-size: 16px;
+  font-weight: 700;
+}
+

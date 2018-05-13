@@ -1,0 +1,50 @@
+.ClientEditor-container {
+  order: 2;
+  background: var(--subtle_dark);
+  padding: 5px 0;
+  margin-bottom: 5px;
+  margin-right: 10px;
+}
+
+.ClientEditor-row {
+  display: flex;
+  margin-bottom: 5px;
+  padding-right: 5px;
+}
+
+.ClientEditor-label {
+  display: block;
+  width: 80px;
+  text-align: right;
+  margin-right: 10px;
+  font-weight: 700;
+  line-height: 40px;
+  color: var(--foreground);
+}
+
+.ClientEditor-input {
+  flex: 1;
+  display: block;
+  border: 0;
+  line-height: 20px;
+  padding: 10px 10px;
+  color: var(--black);
+  background: var(--subtle);
+  color: var(--foreground);
+  outline: none;
+}
+
+.ClientEditor-input:focus {
+  background: var(--secondary);
+  color: var(--background);
+}
+
+.ClientEditor-buttons {
+  padding-right: 5px;
+  margin-left: 90px;
+  display: flex;
+}
+
+.ClientEditor-button {
+  flex: 1;
+}

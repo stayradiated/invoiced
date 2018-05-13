@@ -17,5 +17,6 @@ const knex = new Knex({
 })
 
 const bookshelf = new Bookshelf(knex)
+bookshelf.plugin('pagination')
 
 module.exports = bookshelf

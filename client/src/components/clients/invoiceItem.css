@@ -1,0 +1,77 @@
+.InvoiceItem {
+  --meta_height: 40px;
+  --customer_height: 50px;
+
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.InvoiceItem:hover .InvoiceItem-metadata,
+.InvoiceItem:hover .InvoiceItem-customer {
+  background: var(--subtle_light);
+}
+
+.InvoiceItem.active .InvoiceItem-metadata {
+  background: var(--selected_light);
+}
+.InvoiceItem.active .InvoiceItem-customer {
+  background: var(--selected);
+}
+
+.InvoiceItem-metadata {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  line-height: var(--meta_height);
+  background: var(--subtle_light);
+}
+
+.InvoiceItem-value {
+  padding: 0 15px;
+}
+
+.InvoiceItem-title {
+  order: 1;
+  margin: 0;
+  padding: 0 15px;
+}
+
+.InvoiceItem-created {
+  order: 2;
+  flex: 1;
+}
+
+.InvoiceItem-status {
+  order: 3;
+  font-weight: 600;
+}
+
+.InvoiceItem-customer {
+  background: var(--subtle);
+  padding: 10px 20px;
+  
+  display: flex;
+  flex-direction: row;
+}
+
+.InvoiceItem-primary {
+  order: 1;
+  flex: 1;
+}
+
+.InvoiceItem-customerName {
+  margin: 0;
+  line-height: 26px;
+  color: var(--primary);
+}
+
+.InvoiceItem-customerSite {
+  margin: 0;
+  color: var(--secondary_dark);
+}
+
+.InvoiceItem-price {
+  order: 3;
+  line-height: var(--customer_height);
+}

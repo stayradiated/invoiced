@@ -1,0 +1,43 @@
+.details {
+  flex: 1;
+  order: 1;
+
+  @extend #scroll;
+  padding: 20px;
+  max-width: 300px;
+}
+
+h3 {
+  margin-top: 30px;
+  margin-bottom: 0;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+}
+
+.control {
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  color: $secondary;
+  font-weight: 600;
+  line-height: 25px;
+}
+
+input {
+  border: 0;
+  background: $subtle;
+  color: $foreground;
+  width: 100%;
+  padding: 10px 10px;
+  outline: 0;
+  box-sizing: border-box;
+
+  &:focus {
+    background: $primary;
+    color: $background;
+  }
+}

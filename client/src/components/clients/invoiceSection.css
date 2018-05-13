@@ -1,0 +1,9 @@
+.InvoiceSection-container {
+  min-height: 0;
+  flex: 1;
+  order: 2;
+  padding-left: var(--padding);
+  display: flex;
+  flex-direction: column;
+}
+

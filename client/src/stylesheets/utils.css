@@ -1,0 +1,29 @@
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.scrollable {
+  min-height: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+  background-color: transparent !important;
+}
+
+.scrollable::-webkit-scrollbar-track-piece {
+  background-color: transparent !important;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background-color: $selected_light;
+  border: 0;
+}

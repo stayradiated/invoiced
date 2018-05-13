@@ -1,0 +1,14 @@
+.SearchBox-container .halflings:before {
+  padding: 11px 14px;
+}
+
+.SearchBox-input {
+  flex: 1;
+  margin-left: 20px;
+  background: none;
+  outline: 0;
+  border: 0;
+  line-height: 20px;
+  padding: 10px 0;
+  color: $foreground;
+}

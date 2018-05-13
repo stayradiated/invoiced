@@ -1,0 +1,16 @@
+.modal {
+  background: var(--primary);
+  line-height: 40px;
+  padding: 5px;
+  text-align: center;
+}
+
+.modal .message {
+  display: inline-block;
+  color: var(--background);
+  margin: 0 10px 0 0;
+}
+
+.modal .buttons {
+  display: inline-block;
+}

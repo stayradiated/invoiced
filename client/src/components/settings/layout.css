@@ -1,0 +1,11 @@
+.page-settings {
+  min-height: 0;
+  flex: 1;
+  padding: 20px;
+}
+
+.snippet-manager {
+  max-width: 50%;
+}
+
+@import './snippets.css';

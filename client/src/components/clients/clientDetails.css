@@ -1,0 +1,43 @@
+.ClientDetails-container {
+  order: 1;
+  flex: 0 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  margin-bottom: 5px;
+  margin-right: 10px;
+}
+
+.ClientDetails-details {
+  margin-bottom: 10px;
+}
+
+.ClientDetails-title {
+  margin: 0 0 5px;
+  line-height: 25px;
+}
+
+.ClientDetails-metadata {
+  margin: 0;
+}
+
+.ClientDetails-metadata > span {
+  color: var(--foreground_light);
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.ClientDetails-metadata > span:not(:last-child):after {
+  content: '•';
+  margin: 0 8px;
+}
+
+.ClientDetails-buttons {
+  display: flex;
+}
+
+.ClientDetails-button {
+  flex: 1;
+}

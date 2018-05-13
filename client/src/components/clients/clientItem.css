@@ -1,0 +1,58 @@
+.ClientItem-container {
+  --height: 65px;
+  --space: 5px;
+
+  display: flex;
+  background: var(--subtle);
+  margin-bottom: var(--space);
+  text-decoration: none;
+}
+
+.ClientItem-container:hover {
+  background: var(--subtle_light);
+}
+
+.ClientItem-container.active {
+  background: var(--selected);
+}
+
+.ClientItem-container.unpaid {
+  .invoices-count {
+    background: var(--background);
+  }
+}
+
+.ClientItem-details {
+  flex: 1;
+  order: 1;
+  padding-left: 20px;
+}
+
+.ClientItem-title {
+  margin: 8px 0 4px;
+  line-height: 25px;
+}
+
+.ClientItem-metadata {
+  margin: 0;
+}
+
+.ClientItem-metadata > span {
+  color: var(--foreground_dark);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.ClientItem-metadata > span:not(:last-child):after {
+  content: '•';
+  margin: 0 8px;
+}
+
+.ClientItem-count {
+  order: 2;
+  width: var(--height);
+  line-height: var(--height);
+  text-align: center;
+  border-left: var(--space) solid var(--background);
+}
+

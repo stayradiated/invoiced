@@ -1,0 +1,37 @@
+@import './typography.css';
+@import './reset.css';
+@import './utils.css';
+@import './button.css';
+
+:root {
+  /* scheme */
+  /* http://pltts.me/palettes/723615 */
+
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(0, 0%, 0%);
+  --primary: hsl(358, 57%, 52%);
+  --secondary: hsl(204, 64%, 44%);
+  --subtle: hsl(192, 15%, 94%);
+  --selected: hsl(204, 70%, 53%);
+
+  --background_dark: hsl(0, 0%, 95%);
+  --background_light: hsl(0, 0%, 100%);
+
+  --foreground_dark: hsl(0, 0%, 0%);
+  --foreground_light: hsl(0, 0%, 5%);
+
+  --primary_dark: hsl(358, 57%, 47%);
+  --primary_light: hsl(358, 57%, 57%);
+
+  --secondary_dark: hsl(204, 64%, 39%);
+  --secondary_light: hsl(204, 64%, 49%);
+
+  --subtle_dark: hsl(192, 15%, 89%);
+  --subtle_light: hsl(192, 15%, 99%);
+
+  --selected_dark: hsl(204, 70%, 48%);
+  --selected_light: hsl(204, 70%, 58%);
+
+  --header_height: 75px;
+  --clients_width: 35%;
+}

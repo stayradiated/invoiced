@@ -1,0 +1,14 @@
+.ClientsPage-container {
+  --padding: 20px;
+
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  padding: var(--padding);
+  flex-direction: row;
+}
+
+.ClientsPage-container > section {
+  max-width: 33.33%;
+  box-sizing: border-box;
+}

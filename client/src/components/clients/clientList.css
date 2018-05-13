@@ -1,0 +1,21 @@
+.ClientList-container {
+  min-height: 0;
+  order: 2;
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.ClientList-searchbox {
+  height: 40px;
+  background: var(--subtle);
+  margin-right: 10px;
+  margin-bottom: 5px;
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.ClientList-list {
+  flex: 1;
+}

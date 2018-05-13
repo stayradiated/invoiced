@@ -1,0 +1,60 @@
+button {
+  border: 0;
+  padding: 0 20px;
+  line-height: 40px;
+  margin-left: 5px;
+  font-weight: 700;
+  outline: 0;
+
+  background: var(--background_dark);
+  color: var(--foreground);
+}
+
+buton:hover {
+  background: var(--background);
+}
+
+button:focus {
+  box-shadow: inset 0 0 0 2px rgba(var(--white, 0.2));
+}
+
+button:first-of-type {
+  margin-left: 0;
+}
+
+button halflings:before {
+  color: var(--foreground);
+}
+
+button.primary {
+  background: var(--primary);
+}
+
+button.primary:hover {
+  background: var(--primary-dark);
+}
+
+button.secondary {
+  background: var(--secondary);
+}
+
+button.secondary:hover {
+  background: var(--secondary-dark);
+}
+
+button.subtle {
+  background: var(--subtle);
+}
+
+button.subtle:hover {
+  background: var(--subtle-dark);
+}
+
+button.text {
+  color: var(--foreground);
+  background: transparent;
+}
+
+button.text:hover {
+  background: var(--background_light);
+}

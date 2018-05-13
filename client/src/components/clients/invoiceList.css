@@ -1,0 +1,19 @@
+.InvoiceList-container {
+  --height: 70px;
+  --edit_height: calc(var(--height) + 140px);
+
+  flex: 1;
+  order: 3;
+}
+
+.InvoiceList-sectionTitle {
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  margin-top: 20px;
+  line-height: 30px;
+  padding: 0;
+  color: var(--foreground);
+  background: var(--subtle_dark);
+  color: var(--secondary);
+}

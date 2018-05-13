@@ -1,0 +1,48 @@
+.InvoiceDetails-container {
+  min-height: 0;
+  flex: 1;
+  order: 3;
+  padding-left: var(--padding);
+}
+
+.InvoiceDetails-label {
+  display: block;
+  font-weight: bold;
+  line-height: 15px;
+}
+
+.InvoiceDetails-section {
+  display: flex;
+}
+
+.InvoiceDetails-title {
+  width: 50px;
+}
+
+.InvoiceDetails-title,
+.InvoiceDetails-value {
+  background: var(--subtle);
+  color: var(--foreground);
+}
+
+.InvoiceDetails-date {
+  flex: 1;
+}
+
+.InvoiceDetails-title,
+.InvoiceDetails-value,
+.InvoiceDetails-button {
+  line-height: 40px;
+  margin: 0 0 5px 5px;
+  padding: 0 20px;
+}
+
+.InvoiceDetails-title:first-child,
+.InvoiceDetails-value:first-child,
+.InvoiceDetails-button:first-child {
+  margin-left: 0;
+}
+
+.InvoiceDetails-customer {
+  flex: 1;
+}

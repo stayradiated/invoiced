@@ -30,6 +30,7 @@
     "bookshelf": "^0.13.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
+    "graphql-yoga": "^1.13.1",
     "knex": "^0.14.6",
     "moment": "^2.22.1",
     "mysql": "^2.15.0",

@@ -1,0 +1,28 @@
+import constants from './constants'
+
+export default constants([
+  'CLIENT_PAGE',
+  'EDITOR_PAGE',
+  'SETTINGS_PAGE',
+
+  'OPEN_PAGE',
+  'OPEN_INVOICE',
+  'OPEN_CLIENT',
+
+  'CREATE_CLIENT',
+  'CREATE_INVOICE',
+  'CREATE_ROW',
+  'CREATE_SNIPPET',
+
+  'EDIT_CLIENT',
+  'EDIT_INVOICE',
+  'EDIT_SNIPPET',
+
+  'DESTROY_CLIENT',
+  'DESTROY_INVOICE',
+  'DESTROY_ROW',
+  'DESTROY_SNIPPET',
+
+  'SHOW_MODAL',
+  'EXPORT_INVOICE'
+])
