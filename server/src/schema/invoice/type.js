@@ -1,7 +1,7 @@
 const type = `
   type Invoice {
     id: ID
-    client: Client!
+    client: Client
     number: String
     date: String
     paid: Boolean
@@ -11,7 +11,12 @@ const type = `
     cost: String
     labour: String
     airmover: String
-    rows: [Row]!
+    rows(first: Int, skip: Int): RowList!
+  }
+
+  type InvoiceList {
+    items: [Invoice]!
+    total: Int!
   }
 
   input CreateInvoiceInput {
@@ -47,13 +52,13 @@ const type = `
 
 const typeQuery = `
   invoice(id: ID): Invoice
-  invoices(first: Int, skip: Int): [Invoice]!
+  invoices(first: Int, skip: Int): InvoiceList!
 `
 
 const typeMutation = `
   createInvoice(input: CreateInvoiceInput!): Invoice!
   updateInvoice(input: UpdateInvoiceInput!): Invoice!
-  destroyInvoice(input: DestroyInvoiceInput!): Invoice!
+  destroyInvoice(input: DestroyInvoiceInput!): Boolean!
 `
 
 module.exports = {

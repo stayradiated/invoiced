@@ -1,10 +1,15 @@
 const type = `
   type Row {
-    id: ID
+    id: ID!
     invoice: Invoice
     type: Int
     order: Int
     content: String
+  }
+
+  type RowList {
+    items: [Row]!
+    total: Int!
   }
 
   input CreateRowInput {
@@ -27,13 +32,13 @@ const type = `
 
 const typeQuery = `
   row(id: ID): Row
-  rows(first: Int, skip: Int): [Row]!
+  rows(first: Int, skip: Int): RowList!
 `
 
 const typeMutation = `
   createRow(input: CreateRowInput!): Row!
   updateRow(input: UpdateRowInput!): Row!
-  destroyRow(input: DestroyRowInput!): Row!
+  destroyRow(input: DestroyRowInput!): Boolean!
 `
 
 module.exports = {

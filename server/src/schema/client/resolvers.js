@@ -1,10 +1,10 @@
-const { resolveRelatedItem } = require('../../utils/resolve')
+const { resolveRelatedList } = require('../../utils/resolve')
 
 const { clients } = require('../../models/clients')
 
 const resolvers = {
   Client: {
-    invoices: resolveRelatedItem(clients, 'invoices')
+    invoices: resolveRelatedList(clients, 'invoices')
   }
 }
 

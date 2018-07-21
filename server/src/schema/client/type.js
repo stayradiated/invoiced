@@ -1,11 +1,16 @@
 const type = `
   type Client {
     id: ID!
-    name: String!
-    address: String!
-    city: String!
-    postcode: String!
-    invoices: [Invoice]!
+    name: String
+    address: String
+    city: String
+    postcode: String
+    invoices(first: Int, skip: Int): InvoiceList!
+  }
+
+  type ClientList {
+    items: [Client]!
+    total: Int!
   }
 
   input CreateClientInput {
@@ -30,13 +35,13 @@ const type = `
 
 const typeQuery = `
   client(id: ID): Client
-  clients(first: Int, skip: Int): [Client]!
+  clients(first: Int, skip: Int): ClientList!
 `
 
 const typeMutation = `
   createClient(input: CreateClientInput!): Client!
   updateClient(input: UpdateClientInput!): Client!
-  destroyClient(input: DestroyClientInput!): Client!
+  destroyClient(input: DestroyClientInput!): Boolean!
 `
 
 module.exports = {

@@ -5,6 +5,11 @@ const type = `
     content: String
   }
 
+  type SnippetList {
+    items: [Snippet]!
+    total: Int!
+  }
+
   input CreateSnippetInput {
     shortcut: String
     content: String
@@ -23,13 +28,13 @@ const type = `
 
 const typeQuery = `
   snippet(id: ID): Snippet
-  snippets(first: Int, skip: Int): [Snippet]!
+  snippets(first: Int, skip: Int): SnippetList!
 `
 
 const typeMutation = `
   createSnippet(input: CreateSnippetInput!): Snippet!
   updateSnippet(input: UpdateSnippetInput!): Snippet!
-  destroySnippet(input: DestroySnippetInput!): Snippet!
+  destroySnippet(input: DestroySnippetInput!): Boolean!
 `
 
 module.exports = {

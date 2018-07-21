@@ -1,5 +1,6 @@
 const { type, typeMutation, typeQuery } = require('./type')
-const { queries, resolvers } = require('./queries')
+const { queries } = require('./queries')
+const { resolvers } = require('./resolvers')
 const { mutations } = require('./mutations')
 
 module.exports = {
