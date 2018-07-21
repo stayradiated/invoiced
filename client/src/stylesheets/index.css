@@ -3,6 +3,8 @@
 @import './utils.css';
 @import './button.css';
 
+@import './vendor/_brick.scss';
+
 :root {
   /* scheme */
   /* http://pltts.me/palettes/723615 */

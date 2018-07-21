@@ -11,6 +11,8 @@ const type = `
     cost: String
     labour: String
     airmover: String
+    createdAt: String
+    updatedAt: String
     rows(first: Int, skip: Int): RowList!
   }
 

@@ -1,65 +1,38 @@
 import React from 'react'
+import ApolloClient from 'apollo-boost'
+import { ApolloProvider } from 'react-apollo'
+import { Store } from 'repatch'
+import { BrowserRouter, Route } from 'react-router-dom'
 
 import Header from './header'
-import Modal from './modal'
+// import Modal from './modal'
 import ClientsPage from './pages/clients'
 import EditorPage from './pages/editor'
-import SettingsPage from './pages/settings'
-import AppStore from '../stores/app'
-import AppConstants from '../constants/app'
-import ClientStore from '../stores/client'
-import InvoiceStore from '../stores/invoice'
+// import SettingsPage from './pages/settings'
 
 import './app.css'
 
-const getState = () => ({
-  activePage: AppStore.get('activePage')
+const client = new ApolloClient({
+  uri: '/api',
 })
 
-class App extends React.Component {
-  constructor () {
-    super()
-    this.state = getState()
-  }
+const store = new Store({})
 
-  componentDidMount () {
-    AppStore.on('change:activePage', this._onChange, this)
-    ClientStore.get('collection').once('reset', this._onChange, this)
-    InvoiceStore.get('collection').once('reset', this._onChange, this)
-  }
-
-  render () {
-    var page
-
-    switch (this.state.activePage) {
-      case AppConstants.CLIENT_PAGE:
-        page = <ClientsPage />
-        break
-      case AppConstants.EDITOR_PAGE:
-        page = <EditorPage />
-        break
-      case AppConstants.SETTINGS_PAGE:
-        page = <SettingsPage />
-        break
-      default:
-        page = null
-        break
-    }
-
-    return (
-      <div className='app'>
-        <Header />
-        <Modal />
-        <div className='page-container'>
-          {page}
+const App = () => {
+  return (
+    <BrowserRouter>
+      <ApolloProvider store={store} client={client}>
+        <div className='app'>
+          <Header />
+          {/* <Modal /> */}
+          <div className='page-container'>
+            <Route path='/clients' component={ClientsPage} />
+            <Route path='/editor/:invoiceId' component={EditorPage} />
+          </div>
         </div>
-      </div>
-    )
-  }
-
-  _onChange () {
-    this.setState(getState())
-  }
+      </ApolloProvider>
+    </BrowserRouter>
+  )
 }
 
 export default App

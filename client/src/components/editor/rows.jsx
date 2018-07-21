@@ -5,57 +5,38 @@ import RowDate from './rowDate'
 import RowBullet from './rowBullet'
 import RowNumber from './rowItem'
 import RowHeading from './rowHeading'
-import RowCollection from '../../models/rows'
 
 import ROW from '../../constants/row'
 
-class Rows extends React.Component {
+const Rows = (props) => {
+  const { rows } = props
+  var i = 1
 
-  static propTypes = {
-    collection: PropTypes.instanceOf(RowCollection).isRequired
-  }
+  var rowItems = rows.map(function (row) {
+    var opts = {
+      key: row.cid,
+      model: row
+    }
 
-  componentDidMount () {
-    this.props.collection.on('reset add remove change:type', this._onChange, this)
-  }
+    switch (row.get('type')) {
+      case ROW.DATE:
+        return new RowDate(opts)
+      case ROW.HEADING:
+        return new RowHeading(opts)
+      case ROW.BULLET:
+        return new RowBullet(opts)
+      case ROW.ITEM:
+        opts.index = i++
+        return new RowNumber(opts)
+    }
 
-  componentWillUnmount () {
-    this.props.collection.off('reset add remove change:type', this._onChange, this)
-  }
+    // default row type
+    return new RowNumber(opts)
+  })
 
-  render () {
-    var i = 1
-
-    var rows = this.props.collection.map(function (row) {
-      var opts = {
-        key: row.cid,
-        model: row
-      }
-
-      switch (row.get('type')) {
-        case ROW.DATE:
-          return new RowDate(opts)
-        case ROW.HEADING:
-          return new RowHeading(opts)
-        case ROW.BULLET:
-          return new RowBullet(opts)
-        case ROW.ITEM:
-          opts.index = i++
-          return new RowNumber(opts)
-      }
-
-      // default row type
-      return new RowNumber(opts)
-    })
-
-    return (
-      <div className='rows'>{rows}</div>
-    )
-  }
-
-  _onChange () {
-    this.forceUpdate()
-  }
+  return (
+    <div className='rows'>{rowItems}</div>
+  )
 }
 
 export default Rows

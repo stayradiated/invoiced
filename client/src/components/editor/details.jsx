@@ -2,81 +2,75 @@ import React from 'react'
 import PropTypes from 'proptypes'
 
 import DetailsInput from './detailsInput'
-import InvoiceModel from '../../models/invoice'
 
 import './details.css'
 
-class Details extends React.Component {
+const Details = (props) => {
+  const { invoice } = props
 
-  static propTypes = {
-    model: PropTypes.instanceOf(InvoiceModel).isRequired
-  }
+  return (
+    <div className='details'>
+      <h3>Invoice</h3>
 
-  render () {
-    return (
-      <div className='details'>
-        <h3>Invoice</h3>
+      <DetailsInput
+        invoice={invoice}
+        label='Invoice ID'
+        field='number'
+        type='text'
+      />
 
-        <DetailsInput
-          model={this.props.model}
-          label='Invoice ID'
-          key='number'
-          type='text'
-        />
+      <DetailsInput
+        invoice={invoice}
+        label='Created At'
+        field='date'
+        type='date'
+      />
 
-        <DetailsInput
-          model={this.props.model}
-          label='Created At'
-          key='date'
-          type='date'
-        />
+      <h3>Customer</h3>
 
-        <h3>Customer</h3>
+      <DetailsInput
+        invoice={invoice}
+        label='Customer Name'
+        field='customer'
+      />
 
-        <DetailsInput
-          model={this.props.model}
-          label='Customer Name'
-          key='customer'
-        />
+      <DetailsInput
+        invoice={invoice}
+        label='Site'
+        field='site'
+      />
 
-        <DetailsInput
-          model={this.props.model}
-          label='Site'
-          key='site'
-        />
+      <DetailsInput
+        invoice={invoice}
+        label='Email'
+        field='email'
+        type='email'
+      />
 
-        <DetailsInput
-          model={this.props.model}
-          label='Email'
-          key='email'
-          type='email'
-        />
+      <h3>Cost</h3>
 
-        <h3>Cost</h3>
+      <DetailsInput
+        invoice={invoice}
+        label='Airmover Hire'
+        field='airmover'
+        type='text'
+      />
 
-        <DetailsInput
-          model={this.props.model}
-          label='Airmover Hire'
-          key='airmover'
-          type='text'
-        />
+      <DetailsInput
+        invoice={invoice}
+        label='Labour'
+        field='labour'
+        type='text'
+      />
 
-        <DetailsInput
-          model={this.props.model}
-          label='Labour'
-          key='labour'
-          type='text'
-        />
-
-        <DetailsInput
-          model={this.props.model}
-          label='Total Cost'
-          key='cost'
-          type='text'
-        />
-      </div>
-    )
-  }
+      <DetailsInput
+        invoice={invoice}
+        label='Total Cost'
+        field='cost'
+        type='text'
+      />
+    </div>
+  )
 }
 
 export default Details

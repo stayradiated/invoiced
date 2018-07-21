@@ -7,8 +7,7 @@ import './searchBox.css'
 class SearchBox extends React.Component {
   static propTypes = {
     className: PropTypes.string,
-    collection: PropTypes.object.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func
   }
 
   constructor () {
@@ -40,7 +39,7 @@ class SearchBox extends React.Component {
     this.setState({
       value: value
     })
-    this.props.onChange(value)
+    this.props.onChange && this.props.onChange(value)
   }
 }
 

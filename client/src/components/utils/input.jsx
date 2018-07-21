@@ -5,7 +5,7 @@ import moment from 'moment'
 class Input extends React.Component {
   static propTypes = {
     model: PropTypes.object,
-    key: PropTypes.string,
+    field: PropTypes.string,
     type: PropTypes.string
   }
 
@@ -16,16 +16,8 @@ class Input extends React.Component {
   constructor (props) {
     super()
     this.state = {
-      value: props.model.get(props.key)
+      value: props.model[props.field]
     }
-  }
-
-  componentDidMount () {
-    this.props.model.on('change:' + this.props.key, this._onChange, this)
-  }
-
-  componentWillUnmount () {
-    this.props.model.off('change:' + this.props.key, this._onChange, this)
   }
 
   render () {
@@ -50,7 +42,7 @@ class Input extends React.Component {
   }
 
   save () {
-    this.props.model.set(this.props.key, this.state.value)
+    this.props.model.set(this.props.field, this.state.value)
     if (this.props.model.hasChanged()) {
       this.props.model.save()
     }
@@ -64,7 +56,7 @@ class Input extends React.Component {
 
   _onChange () {
     this.setState({
-      value: this.props.model.get(this.props.key)
+      value: this.props.model.get(this.props.field)
     })
   }
 }

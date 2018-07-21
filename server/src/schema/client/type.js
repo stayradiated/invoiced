@@ -5,6 +5,8 @@ const type = `
     address: String
     city: String
     postcode: String
+    createdAt: String
+    updatedAt: String
     invoices(first: Int, skip: Int): InvoiceList!
   }
 
