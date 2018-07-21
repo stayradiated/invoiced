@@ -11,8 +11,7 @@ const knex = new Knex({
     user: process.env.SQL_USER || 'root',
     password: process.env.SQL_PASS || '',
     database: process.env.SQL_DB || 'tcs_invoiced',
-    charset: 'utf8',
-    debug: false
+    charset: 'utf8'
   }
 })
 

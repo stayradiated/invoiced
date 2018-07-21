@@ -1,7 +1,8 @@
 /* @flow */
 
 const db = require('../utils/db')
-const Invoices = require('./invoices')
+
+const { Invoices } = require('./invoices')
 
 const Client = db.Model.extend({
   tableName: 'clients',
@@ -13,4 +14,6 @@ const Client = db.Model.extend({
   }
 })
 
-module.exports = Client
+module.exports = {
+  Client
+}

@@ -1,11 +1,15 @@
 /* @flow */
 
 const db = require('../utils/db')
-const Row = require('./row')
+
+const { Row } = require('./row')
 
 const Rows = db.Collection.extend({
   model: Row,
   comparator: 'order'
 })
 
-module.exports = Rows
+module.exports = {
+  Rows,
+  rows: Rows.forge()
+}

@@ -1,10 +1,14 @@
 /* @flow */
 
-var db = require('../utils/db')
-var Snippet = require('./snippet')
+const db = require('../utils/db')
 
-var Snippets = db.Collection.extend({
+const { Snippet } = require('./snippet')
+
+const Snippets = db.Collection.extend({
   model: Snippet
 })
 
-module.exports = Snippets
+module.exports = {
+  Snippets,
+  snippets: Snippets.forge()
+}

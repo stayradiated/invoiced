@@ -1,7 +1,8 @@
 /* @flow */
 
 const db = require('../utils/db')
-const Rows = require('./rows')
+
+const { Rows } = require('./rows')
 
 const Invoice = db.Model.extend({
   tableName: 'invoices',
@@ -9,7 +10,7 @@ const Invoice = db.Model.extend({
   hasTimestamps: ['createdAt', 'updatedAt'],
 
   client: function () {
-    const Client = require('./client')
+    const { Client } = require('./client')
     return this.belongsTo(Client, 'client')
   },
 
@@ -19,4 +20,4 @@ const Invoice = db.Model.extend({
 
 })
 
-module.exports = Invoice
+module.exports = { Invoice }

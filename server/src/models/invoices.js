@@ -1,10 +1,14 @@
 /* @flow */
 
 const db = require('../utils/db')
-const Invoice = require('./invoice')
+
+const { Invoice } = require('./invoice')
 
 const Invoices = db.Collection.extend({
   model: Invoice
 })
 
-module.exports = Invoices
+module.exports = {
+  Invoices,
+  invoices: Invoices.forge()
+}

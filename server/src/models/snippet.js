@@ -6,4 +6,4 @@ const Snippet = db.Model.extend({
   tableName: 'snippets'
 })
 
-module.exports = Snippet
+module.exports = { Snippet }
