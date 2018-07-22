@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'proptypes'
 
 const RowInput = (props) => {
   const { row } = props
@@ -14,6 +13,7 @@ const RowInput = (props) => {
   )
 }
 
+/*
 const handleChange = () => {
   var val = this.refs.input.getDOMNode().value
   this.props.model.set('content', val)
@@ -30,5 +30,6 @@ const handleKeyDown = (e) => {
     }
   }
 }
+*/
 
 export default RowInput

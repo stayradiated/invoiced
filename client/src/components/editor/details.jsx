@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'proptypes'
 
 import DetailsInput from './detailsInput'
 

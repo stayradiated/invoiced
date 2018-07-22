@@ -1,8 +1,7 @@
 import React from 'react'
-import PropTypes from 'proptypes'
 
 const InvoiceRows = () => (
-  null
+  <div />
 )
 
 export default InvoiceRows

@@ -1,11 +1,7 @@
 import classNames from 'classnames'
-import PropTypes from 'proptypes'
-import compose from 'recompose/compose'
 import { Link } from 'react-router-dom'
 
 import React from 'react'
-
-import AppActions from '../../actions/app'
 
 import './clientItem.css'
 

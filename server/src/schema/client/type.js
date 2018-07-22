@@ -37,7 +37,7 @@ const type = `
 
 const typeQuery = `
   client(id: ID): Client
-  clients(first: Int, skip: Int): ClientList!
+  clients(first: Int!, skip: Int): ClientList!
 `
 
 const typeMutation = `

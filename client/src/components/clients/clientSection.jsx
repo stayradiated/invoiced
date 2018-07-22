@@ -1,10 +1,52 @@
 import React from 'react'
+import { Mutation } from 'react-apollo'
+import { compose, withHandlers } from 'recompose'
 
 import ClientList from './clientList'
 
+import {
+  FETCH_ALL_CLIENTS,
+  CREATE_CLIENT
+} from '../../queries'
+
 import './clientSection.css'
 
-const ClientSection = () => {
+const handleCreateClient = (props) => (input) => {
+  const { createClient } = props
+  return createClient({
+    variables: {
+      input: {
+        name: '',
+        address: '',
+        city: '',
+        postcode: ''
+      }
+    },
+    update: (cache, { data} ) => {
+      const { clients } = cache.readQuery({
+        query: FETCH_ALL_CLIENTS,
+        variables: { first: 30, skip: 0 }
+      })
+      cache.writeQuery({
+        query: FETCH_ALL_CLIENTS,
+        variables: { first: 30, skip: 0 },
+        data: {
+          clients: {
+            ...clients,
+            items: [
+              data.createClient,
+              ...clients.items
+            ]
+          }
+        }
+      })
+    }
+  })
+}
+
+const ClientSection = (props) => {
+  const { onCreateClient } = props
+
   return (
     <section className='ClientSection-container'>
       <header className='ClientSection-header'>
@@ -15,7 +57,7 @@ const ClientSection = () => {
           <button
             className='ClientSection-button'
             type='button'
-            onClick={this.create}
+            onClick={onCreateClient}
           >
             <span className='halflings plus-sign'>New Client</span>
           </button>
@@ -26,4 +68,17 @@ const ClientSection = () => {
   )
 }
 
-export default ClientSection
+const withCreateClient = (Component) => (props) => (
+  <Mutation mutation={CREATE_CLIENT}>
+    {(createClient) => (
+      <Component {...props} createClient={createClient} />
+    )}
+  </Mutation>
+)
+
+export default compose(
+  withCreateClient,
+  withHandlers({
+    onCreateClient: handleCreateClient
+  })
+)(ClientSection)

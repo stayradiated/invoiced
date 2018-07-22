@@ -1,40 +1,60 @@
 import React from 'react'
-import PropTypes from 'proptypes'
 import moment from 'moment'
 import numeral from 'numeral'
-import { gql } from 'apollo-boost'
-import { Query } from 'react-apollo'
+import { Mutation, Query } from 'react-apollo'
+import { Link } from 'react-router-dom'
+import { compose, withHandlers } from 'recompose'
 
 import InvoiceRows from './invoiceRows'
 import TogglePaidBtn from './togglePaidBtn'
 
+import {
+  clientFragment,
+  FETCH_SINGLE_INVOICE,
+  DESTROY_INVOICE
+} from '../../queries'
+
 import './invoiceDetails.css'
 
-const QUERY = gql`
-  query fetchInvoiceDetails ($invoiceId: ID!) {
-    invoice(id: $invoiceId) {
-      id
-      number
-      date
-      customer
-      site
-      email
-      airmover
-      labour
-      cost
-      createdAt
-      updatedAt
-      rows {
-        items {
-          id
+const handleDestroy = (props) => () => {
+  const { history, invoice, destroyInvoice } = props
+
+  history.push(`/clients/${invoice.client.id}`)
+
+  destroyInvoice({
+    variables: {
+      input: {
+        id: invoice.id
+      }
+    },
+    update: (cache, { data }) => {
+      const id = `Client:${invoice.client.id}`
+
+      const prev = cache.readFragment({
+        id,
+        fragment: clientFragment
+      })
+
+      const next = {
+        ...prev,
+        invoices: {
+          ...prev.invoices,
+          items: prev.invoices.items.filter((item) =>
+            item.id !== invoice.id)
         }
       }
+
+      cache.writeFragment({
+        id,
+        fragment: clientFragment,
+        data: next
+      })
     }
-  }
-`
+  })
+}
 
 const InvoiceDetails = (props) => {
-  const { invoice } = props
+  const { invoice, onDestroy } = props
 
   return (
     <section className='InvoiceDetails-container'>
@@ -51,9 +71,12 @@ const InvoiceDetails = (props) => {
         </section>
 
         <section className='InvoiceDetails-section'>
-          <button className='InvoiceDetails-button secondary' type='button' onClick={this.handleEdit}>
+          <Link
+            className='InvoiceDetails-button secondary'
+            to={`/editor/${invoice.id}`}
+          >
             <span className='halflings pencil'>Edit Invoice</span>
-          </button>
+          </Link>
           <button className='InvoiceDetails-button secondary' type='button' onClick={this.handleExport}>
             <span className='halflings print'>Open in Word</span>
           </button>
@@ -97,7 +120,7 @@ const InvoiceDetails = (props) => {
         </div>
       </section>
 
-      <button className='InvoiceDetails-button subtle' type='button' onClick={this.handleDestroy}>
+      <button className='InvoiceDetails-button subtle' type='button' onClick={onDestroy}>
         <span className='halflings remove'>Delete Invoice</span>
       </button>
 
@@ -106,21 +129,36 @@ const InvoiceDetails = (props) => {
 }
 
 const withInvoice = (Component) => (props) => (
-  <Query query={QUERY} variables={props}>
+  <Query query={FETCH_SINGLE_INVOICE} variables={props}>
     {({ data, loading }) => {
       if (loading) {
         return 'loading...'
       }
-      return <Component invoice={data.invoice} />
+      return <Component {...props} invoice={data.invoice} />
     }}
   </Query>
+)
+
+const withDestroyInvoice = (Component) => (props) => (
+  <Mutation mutation={DESTROY_INVOICE}>
+    {(destroyInvoice) => (
+      <Component {...props} destroyInvoice={destroyInvoice} />
+    )}
+  </Mutation>
 )
 
 const withInvoiceId = (Component) => (props) => {
   const { match } = props
   const { invoiceId } = match.params
-  return <Component invoiceId={invoiceId} />
+  return <Component {...props} invoiceId={invoiceId} />
 }
 
 
-export default withInvoiceId(withInvoice(InvoiceDetails))
+export default compose(
+  withInvoiceId,
+  withInvoice,
+  withDestroyInvoice,
+  withHandlers({
+    onDestroy: handleDestroy
+  })
+)(InvoiceDetails)

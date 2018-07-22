@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'proptypes'
 
 import RowInput from './rowInput'
 import RowDestroyBtn from './rowDestroyBtn'

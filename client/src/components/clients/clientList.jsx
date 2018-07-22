@@ -1,55 +1,69 @@
 import React from 'react'
 import PropTypes from 'proptypes'
-import { gql } from 'apollo-boost'
 import { Query } from 'react-apollo'
 
 import ClientItem from './clientItem'
-import AppActions from '../../actions/app'
-
 import SearchBox from '../utils/searchBox'
+
+import { FETCH_ALL_CLIENTS } from '../../queries'
 
 import './clientList.css'
 
-const QUERY = gql`
-  query fetchAllClients {
-    clients {
-      total
-      items {
-        id
-        name
-        address
-        city
-        postcode
-        invoices {
-          total
-        }
-      }
-    }
-  }
-`
+const ClientList = (props) => {
+  const { clientList } = props
 
-const ClientList = (props) => (
-  <Query query={QUERY}>
-    {({data, loading}) => {
+  const clientItems = clientList.map((client) => (
+    <ClientItem key={client.id} client={client} />
+  ))
+
+  return (
+    <div className='ClientList-container'>
+      <SearchBox 
+        className='ClientList-searchbox'
+        onChange={this.handleSearch}
+      />
+      <div className='ClientList-list scrollable'>{clientItems}</div>
+    </div>
+  )
+}
+
+ClientList.propTypes = {
+  clientList: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired
+  })).isRequired
+}
+
+const withClientList = (Component) => () => (
+  <Query
+    query={FETCH_ALL_CLIENTS}
+    variables={{first: 30, skip: 0}}
+  >
+    {({data, loading, fetchMore}) => {
       if (loading) {
         return 'loading...'
       }
 
-      const clientItems = data.clients.items.map((client) => (
-        <ClientItem key={client.id} client={client} />
-      ))
+      if (data.clients.items.length < data.clients.total) {
+        fetchMore({
+          variables: { skip: data.clients.items.length },
+          updateQuery: (prev, { fetchMoreResult }) => {
+            if (!fetchMoreResult) {
+              return prev
+            }
+            return {
+              ...prev,
+              clients: {
+                ...prev.clients,
+                items: [...prev.clients.items, ...fetchMoreResult.clients.items]
+              }
+            }
+          }
+        })
+      }
 
-      return (
-        <div className='ClientList-container'>
-          <SearchBox 
-            className='ClientList-searchbox'
-            onChange={this.handleSearch}
-          />
-          <div className='ClientList-list scrollable'>{clientItems}</div>
-        </div>
-      )
+      return <Component clientList={data.clients.items} />
     }}
   </Query>
 )
 
-export default ClientList
+export default withClientList(ClientList)

@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'proptypes'
 
 import ROW from '../../constants/row'
 

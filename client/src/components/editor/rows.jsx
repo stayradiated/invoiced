@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'proptypes'
 
 import RowDate from './rowDate'
 import RowBullet from './rowBullet'
@@ -28,10 +27,9 @@ const Rows = (props) => {
       case ROW.ITEM:
         opts.index = i++
         return new RowNumber(opts)
+      default:
+        return new RowNumber(opts)
     }
-
-    // default row type
-    return new RowNumber(opts)
   })
 
   return (

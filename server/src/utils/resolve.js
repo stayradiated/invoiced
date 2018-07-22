@@ -24,9 +24,9 @@ const resolveRelatedItem = (collection, table) => async ({ id }) => {
   return toJSON(data)
 }
 
-const resolveRelatedList = (collection, table) => async({ id }, { first, skip }) => {
+const resolveRelatedList = (collection, table, buildQuery) => async({ id }, { first, skip }) => {
   const model = await collection.query({ where: { id } }).fetchOne()
-  const data = await model.related(table).fetchPage({ limit: first, offset: skip })
+  const data = await model.related(table).query(buildQuery).fetchPage({ limit: first, offset: skip })
   return {
     items: toJSON(data),
     total: data.pagination.rowCount

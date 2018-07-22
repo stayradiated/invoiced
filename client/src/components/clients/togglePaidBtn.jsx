@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'proptypes'
 
 const TogglePaidBtn = (props) => {
   const { invoice } = props

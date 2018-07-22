@@ -1,24 +1,52 @@
 import React from 'react'
 import PropTypes from 'proptypes'
-import { gql } from 'apollo-boost'
-import { Query } from 'react-apollo'
+import { Mutation, Query } from 'react-apollo'
+import { compose, withHandlers } from 'recompose'
+
+import {
+  clientFragment,
+  FETCH_SINGLE_CLIENT,
+  CREATE_INVOICE
+} from '../../queries'
 
 import './clientDetails.css'
 
-const QUERY = gql`
-  query fetchClientDetails ($clientId: ID!) {
-    client(id: $clientId) {
-      id
-      name
-      address
-      city
-      postcode
+const handleCreateInvoice = (props) => () => {
+  const { clientId, createInvoice } = props
+  createInvoice({
+    variables: {
+      input: { client: clientId }
+    },
+    update: (cache, { data } ) => {
+      const id = `Client:${clientId}`
+
+      const prev = cache.readFragment({
+        id,
+        fragment: clientFragment
+      })
+
+      const next = {
+        ...prev,
+        invoices: {
+          ...prev.invoices,
+          items: [
+            data.createInvoice,
+            ...prev.invoices.items
+          ]
+        }
+      }
+
+      cache.writeFragment({
+        id,
+        fragment: clientFragment,
+        data: next
+      })
     }
-  }
-`
+  })
+}
 
 const ClientDetails = (props) => {
-  const { client } = props
+  const { client, onCreateInvoice } = props
   const { name, address, city, postcode } = client
 
   return (
@@ -36,7 +64,7 @@ const ClientDetails = (props) => {
           <span className='halflings pencil'>Edit Details</span>
         </button>
         <button className='ClientDetails-button primary' type='button'
-          onClick={this.handleCreate}>
+          onClick={onCreateInvoice}>
           <span className='halflings plus-sign'>New Invoice</span>
         </button>
       </div>
@@ -44,15 +72,39 @@ const ClientDetails = (props) => {
   )
 }
 
+ClientDetails.propTypes = {
+  client: PropTypes.shape({
+    name: PropTypes.string,
+    address: PropTypes.string,
+    city: PropTypes.string,
+    postcode: PropTypes.string
+  }),
+  onCreateInvoice: PropTypes.func.isRequired
+}
+
 const withClient = (Component) => (props) => (
-  <Query query={QUERY} variables={props}>
+  <Query query={FETCH_SINGLE_CLIENT} variables={props}>
     {({ data, loading }) => {
       if (loading) {
         return 'loading...'
       }
-      return <Component client={data.client} />
+      return <Component {...props} client={data.client} />
     }}
   </Query>
 )
 
-export default withClient(ClientDetails)
+const withCreateInvoice = (Component) => (props) => (
+  <Mutation mutation={CREATE_INVOICE}>
+    {(createInvoice) => (
+      <Component {...props} createInvoice={createInvoice} />
+    )}
+  </Mutation>
+)
+
+export default compose(
+  withClient,
+  withCreateInvoice,
+  withHandlers({
+    onCreateInvoice: handleCreateInvoice
+  })
+)(ClientDetails)

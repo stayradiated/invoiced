@@ -28,6 +28,9 @@ class Input extends React.Component {
       case 'date':
         value = moment(value).format('YYYY-MM-DD')
         break
+      default:
+        value = this.state.value
+        break
     }
 
     return (

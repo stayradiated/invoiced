@@ -1,48 +1,42 @@
 import React from 'react'
-import PropTypes from 'proptypes'
+import { gql } from 'apollo-boost'
+import { Query } from 'react-apollo'
 
-import SnippetStore from '../../stores/snippet'
 import SnippetItem from './snippetEditItem'
-import SnippetCollection from '../../models/snippets'
 
-const getState = () => ({
-  edit: SnippetStore.get('edit')
-})
-
-class SnippetList extends React.Component {
-
-  static propTypes = {
-    collection: PropTypes.instanceOf(SnippetCollection).isRequired
+const QUERY = gql`
+  query fetchSnippets {
+    snippets {
+      items {
+        id
+        shortcut
+        content
+      }
+    }
   }
+`
 
-  constructor () {
-    super()
-    this.state = getState()
-  }
+const SnippetList = (props) => {
+  const { snippetList } = props
 
-  componentDidMount () {
-    SnippetStore.on('change:edit', this._onChange, this)
-    this.props.collection.on('add remove', this._onChange, this)
-  }
+  const snippetItems = snippetList.map((snippet) => (
+    <SnippetItem key={snippet.id} snippet={snippet} />
+  ))
 
-  componentWillUnmount () {
-    SnippetStore.off('change:edit', this._onChange, this)
-    this.props.collection.off('add remove', this._onChange, this)
-  }
-
-  render () {
-    return (
-      <div className='snippet-list'>{
-        this.props.collection.map(function (snippet) {
-          return <SnippetItem key={snippet.cid} model={snippet} />
-        }, this)
-      }</div>
-    )
-  }
-
-  _onChange () {
-    this.setState(getState())
-  }
+  return (
+    <div className='snippet-list'>{snippetItems}</div>
+  )
 }
 
-export default SnippetList
+const withSnippetList = (Component) => () => (
+  <Query query={QUERY}>
+    {({ data, loading }) => {
+      if (loading) {
+        return 'loading...'
+      }
+      return <Component snippetList={data.snippets.items} />
+    }}
+  </Query>
+)
+
+export default withSnippetList(SnippetList)

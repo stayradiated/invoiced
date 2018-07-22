@@ -1,35 +1,13 @@
 import React from 'react'
-import { gql } from 'apollo-boost'
 import { Query } from 'react-apollo'
 
 import Header from '../editor/header'
 import Details from '../editor/details'
 import Rows from '../editor/rows'
 
-import './editor.css'
+import { FETCH_SINGLE_INVOICE } from '../../queries'
 
-const QUERY = gql`
-  query fetchInvoiceDetails ($invoiceId: ID!) {
-    invoice(id: $invoiceId) {
-      id
-      number
-      date
-      customer
-      site
-      email
-      airmover
-      labour
-      cost
-      createdAt
-      updatedAt
-      rows {
-        items {
-          id
-        }
-      }
-    }
-  }
-`
+import './editor.css'
 
 const EditorPage = (props) => {
   const { invoice } = props
@@ -46,7 +24,7 @@ const EditorPage = (props) => {
 }
 
 const withInvoice = (Component) => (props) => (
-  <Query query={QUERY} variables={props}>
+  <Query query={FETCH_SINGLE_INVOICE} variables={props}>
     {({ data, loading }) => {
       if (loading) {
         return 'loading...'
